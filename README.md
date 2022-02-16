@@ -9,7 +9,7 @@
 
 Hace falta hacer uso de [pre-commit](https://github.com/pre-commit/pre-commit) para el empleo de la herramienta de formateo de codigo [Prettier](https://prettier.io/) antes de los commits.
 
-#### Instalacion:
+#### Instalacion: ala
 
 1. Instalar `pre-commit`
 
