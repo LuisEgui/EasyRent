@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link
+      rel="shortcut icon"
+      href="images/logo_easyRent.png"
+      type="image/png"
+    />
+    <title>Detalles</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>Formulario de contacto</h1>
+      <img src="images/logo_easyRent.png" width="270" height="130" />
+      <nav>
+        <ul>
+          <li>
+            <a href="index.html">Inicio</a>
+          </li>
+          <li>
+            <a href="detalles.html">Detalles</a>
+          </li>
+          <li>
+            <a href="bocetos.html">Bocetos</a>
+          </li>
+          <li>
+            <a href="planificacion.html">Planificación</a>
+          </li>
+          <li>
+            <a href="miembros.html">Miembros</a>
+          </li>
+          <li>
+            <a href="contacto.html">Contacto</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <form action="mailto:easyrentucm@gmail.com" method="post">
+        Escribe tu nombre: <input type="text" name="nombre" value="" /><br />
+        Dirección de email de contacto:
+        <input type="text" name="nombre" value="" /><br />
+        Motivo de la consulta:
+        <input type="radio" name="motivo" value="evaluacion" id="eval" />
+        <label for="eval">Evaluación</label>
+
+        <input type="radio" name="motivo" value="sugerencias" id="sug" />
+        <label for="sug">Sugerencias</label>
+        <input type="radio" name="motivo" value=" criticas" id="crit" />
+        <label for="crit">Críticas</label> <br />
+        <br />
+        <input name="leidoTerminos" type="checkbox" value="leido" /> Marque esta
+        casilla para verificar que ha leído nuestros términos y condiciones del
+        servicio <br /><br />
+        Consulta <br />
+        <textarea name="consulta" rows="4" cols="50"> </textarea>
+        <input type="submit" value="Enviar" />
+      </form>
+    </main>
+  </body>
+</html>
