@@ -30,3 +30,7 @@ indent_size = 2
 [*.md]
 trim_trailling_whitespace = false
 
+; SQL files
+[*.sql]
+ident_size = 4
+ident_size = space
