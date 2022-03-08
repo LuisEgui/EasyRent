@@ -50,7 +50,7 @@ select *
 from Vehicle;
 
 -- Insert example Damage row:
-insert into Damage(vehicle, area, damageType, isRepaired)
+insert into Damage(vehicle, area, type, isRepaired)
 values (123456, 'general', 'minor', true);
 
 -- View inserted data:

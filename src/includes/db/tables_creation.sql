@@ -1,6 +1,5 @@
 -- Author: Luis Egui
 
--- Author: Luis Egui
 -- Model table creation
 create table
   Model (
@@ -20,8 +19,8 @@ create table
   Image (
     img_id serial primary key,
     absoluteUrl varchar(512) not null,
-    height integer(5) not null,
-    width integer(5) not null,
+    height integer not null,
+    width integer not null,
     mimeType enum('jpg', 'png') not null,
     imgBlob blob not null
   );
@@ -67,7 +66,7 @@ create table
       'underbody',
       'wheels'
     ) not null,
-    damageType enum ('minor', 'moderate', 'severe'),
+    type enum ('minor', 'moderate', 'severe'),
     isRepaired boolean default false,
     foreign key (vehicle) references Vehicle(vin)
   );
@@ -84,7 +83,7 @@ describe EvidenceDamage;
 
 -- User table creation
 create table
-  user (
+  User (
     u_id serial primary key,
     email varchar(30) unique not null,
     password varchar(70) not null,
@@ -97,7 +96,7 @@ create table
   );
 
 -- Aux: check EvidenceDamage fields:
-describe user;
+describe User;
 
 -- Reserve table creation
 create table
@@ -111,7 +110,7 @@ create table
     returnTime datetime not null,
     price float,
     foreign key (vehicle) references Vehicle(vin),
-    foreign key (user) references user(u_id),
+    foreign key (user) references User(u_id),
     primary key(vehicle, user, pickupTime),
     check (timediff(returnTime, pickupTime) > 0)
   );
