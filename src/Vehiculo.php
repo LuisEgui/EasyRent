@@ -10,11 +10,19 @@ class Vehiculo{
     private $seatCount;
     private $state;
 
-    const PUBLICA = 0;
+    const AVAILABLE = 0;
 
-    const PRIVADA = 1;
+    const UNAVAILABLE = 1;
 
-    const TIPOS_ESTADO = [self::PUBLICA, self::PRIVADA];
+    const RESERVED = 2;
+
+    const TYPES_STATE = [self::AVAILABLE, self::UNAVAILABLE, self::RESERVED];
+
+    public static function crea($vin, $licensePlate, $model, $fuelType, $seatCount, $state)
+    {
+        $vehiculo = new Vehiculo($vin, $licensePlate, $model, $fuelType, $seatCount, $state = self::AVAILABLE);
+        return $vehiculo;
+    }
 
     public function __construct($vin, $licensePlate, $model, $fuelType, $seatCount, $state){
         $this->vin = $vin;
@@ -22,7 +30,10 @@ class Vehiculo{
         $this->model = $model;
         $this->fuelType = $fuelType;
         $this->seatCount = $seatCount;
-        $this->state = $state;
+        if (!in_array($state, self::TYPES_STATE)) {
+            throw new Exception("$state no es un tipo de acceso válido");
+        }
+        $this->state = intval($state);
     }
 
 	public function registrar($_params){
