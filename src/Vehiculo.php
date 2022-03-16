@@ -2,38 +2,32 @@
 
 namespace FlejeMascarillas;
 
-class Mascarilla{
-	private $config;
-    private $cn = null;
+class Vehiculo{
+	private $vin;
+    private $licensePlate;
+    private $model;
+    private $fuelType;
+    private $seatCount;
+    private $state;
 
-    public function __construct(){
+    const PUBLICA = 0;
 
-        $this->config = parse_ini_file(__DIR__.'/../config.ini') ;
+    const PRIVADA = 1;
 
-        $this->cn = new \PDO( $this->config['dns'], $this->config['usuario'],$this->config['clave'],array(
-            \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
-        ));
-        
+    const TIPOS_ESTADO = [self::PUBLICA, self::PRIVADA];
+
+    public function __construct($vin, $licensePlate, $model, $fuelType, $seatCount, $state){
+        $this->vin = $vin;
+        $this->licensePlate = $licensePlate;
+        $this->model = $model;
+        $this->fuelType = $fuelType;
+        $this->seatCount = $seatCount;
+        $this->state = $state;
     }
+
 	public function registrar($_params){
-        $sql = "INSERT INTO `mascarillas`(`producto`, `descripcion`, `foto`, `precio`, `categoria_id`, `fecha`) 
-        VALUES (:producto,:descripcion,:foto,:precio,:categoria_id,:fecha)";
-
-        $resultado = $this->cn->prepare($sql);
-
-        $_array = array(
-            ":producto" => $_params['producto'],
-            ":descripcion" => $_params['descripcion'],
-            ":foto" => $_params['foto'],
-            ":precio" => $_params['precio'],
-            ":categoria_id" => $_params['categoria_id'],
-            ":fecha" => $_params['fecha'],
-        );
-
-        if($resultado->execute($_array))
-            return true;
-
-        return false;
+        $sql="INSERT INTO Vehicle (vin, licensePlate, model, fuelType, seatCount, state) 
+        VALUES ('$vin', '$licensePlate', '$model', '$fuelType', '$seatCount', '$state')";
     }
 
     public function actualizar($_params){
