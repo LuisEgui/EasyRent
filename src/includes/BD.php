@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__. '/includes/config.php';
-
 /**
  * Funciones de utilidad para acceso a la base de datos.
  */

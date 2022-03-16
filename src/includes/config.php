@@ -1,73 +1,38 @@
 <?php
-/* */
-/* Parámetros de configuración de la aplicación */
-/* */
 
-// Parámetros de configuración generales
-define('RUTA_APP', '/sw-practices');
-define('RUTA_IMGS', RUTA_APP . '/img');
-define('RUTA_CSS', RUTA_APP . '/css');
-define('RUTA_JS', RUTA_APP . '/js');
-define('INSTALADA', false);
+require_once __DIR__.'/Aplicacion.php';
+require_once __DIR__.'/BD.php';
 
-// Parámetros de configuración de la BD
+/**
+ * Parámetros de conexión a la BD
+ */
 define('BD_HOST', 'localhost');
 define('BD_NAME', 'easyrent_db');
-define('BD_USER', 'easyrent_db');
-define('BD_PASS', 'easyrent_db');
+define('BD_USER', 'user');
+define('BD_PASS', '1234');
 
-/* */
-/* Utilidades básicas de la aplicación */
-/* */
+/**
+ * Parámetros de configuración utilizados para generar las URLs y las rutas a ficheros en la aplicación
+ */
+define('RAIZ_APP', __DIR__);
+define('RUTA_APP', '/sw-practices');
+define('RUTA_IMGS', RUTA_APP.'/img');
+define('RUTA_CSS', RUTA_APP.'/css');
+define('RUTA_JS', RUTA_APP.'/js');
 
-require_once __DIR__.'/src/Utils.php';
-
-/* */
-/* Inicialización de la aplicación */
-/* */
-
-if (!INSTALADA) {
-	Utils::paginaError(502, 'Error', 'Oops', 'La aplicación no está configurada. Tienes que modificar el fichero config.php');
-}
-
-/* */
-/* Configuración de Codificación y timezone */
-/* */
-
+/**
+ * Configuración del soporte de UTF-8, localización (idioma y país) y zona horaria
+ */
 ini_set('default_charset', 'UTF-8');
 setLocale(LC_ALL, 'es_ES.UTF.8');
 date_default_timezone_set('Europe/Madrid');
 
-/* */
-/* Clases y Traits de la aplicación */
-/* */
-require_once 'src/Arrays.php';
-require_once 'src/traits/MagicProperties.php';
+// Inicializa la aplicación
+$app = Aplicacion::getInstance();
+$app->init(['host'=>BD_HOST, 'bd'=>BD_NAME, 'user'=>BD_USER, 'pass'=>BD_PASS]);
 
-/* */
-/* Clases que simulan una BD almacenando los datos en memoria */
-/*
-require_once 'src/usuarios/memoria/Usuario.php';
-require_once 'src/mensajes/memoria/Mensaje.php';
-*/
-
-/*
- * Configuramos e inicializamos la sesión para todas las peticiones
+/**
+ * @see http://php.net/manual/en/function.register-shutdown-function.php
+ * @see http://php.net/manual/en/language.types.callable.php
  */
-session_start([
-	'cookie_path' => RUTA_APP, // Para evitar problemas si tenemos varias aplicaciones en htdocs
-]);
-
-/* */
-/* Inicialización de las clases que simulan una BD en memoria */
-/*
-Usuario::init();
-Mensaje::init();
-*/
-
-/* */
-/* Clases que usan una BD para almacenar el estado */
-/* */
-require_once 'src/BD.php';
-require_once 'src/usuarios/bd/Usuario.php';
-require_once 'src/mensajes/bd/Mensaje.php';
+register_shutdown_function([$app, 'shutdown']);

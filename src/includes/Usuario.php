@@ -1,9 +1,9 @@
 <?php
 
+//use MagicProperties;
+require_once __DIR__.'/BD.php';
 class Usuario
 {
-
-    use MagicProperties;
 
     public const ADMIN_ROLE = 1;
 
