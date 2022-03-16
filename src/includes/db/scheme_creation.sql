@@ -6,4 +6,4 @@ create database if not exists easyrent_db
     collate utf8mb4_0900_ai_ci;
 
 -- Select the created database to be used 
-use easyrent_db;
+use easyrent_db; 
