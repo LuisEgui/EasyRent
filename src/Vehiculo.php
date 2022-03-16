@@ -41,71 +41,73 @@ class Vehiculo{
         VALUES ('$vin', '$licensePlate', '$model', '$fuelType', '$seatCount', '$state')";
     }
 
-    public function actualizar($_params){
-        $sql = "UPDATE `mascarillas` SET `producto`=:producto,`descripcion`=:descripcion,`foto`=:foto,`precio`=:precio,`categoria_id`=:categoria_id,`fecha`=:fecha  WHERE `id`=:id";
+    private static function getVehiculos($model = null, $fuelType = null, $seatCount = null, $state = null)
+    {
+        $result = [];
 
-        $resultado = $this->cn->prepare($sql);
+        $conn = BD::getInstance()->getConexionBd();
+        $query = 'SELECT * FROM Vehiculos';
 
-        $_array = array(
-            ":producto" => $_params['producto'],
-            ":descripcion" => $_params['descripcion'],
-            ":foto" => $_params['foto'],
-            ":precio" => $_params['precio'],
-            ":categoria_id" => $_params['categoria_id'],
-            ":fecha" => $_params['fecha'],
-            ":id" =>  $_params['id']
-        );
+        if($model !== null || $fuelType !== null || $seatCount !== null || $state !== null){
+            $query .= 'WHERE '
+        }
 
-        if($resultado->execute($_array))
-            return true;
+        $contadorFiltros = 0;
 
-        return false;
+        if ($model !== null) {
+            $query .= sprintf('model = %d', $model);
+            $contadorFiltros++;
+        }
+        if ($fuelType !== null) {
+            if($contadorFiltros > 0){
+                $query .= sprintf(' AND fuelType = %d', $fuelType);
+            }
+            else{
+                $query .= sprintf('fuelType = %d', $fuelType);
+            }
+            $contadorFiltros++;
+        }
+        if ($seatCount !== null) {
+            if($contadorFiltros > 0){
+                $query .= sprintf(' AND seatCount = %d', $seatCount);
+            }
+            else{
+                $query .= sprintf('seatCount = %d', $seatCount);
+            }
+            $contadorFiltros++;
+        }
+        if ($state !== null) {
+            if($contadorFiltros > 0){
+                $query .= sprintf(' AND state = %d', $state);
+            }
+            else{
+                $query .= sprintf('state = %d', $state);
+            }
+            $contadorFiltros++;
+        }
+        
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($fila = $rs->fetch_assoc()) {
+                $result[] = new Vehiculo($fila['vin'], $fila['licensePlate'], $fila['model'], $fila['fuelType'], $fila['seatCount']);
+            }
+            $rs->free();
+        } else {
+            error_log($conn->error);
+        }
+
+        return $result;
     }
 
-    public function eliminar($id){
-        $sql = "DELETE FROM `mascarillas` WHERE `id`=:id ";
-
-        $resultado = $this->cn->prepare($sql);
-        
-        $_array = array(
-            ":id" =>  $id
-        );
-
-        if($resultado->execute($_array))
-            return true;
-
-        return false;
+    public static function listaVehiculos()
+    {
+        return self::getVehiculos();
     }
 
-    public function mostrar(){
-        $sql = "SELECT mascarillas.id, producto, descripcion,foto,precio,nombre,fecha,estado FROM mascarillas 
-        
-        INNER JOIN categorias
-        ON mascarillas.categoria_id = categorias.id ORDER BY mascarillas.id DESC
-        ";
-        
-        $resultado = $this->cn->prepare($sql);
-
-        if($resultado->execute())
-            return $resultado->fetchAll();
-
-        return false;
+    public static function buscaPor($model = null, $fuelType = null, $seatCount = null, $state = null)
+    {
+        return self::getVehiculos($model, $fuelType, $seatCount, $state);
     }
 
-    public function mostrarPorId($id){
-        
-        $sql = "SELECT * FROM `mascarillas` WHERE `id`=:id ";
-        
-        $resultado = $this->cn->prepare($sql);
-        $_array = array(
-            ":id" =>  $id
-        );
-
-        if($resultado->execute($_array))
-            return $resultado->fetch();
-
-        return false;
-    }
-
-
+    
 }

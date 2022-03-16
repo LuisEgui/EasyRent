@@ -3,6 +3,13 @@
 //Inicio del procesamiento
 session_start();
 
+function getVehiculos($model = null, $fuelType = null, $seatCount = null, $state = null)
+    {
+        $númargs = func_num_args();
+        echo "Número de argumentos: $númargs\n";
+    }
+
+    
 $tituloPagina = 'Formulario Vehiculo';
 $contenidoPrincipal = <<< EOS
 <form>
@@ -16,5 +23,7 @@ $contenidoPrincipal = <<< EOS
     </div>
 </form>
 EOS;
+
+$contenidoPrincipal .= getVehiculos(null, 4, 5, null);
 
 include 'includes/vistas/plantillas/plantilla.php';
