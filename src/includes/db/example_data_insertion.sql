@@ -30,7 +30,7 @@ values (
     640,
     'jpg',
     load_file('var/lib/mysql-files/6.jpg')
-  );
+  ); 
 
 -- View inserted data:
 select
