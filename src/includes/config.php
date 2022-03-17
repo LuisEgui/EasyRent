@@ -17,9 +17,7 @@ define('BD_PORT', '3306');
  */
 define('RAIZ_APP', __DIR__);
 define('RUTA_APP', '/sw-practices');
-define('RUTA_IMGS', RUTA_APP.'/img');
-define('RUTA_CSS', RUTA_APP.'/css');
-define('RUTA_JS', RUTA_APP.'/js');
+define('RUTA_IMGS', RUTA_APP.'/doc/web/images');
 
 /**
  * Configuración del soporte de UTF-8, localización (idioma y país) y zona horaria

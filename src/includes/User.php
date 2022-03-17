@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/BD.php';
+require_once __DIR__.'\BD.php';
 
 class User {
     private $id;
