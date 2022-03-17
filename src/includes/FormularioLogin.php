@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/Formulario.php';
-require_once __DIR__.'/Usuario.php';
+require_once __DIR__.'/User.php';
 
 class FormularioLogin extends Formulario
 {
