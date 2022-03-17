@@ -66,13 +66,13 @@ select *
 from EvidenceDamage;
 
 -- Insert example User row:
-insert into user(email, password, role, userImg)
+-- Password encrypted with BCrypt.
+-- Password: 1234
+insert into User(email, password, role)
 values (
     'luis@easyrent.com',
-    '$2y$10$cpQ2kCIToPB3GXxNvGq/Fuq/H2PFuK3/
-    UQDPrHgp9ZNyFcNWbQcq2',
-    'admin',
-    1
+    '$2a$12$JZERzQcCfpMaNOXVYtqy2.yTvyvIRlwd/TnygtYHaj20gBDaLW8OK',
+    'admin'
   );
 
 -- View inserted data:
