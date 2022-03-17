@@ -11,14 +11,36 @@ class Vehiculo{
     private $state;
 
     const AVAILABLE = 0;
-
     const UNAVAILABLE = 1;
-
     const RESERVED = 2;
 
-    const TYPES_STATE = [self::AVAILABLE => 'Diponible', self::UNAVAILABLE => '', self::RESERVED => ''];
+    const TYPES_STATE = [self::AVAILABLE => 'Disponible', self::UNAVAILABLE => 'No disponible', self::RESERVED => 'Reservado'];
 
-    //getLiteralSegunStateNumerico();
+    public static function getStringEnumState($enum){
+        if($enum < sizeof(self::TYPES_STATE) && $enum >= 0){
+            return self::TYPES_STATE[$enum];
+        }
+        else{
+            return null;
+        }
+    }
+
+    const DIESEL = 0;
+    const ELECTRIC-HYBRID = 1;
+    const ELECTRIC = 2;
+    const PETROL = 3;
+    const PLUG-IN-HYBRID = 4;
+
+    const TYPES_STATE = [self::DIESEL => 'Diesel', self::ELECTRIC-HYBRID => 'Hibrido', self::ELECTRIC => 'Electrico', self::PETROL => 'Gasolina', self::PLUG-IN-HYBRID => 'Hibrido enchufable'];
+
+    public static function getStringEnumState($enum){
+        if($enum < sizeof(self::TYPES_STATE) && $enum >= 0){
+            return self::TYPES_STATE[$enum];
+        }
+        else{
+            return null;
+        }
+    }
 
     public static function crea($vin, $licensePlate, $model, $fuelType, $seatCount)
     {

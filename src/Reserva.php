@@ -4,21 +4,30 @@ namespace ClaseReserva;
 
 class Reserva{
 	private $vehicle;
-    private $licensePlate;
-    private $model;
-    private $fuelType;
-    private $seatCount;
+    private $user;
     private $state;
+    private $pickupLocation;
+    private $returnLocation;
+    private $pickupTime;
+    private $returnTime;
+    private $price;
 
-    const AVAILABLE = 0;
+    const RESERVED = 0;
 
-    const UNAVAILABLE = 1;
+    const PENDING = 1;
 
-    const RESERVED = 2;
+    const CANCELLED = 2;
 
-    const TYPES_STATE = [self::AVAILABLE => 'Diponible', self::UNAVAILABLE => '', self::RESERVED => ''];
+    const TYPES_STATE = [self::RESERVED => 'Reservado', self::PENDING => 'Pendiente', self::CANCELLED => 'Cancelado'];
 
-    //getLiteralSegunStateNumerico();
+    public static function getStringEnumState($enum){
+        if($enum < sizeof(self::TYPES_STATE) && $enum >= 0){
+            return self::TYPES_STATE[$enum];
+        }
+        else{
+            return null;
+        }
+    }
 
     public static function crea($vin, $licensePlate, $model, $fuelType, $seatCount)
     {
