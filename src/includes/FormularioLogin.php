@@ -3,14 +3,13 @@
 require_once __DIR__.'/Formulario.php';
 require_once __DIR__.'/User.php';
 
-class FormularioLogin extends Formulario
-{
+class FormularioLogin extends Formulario {
+    
     public function __construct() {
         parent::__construct('formLogin', ['urlRedireccion' => 'index.php']);
     }
     
-    protected function generaCamposFormulario(&$datos)
-    {
+    protected function generaCamposFormulario(&$datos) {
         // Se reutiliza el email introducido previamente o se deja en blanco
         $email = $datos['email'] ?? '';
 
@@ -41,8 +40,7 @@ class FormularioLogin extends Formulario
         return $html;
     }
 
-    protected function procesaFormulario(&$datos)
-    {
+    protected function procesaFormulario(&$datos) {
         $this->errores = [];
         $email = trim($datos['email'] ?? '');
         $email = filter_var($email, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -67,8 +65,9 @@ class FormularioLogin extends Formulario
                 $_SESSION['login'] = true;
                 $_SESSION['email'] = $usuario->getEmail();
                 $_SESSION['esAdmin'] = $usuario->hasRole('admin');
-                echo '<p>Logged in!</p>';
+                $this->errores[] = "Logged in!";
             }
         }
     }
+    
 }
