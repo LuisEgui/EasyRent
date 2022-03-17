@@ -10,7 +10,7 @@ abstract class Utils
     {
         http_response_code($codigoRespuesta);
         $contenidoPrincipal = "<h1>{$mensajeError}</h1><p>{$explicacion}</p>";
-        require dirname(__DIR__).'/vistas/comun/layout.php';
+       // require dirname(__DIR__).'/vistas/comun/layout.php';
         exit();    
     }
     
