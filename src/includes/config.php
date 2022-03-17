@@ -10,6 +10,7 @@ define('BD_HOST', 'localhost');
 define('BD_NAME', 'easyrent_db');
 define('BD_USER', 'user');
 define('BD_PASS', '1234');
+define('BD_PORT', '3306');
 
 /**
  * Parámetros de configuración utilizados para generar las URLs y las rutas a ficheros en la aplicación
@@ -29,7 +30,7 @@ date_default_timezone_set('Europe/Madrid');
 
 // Inicializa la aplicación
 $app = Aplicacion::getInstance();
-$app->init(['host'=>BD_HOST, 'bd'=>BD_NAME, 'user'=>BD_USER, 'pass'=>BD_PASS]);
+$app->init(['host'=>BD_HOST, 'bd'=>BD_NAME, 'user'=>BD_USER, 'pass'=>BD_PASS, 'port'=>BD_PORT]);
 
 /**
  * @see http://php.net/manual/en/function.register-shutdown-function.php

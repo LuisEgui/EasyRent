@@ -119,14 +119,15 @@ class Aplicacion
 			$bdHost = $this->bdDatosConexion['host'];
 			$bdUser = $this->bdDatosConexion['user'];
 			$bdPass = $this->bdDatosConexion['pass'];
+			$bdPort = $this->bdDatosConexion['port'];
 			$bd = $this->bdDatosConexion['bd'];
 			
-			$conn = new mysqli($bdHost, $bdUser, $bdPass, $bd);
+			$conn = new mysqli($bdHost, $bdUser, $bdPass, $bd, $bdPort);
 			if ( $conn->connect_errno ) {
 				echo "Error de conexión a la BD ({$conn->connect_errno}):  {$conn->connect_error}";
 				exit();
 			}
-			if ( ! $conn->set_charset("utf8mb4")) {
+			if (!$conn->set_charset("utf8mb4")) {
 				echo "Error al configurar la BD ({$conn->errno}):  {$conn->error}";
 				exit();
 			}
