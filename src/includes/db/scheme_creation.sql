@@ -12,7 +12,7 @@ use easyrent_db;
 -- you have logged in with an admin user (root):
 create user if not exists 'user'@'localhost' 
     identified by '1234';
-grant all privileges on `easyrent_db`.* TO 'userdb'@'localhost';
+grant all privileges on `easyrent_db`.* TO 'user'@'localhost';
 
 -- Aux: show active users in the db:
 -- select user from mysql.user;
