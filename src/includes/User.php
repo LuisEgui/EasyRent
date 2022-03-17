@@ -2,8 +2,7 @@
 
 require_once __DIR__.'/BD.php';
 
-class User
-{
+class User {
     private $id;
     private $email;
     private $password;
@@ -29,28 +28,24 @@ class User
     }
 
     public function hasRole($role) {
-        if ($this->role == null)
-            self::loadRole($this);
-        
-        return $this->role;
+        return ($this->role === $role) ? true : false;
     }
 
     public static function findUserByEmail($email) {
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf("SELECT * FROM User U WHERE U.email='%s'", $conn->real_escape_string($email));
         $rs = $conn->query($query);
-        $result = false;
+        $user = false;
 
         if ($rs) {
-            $row = $rs->fetch_assoc();
-            if ($row) {
-                $result = new User($row['u_id'], $row['email'], $row['password'], $row['role']);
-            }
+            $row = $rs->fetch_assoc();  
+            if ($row)
+                $user = new User($row['u_id'], $row['email'], $row['password'], $row['role']);
             $rs->free();
-        } else {
+        } else
             error_log("Error BD ({$conn->errno}): {$conn->error}");
-        }
-        return $result;
+        
+        return $user;
     }
 
     public static function findUserById($idUser) {
@@ -73,15 +68,15 @@ class User
 
     public static function login($email, $password) {
         $user = self::findUserByEmail($email);
-
-        if ($user && $user->verifyPassword($password))
-            return user;
         
-        return false;
+        return ($user && $user->verifyPassword($password)) ? $user : false;
     }
 
     private static function hashPassword($password) {
-        return password_hash($password, PASSWORD_DEFAULT);
+        $options = [
+            'cost' => 12
+        ];
+        return password_hash($password, PASSWORD_BCRYPT, $options);
     }
 
     public function verifyPassword($password) {
@@ -148,9 +143,7 @@ class User
             return false;
         
         $conn = BD::getInstance()->getConexionBd();
-        $query = sprintf("delete from User U where U.u_id = %d"
-            , $idUser
-        );
+        $query = sprintf("delete from User U where U.u_id = %d", $idUser);
 
         if ( !$conn->query($query) ) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
@@ -161,8 +154,7 @@ class User
     }
 
     public function delete() {
-        if ($this->id !== null)
-            return self::deleteUser($this);
-        return false;
+        return ($this->id !== null) ? self::deleteUser($this) : false;
     }
+    
 }
