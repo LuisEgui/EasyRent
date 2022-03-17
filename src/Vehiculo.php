@@ -1,6 +1,6 @@
 <?php
 
-namespace FlejeMascarillas;
+namespace ClaseVehiculo;
 
 class Vehiculo{
 	private $vin;
@@ -16,9 +16,11 @@ class Vehiculo{
 
     const RESERVED = 2;
 
-    const TYPES_STATE = [self::AVAILABLE, self::UNAVAILABLE, self::RESERVED];
+    const TYPES_STATE = [self::AVAILABLE => 'Diponible', self::UNAVAILABLE => '', self::RESERVED => ''];
 
-    public static function crea($vin, $licensePlate, $model, $fuelType, $seatCount, $state)
+    //getLiteralSegunStateNumerico();
+
+    public static function crea($vin, $licensePlate, $model, $fuelType, $seatCount)
     {
         $vehiculo = new Vehiculo($vin, $licensePlate, $model, $fuelType, $seatCount, $state = self::AVAILABLE);
         return $vehiculo;
@@ -30,86 +32,46 @@ class Vehiculo{
         $this->model = $model;
         $this->fuelType = $fuelType;
         $this->seatCount = $seatCount;
-        if (!in_array($state, self::TYPES_STATE)) {
+        /*if (!array_key_exists($state, self::TYPES_STATE)) {
             throw new Exception("$state no es un tipo de acceso válido");
-        }
+        }*/
         $this->state = intval($state);
     }
 
-    private static function getVehiculos($vin = null, $licensePlate = null, $model = null, $fuelType = null, $seatCount = null, $state = null)
-    {
+    private static function getVehiculos($opciones = array())
+    { //puedo pasar 
         $result = [];
 
+        //real_escape_string() con TODOS los parametros q llegan desde opciones
         $conn = BD::getInstance()->getConexionBd();
+
         $query = 'SELECT * FROM Vehicle';
 
-        if($model !== null || $fuelType !== null || $seatCount !== null || $state !== null){
-            $query .= 'WHERE '
+        if(!empty($opciones)){
+            $query .= 'WHERE ';
+            $contadorFiltros = 0;
+            foreach ($opciones as $columna => $valor){
+                if($columna != null && $contadorFiltros == 0){
+                    $query .= $columna.' = '.$valor;
+                }
+                else if($columna != null && $contadorFiltros > 0){
+                    $query .= 'AND '.$columna.' = '.$valor;
+                }
+                $contadorFiltros++;
+            }
         }
 
-        $contadorFiltros = 0;
-
-        if ($vin !== null) {
-            $query .= sprintf('vin = %d', $vin);
-            $contadorFiltros++;
-        }
-        if ($licensePlate !== null) {
-            if($contadorFiltros > 0){
-                $query .= sprintf(' AND licensePlate = %s', $licensePlate); // a lo mejor la matrícula es un string
-            }
-            else{
-                $query .= sprintf('licensePlate = %s', $licensePlate);
-            }
-            $contadorFiltros++;
-        }
-        if ($model !== null) {
-            if($contadorFiltros > 0){
-                $query .= sprintf(' AND model = %d', $model);
-            }
-            else{
-                $query .= sprintf('model = %d', $model);
-            }
-            $contadorFiltros++;
-        }
-        if ($fuelType !== null) {
-            if($contadorFiltros > 0){
-                $query .= sprintf(' AND fuelType = %d', $fuelType);
-            }
-            else{
-                $query .= sprintf('fuelType = %d', $fuelType);
-            }
-            $contadorFiltros++;
-        }
-        if ($seatCount !== null) {
-            if($contadorFiltros > 0){
-                $query .= sprintf(' AND seatCount = %d', $seatCount);
-            }
-            else{
-                $query .= sprintf('seatCount = %d', $seatCount);
-            }
-            $contadorFiltros++;
-        }
-        if ($state !== null) {
-            if($contadorFiltros > 0){
-                $query .= sprintf(' AND state = %d', $state);
-            }
-            else{
-                $query .= sprintf('state = %d', $state);
-            }
-            $contadorFiltros++;
-        }
-        
         $rs = $conn->query($query);
         if ($rs) {
             while ($fila = $rs->fetch_assoc()) {
                 $result[] = new Vehiculo($fila['vin'], $fila['licensePlate'], $fila['model'], $fila['fuelType'], $fila['seatCount']);
-            }
+            } // para que puedo querer devolver este resultado??
             $rs->free();
         } else {
             error_log($conn->error);
         }
 
-        return $result;
+        return $result; 
     }
 
     public static function listaVehiculos()
@@ -117,7 +79,7 @@ class Vehiculo{
         return self::getVehiculos();
     }
 
-    public static function buscarPorVin($vin)
+    /*public static function buscarPorVin($vin)
     {
         return self::getVehiculos($vin);
     }
@@ -125,16 +87,11 @@ class Vehiculo{
     public static function buscarPorLicensePlate($licensePlate)
     {
         return self::getVehiculos(null, $licensePlate);
-    }
+    }*/
 
-    public static function buscaPorFiltros($model = null, $fuelType = null, $seatCount = null, $state = null)
+    public static function buscaPorFiltros($opciones = array())
     {
-        return self::getVehiculos(null, null, $model, $fuelType, $seatCount, $state);
-    }
-
-	public function registrar($_params){
-        $sql="INSERT INTO Vehicle (vin, licensePlate, model, fuelType, seatCount, state) 
-        VALUES ('$vin', '$licensePlate', '$model', '$fuelType', '$seatCount', '$state')";
+        return self::getVehiculos($opciones);
     }
 
     private static function inserta($vehiculo)
