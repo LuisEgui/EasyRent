@@ -7,6 +7,42 @@ abstract class Formulario
 {
 
     /**
+     * @var string Identificador único utilizado para &quot;id&quot; de la etiqueta &lt;form&gt; y para comprobar que se ha enviado el formulario.
+     */
+    protected $formId;
+
+    /**
+     * @var string Método HTTP utilizado para enviar el formulario.
+     */
+    protected $method;
+
+    /**
+     * @var string URL asociada al atributo "action" de la etiqueta &lt;form&gt; del fomrulario y que procesará el 
+     * envío del formulario.
+     */
+    protected $action;
+
+    /**
+     * @var string Valor del atributo "class" de la etiqueta &lt;form&gt; asociada al formulario. Si este parámetro incluye la cadena "nocsrf" no se generá el token CSRF para este formulario.
+     */
+    protected $classAtt;
+
+    /**
+     * @var string Valor del parámetro enctype del formulario.
+     */
+    protected $enctype;
+
+    /**
+     * @var string Url a la que redirigir en caso de que el formulario se procese exitosamente.
+     */
+    protected $urlRedireccion;
+
+    /**
+     * @param string[] Array con los mensajes de error de validación y/o procesamiento del formulario.
+     */
+    protected $errores;
+
+    /**
      * Genera la lista de mensajes de errores globales (no asociada a un campo) a incluir en el formulario.
      *
      * @param string[] $errores (opcional) Array con los mensajes de error de validación y/o procesamiento del formulario.
@@ -66,42 +102,6 @@ abstract class Formulario
         }
         return $erroresCampos;
     }
-
-    /**
-     * @var string Identificador único utilizado para &quot;id&quot; de la etiqueta &lt;form&gt; y para comprobar que se ha enviado el formulario.
-     */
-    protected $formId;
-
-    /**
-     * @var string Método HTTP utilizado para enviar el formulario.
-     */
-    protected $method;
-
-    /**
-     * @var string URL asociada al atributo "action" de la etiqueta &lt;form&gt; del fomrulario y que procesará el 
-     * envío del formulario.
-     */
-    protected $action;
-
-    /**
-     * @var string Valor del atributo "class" de la etiqueta &lt;form&gt; asociada al formulario. Si este parámetro incluye la cadena "nocsrf" no se generá el token CSRF para este formulario.
-     */
-    protected $classAtt;
-
-    /**
-     * @var string Valor del parámetro enctype del formulario.
-     */
-    protected $enctype;
-
-    /**
-     * @var string Url a la que redirigir en caso de que el formulario se procese exitosamente.
-     */
-    protected $urlRedireccion;
-
-    /**
-     * @param string[] Array con los mensajes de error de validación y/o procesamiento del formulario.
-     */
-    protected $errores;
 
     /**
      * Crea un nuevo formulario.
@@ -186,7 +186,6 @@ abstract class Formulario
      */
     public function gestiona()
     {
-        
         $datos = &$_POST;
         if (strcasecmp('GET', $this->method) == 0) {
             $datos = &$_GET;
