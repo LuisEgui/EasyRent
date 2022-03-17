@@ -6,4 +6,13 @@ create database if not exists easyrent_db
     collate utf8mb4_0900_ai_ci;
 
 -- Select the created database to be used 
-use easyrent_db; 
+use easyrent_db;
+
+-- Create a common user, before this statement make sure
+-- you have logged in with an admin user (root):
+create user if not exists 'user'@'localhost' 
+    identified by '1234';
+grant all privileges on `easyrent_db`.* TO 'userdb'@'localhost';
+
+-- Aux: show active users in the db:
+-- select user from mysql.user;
