@@ -130,7 +130,7 @@ class User {
     }
 
     public static function createUser($email, $password, $role) {
-        $user = new User($email, self::changePassword($password), $role);
+        $user = new User(null, $email, self::changePassword($password), $role);
         return $user->save();
     }
     
