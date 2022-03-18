@@ -1,5 +1,8 @@
 <?php
-
+//Mirar si las consultas sql estan bien
+//Mirar si los %d, %f, %s estan bien escritos
+//en el actualiza comprobar que la clave primaria esta bien, seguro que noç
+//la funcion borra como hacemos para identificar la reserva? 
 namespace ClaseReserva;
 
 class Reserva{
@@ -29,32 +32,32 @@ class Reserva{
         }
     }
 
-    public static function crea($vin, $licensePlate, $model, $fuelType, $seatCount)
+    public static function crea($vehicle, $user, $pickupLocation, $returnLocation, $pickupTime, $returnTime, $price)
     {
-        $vehiculo = new Vehiculo($vin, $licensePlate, $model, $fuelType, $seatCount, $state = self::AVAILABLE);
-        return $vehiculo;
+        $reserva = new Reserva($vehicle, $user, $pickupLocation, $returnLocation, $pickupTime, $returnTime, $price, self::PENDING);
+        return $reserva;
     }
 
-    public function __construct($vin, $licensePlate, $model, $fuelType, $seatCount, $state){
-        $this->vin = $vin;
-        $this->licensePlate = $licensePlate;
-        $this->model = $model;
-        $this->fuelType = $fuelType;
-        $this->seatCount = $seatCount;
-        /*if (!array_key_exists($state, self::TYPES_STATE)) {
-            throw new Exception("$state no es un tipo de acceso válido");
-        }*/
+    public function __construct($vehicle, $user, $pickupLocation, $returnLocation, $pickupTime, $returnTime, $price, $state){
+        //hay que asegurarse de que las variables enumeradas toman los valores permitidos y eso se hace antes de llamar a la funcion crea()
+        $this->vehicle = intval($vehicle);
+        $this->user = intval($user);
+        $this->pickupLocation = $pickupLocation;
+        $this->returnLocation = $returnLocation;
+        $this->pickupTime = $pickupTime;
+        $this->returnTime = $returnTime;
+        $this->price = floatval($price);
         $this->state = intval($state);
     }
 
-    private static function getVehiculos($opciones = array())
-    { //puedo pasar 
+    private static function getReservas($opciones = array())
+    {
         $result = [];
 
         //real_escape_string() con TODOS los parametros q llegan desde opciones
         $conn = BD::getInstance()->getConexionBd();
 
-        $query = 'SELECT * FROM Vehicle';
+        $query = 'SELECT * FROM Reserve'; 
 
         if(!empty($opciones)){
             $query .= 'WHERE ';
@@ -73,8 +76,8 @@ class Reserva{
         $rs = $conn->query($query);
         if ($rs) {
             while ($fila = $rs->fetch_assoc()) {
-                $result[] = new Vehiculo($fila['vin'], $fila['licensePlate'], $fila['model'], $fila['fuelType'], $fila['seatCount']);
-            } // para que puedo querer devolver este resultado??
+                $result[] = new Reserva($fila['vehicle'], $fila['user'], $fila['pickupLocation'], $fila['returnLocation'], $fila['pickupTime'], $fila['returnTime'], $fila['price'], $fila['state']);
+            } 
             $rs->free();
         } else {
             error_log($conn->error);
@@ -83,67 +86,56 @@ class Reserva{
         return $result; 
     }
 
-    public static function listaVehiculos()
+    public static function listaReservas()
     {
-        return self::getVehiculos();
+        return self::getReservas();
     }
-
-    /*public static function buscarPorVin($vin)
-    {
-        return self::getVehiculos($vin);
-    }
-
-    public static function buscarPorLicensePlate($licensePlate)
-    {
-        return self::getVehiculos(null, $licensePlate);
-    }*/
 
     public static function buscaPorFiltros($opciones = array())
     {
-        return self::getVehiculos($opciones);
+        return self::getReservas($opciones);
     }
 
-    private static function inserta($vehiculo)
+    private static function inserta($reserva)
     {
         $result = false;
-        $vehiculoInsertado = null;
 
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf(
-            "INSERT INTO Vehicle (vin, licensePlate, model, fuelType, seatCount, state) VALUES ('%d', '%s', '%d', %d, %d, %d)",
-            $vehiculo->vin, //y si son enteros, tb hay q pasarlos a string?
-            $conn->real_escape_string($vehiculo->licensePlate), 
-            $vehiculo->model,
-            $vehiculo->fuelType,
-            $conn->real_escape_string($vehiculo->seatCount),
-            $vehiculo->state,
-            //$imagen->tipoAcceso (enumerado) --> los enumerados se insertan así?
+            "INSERT INTO Reserve (vehicle, user, pickupLocation, returnLocation, pickupTime, returnTime, price, state) VALUES (%d, %d, '%s', '%s', '%s', '%s', %f, %d)",
+            $reserva->vehicle,
+            $conn->real_escape_string($reserva->pickupLocation), 
+            $conn->real_escape_string($reserva->returnLocation), 
+            $conn->real_escape_date($reserva->pickupTime), // duda en como insertar los datetime
+            $conn->real_escape_string($reserva->returnTime), 
+            $reserva->price,
+            $reserva->state,
         );
 
         $result = $conn->query($query);
-        if ($result) {
-            //$vehiculoInsertado = mysql_fetch_object($result, 'Vehiculo'); //esta funcion funciona como queremos, que devuelva el vehiculo insertado con todas sus características, y es útil eso q queremos hacer?
-            //quiero poner algo para comprobar que se ha insertado bienn
-        } else {
+        if (!$result) {
             error_log($conn->error);
+        } else if ($conn->affected_rows != 1) {
+            error_log(__CLASS__ . ": Se han insertado '$conn->affected_rows' !");
         }
-
-        return $vehiculoInsertado;
+        return $result;
     }
 
-    private static function actualiza($vehiculo)
+    private static function actualiza($reserva)
     {
         $result = false;
 
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf(
-            "UPDATE Vehicle SET licensePlate = '%s', model = '%d', fuelType = %d, seatCount = %d, state = %d WHERE vin = %d",
-            $conn->real_escape_string($vehiculo->licensePlate), 
-            $vehiculo->model,
-            $vehiculo->fuelType,
-            $conn->real_escape_string($vehiculo->seatCount),
-            $vehiculo->state,
-            $vehiculo->vin,
+            "UPDATE Reserve SET pickupLocation = '%s', returnLocation = '%s', returnTime = '%s', price = %f, state = %d WHERE vehicle = %d AND user = %d AND pickupTime = '%s'",
+            $conn->real_escape_string($reserva->pickupLocation), 
+            $conn->real_escape_string($reserva->returnLocation),
+            $conn->real_escape_string($reserva->returnTime), 
+            $reserva->price,
+            $reserva->state,
+            $reserva->vehicle,
+            $reserva->user, 
+            $conn->real_escape_string($reserva->pickupTime)
         );
         $result = $conn->query($query);
         if (!$result) {
@@ -151,28 +143,30 @@ class Reserva{
         } else if ($conn->affected_rows != 1) {
             error_log(__CLASS__ . ": Se han actualizado '$conn->affected_rows' !");
         }
-        // de que vale el error log??
         return $result;
     }
 
-    private static function borra($vehiculo)
+    private static function borra($reserva)
     {
-        return self::borraPorVin($vehiculo->vin);
+        return self::borraPorClavePrimaria($reserva);
     }
 
-    private static function borraPorVin($vinVehiculo)
+    private static function borraPorCalvePrimaria($reserva)
     {
         $result = false;
 
         $conn = BD::getInstance()->getConexionBd();
-        $query = sprintf("DELETE FROM Vehicle WHERE vin = %d", intval($vinVehiculo));
+        $query = sprintf("DELETE FROM Vehicle WHERE vehicle = %d AND user = %d AND pickupTime = '%s'",
+        $reserva->vehicle,
+        $reserva->user, 
+        $conn->real_escape_string($reserva->pickupTime)
+    );
         $result = $conn->query($query);
         if (!$result) {
             error_log($conn->error);
         } else if ($conn->affected_rows != 1) {
-            error_log("Se han borrado '$conn->affected_rows' !");
+            error_log(__CLASS__ . ": Se han borrado '$conn->affected_rows' !");
         }
-
         return $result;
     }
 }
