@@ -32,7 +32,7 @@ class FormularioRegistroUsuario extends Formulario {
                 <input id="password" type="password" name="password" />
                 {$erroresCampos['password']}
             </div>
-            <di>
+            <div>
                 <label for="role">Role:</label>
                 <input id="role" type="text" name="role" />
                 {$erroresCampos['role']}
