@@ -98,16 +98,6 @@ class Vehiculo{
         return $result; 
     }
 
-    /*public static function buscarPorVin($vin)
-    {
-        return self::getVehiculos($vin);
-    }
-
-    public static function buscarPorLicensePlate($licensePlate)
-    {
-        return self::getVehiculos(null, $licensePlate);
-    }*/
-
     public static function buscaPorFiltros($opciones = array())
     {
         return self::getVehiculos($opciones);
@@ -157,7 +147,6 @@ class Vehiculo{
         } else if ($conn->affected_rows != 1) {
             error_log(__CLASS__ . ": Se han actualizado '$conn->affected_rows' !");
         }
-        // de que vale el error log??
         return $result;
     }
 
@@ -180,5 +169,51 @@ class Vehiculo{
         }
 
         return $result;
+    }
+
+    public function getVin()
+    {
+        return $this->vin;
+    }
+    public function getLicensePlate()
+    {
+        return $this->licensePlate;
+    }
+    public function getModel()
+    {
+        return $this->model;
+    }
+    public function getFuelType()
+    {
+        return $this->fuelType;
+    }
+    public function getSeatCount()
+    {
+        return $this->seatCount;
+    }
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setLicensePlate($licPlate)
+    {
+        $this->licensePlate = $licPlate;
+    }
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+    public function setFuelType($fuelT)
+    {
+        $this->fuelType = $fuelT;
+    }
+    public function setSeatCount($seatC)
+    {
+        $this->seatCount = $seatC;
+    }
+    public function setState($state)
+    {
+        $this->state = $state;
     }
 }

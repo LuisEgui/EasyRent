@@ -1,8 +1,5 @@
 <?php
-//Mirar si las consultas sql estan bien
-//Mirar si los %d, %f, %s estan bien escritos
-//en el actualiza comprobar que la clave primaria esta bien, seguro que noç
-//la funcion borra como hacemos para identificar la reserva? 
+
 namespace ClaseReserva;
 
 class Reserva{
@@ -181,5 +178,61 @@ class Reserva{
             error_log(__CLASS__ . ": Se han borrado '$conn->affected_rows' !");
         }
         return $result;
+    }
+
+
+    private $state;
+    private $pickupLocation;
+    private $returnLocation;
+    private $returnTime;
+    private $price;
+    public function getVehicle()
+    {
+        return $this->vehicle;
+    }
+    public function getUser()
+    {
+        return $this->user;
+    }
+    public function getState()
+    {
+        return $this->state;
+    }
+    public function getPickupLocation()
+    {
+        return $this->pickupLocation;
+    }
+    public function getReturnLocation()
+    {
+        return $this->returnLocation;
+    }
+    public function getReturnTime()
+    {
+        return $this->returnTime;
+    }
+    public function getPrice())
+    {
+        return $this->price;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+    public function setPickupLocation($pickupLocation)
+    {
+        $this->pickupLocation = $pickupLocation;
+    }
+    public function setReturnLocation($returnLocation)
+    {
+        $this->returnLocation = $returnLocation;
+    }
+    public function setReturnTime($returnTime)
+    {
+        $this->returnTime = $returnTime;
+    }
+    public function setPrice($price)
+    {
+        $this->price = $price;
     }
 }
