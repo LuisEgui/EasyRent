@@ -6,6 +6,8 @@
 namespace ClaseReserva;
 
 class Reserva{
+    use MagicProperties;
+
 	private $vehicle;
     private $user;
     private $state;
@@ -54,12 +56,23 @@ class Reserva{
     {
         $result = [];
 
-        //real_escape_string() con TODOS los parametros q llegan desde opciones
         $conn = BD::getInstance()->getConexionBd();
 
         $query = 'SELECT * FROM Reserve'; 
 
         if(!empty($opciones)){
+            if($array_key_exists('pickupLocation', $opciones)){
+                $opciones['pickupLocation'] = $conn->real_escape_string($opciones['pickupLocation']);
+            }
+            if($array_key_exists('returnLocation', $opciones)){
+                $opciones['returnLocation'] = $conn->real_escape_string($opciones['returnLocation']);
+            }
+            if($array_key_exists('pickupTime', $opciones)){
+                $opciones['pickupTime'] = $conn->real_escape_string($opciones['pickupTime']);
+            }
+            if($array_key_exists('returnTime', $opciones)){
+                $opciones['returnTime'] = $conn->real_escape_string($opciones['returnTime']);
+            }
             $query .= 'WHERE ';
             $contadorFiltros = 0;
             foreach ($opciones as $columna => $valor){

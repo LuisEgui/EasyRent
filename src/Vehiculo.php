@@ -3,6 +3,8 @@
 namespace ClaseVehiculo;
 
 class Vehiculo{
+    use MagicProperties;
+
 	private $vin;
     private $licensePlate;
     private $model;
@@ -59,7 +61,7 @@ class Vehiculo{
     }
 
     private static function getVehiculos($opciones = array())
-    { //puedo pasar 
+    { 
         $result = [];
         
         $conn = BD::getInstance()->getConexionBd();
@@ -67,14 +69,16 @@ class Vehiculo{
         $query = 'SELECT * FROM Vehicle';
 
         if(!empty($opciones)){
-            if($array_key_exists($key, $opciones))
+            if($array_key_exists('licensePlate', $opciones)){
+                $opciones['licensePlate'] = $conn->real_escape_string($opciones['licensePlate']);
+            }
             $query .= 'WHERE ';
             $contadorFiltros = 0;
             foreach ($opciones as $columna => $valor){
-                if($columna != null && $contadorFiltros == 0){
+                if($contadorFiltros == 0){
                     $query .= $columna.' = '.$valor;
                 }
-                else if($columna != null && $contadorFiltros > 0){
+                else if($contadorFiltros > 0){
                     $query .= 'AND '.$columna.' = '.$valor;
                 }
                 $contadorFiltros++;
@@ -115,23 +119,22 @@ class Vehiculo{
 
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf(
-            "INSERT INTO Vehicle (vin, licensePlate, model, fuelType, seatCount, state) VALUES ('%d', '%s', '%d', %d, %d, %d)",
+            "INSERT INTO Vehicle (vin, licensePlate, model, fuelType, seatCount, state) VALUES (%d, '%s', %d, %d, %d, %d)",
             $vehiculo->vin,
             $conn->real_escape_string($vehiculo->licensePlate), 
             $vehiculo->model,
             $vehiculo->fuelType,
-            $conn->real_escape_string($vehiculo->seatCount),
+            $vehiculo->seatCount,
             $vehiculo->state
         );
 
         $result = $conn->query($query);
-        if ($result) {
-            error_log("Se han insertado '$conn->affected_rows' !");
-        } else {
+        if (!$result) {
             error_log($conn->error);
+        } else if ($conn->affected_rows != 1) {
+            error_log(__CLASS__ . ": Se han insertado '$conn->affected_rows' !");
         }
-
-        return $vehiculoInsertado;
+        return $result;
     }
 
     private static function actualiza($vehiculo)
@@ -140,11 +143,11 @@ class Vehiculo{
 
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf(
-            "UPDATE Vehicle SET licensePlate = '%s', model = '%d', fuelType = '%d', seatCount = '%d', state = '%d' WHERE vin = %d",
+            "UPDATE Vehicle SET licensePlate = '%s', model = %d, fuelType = %d, seatCount = %d, state = %d WHERE vin = %d",
             $conn->real_escape_string($vehiculo->licensePlate), 
             $vehiculo->model,
             $vehiculo->fuelType,
-            $conn->real_escape_string($vehiculo->seatCount),
+            $vehiculo->seatCount,
             $vehiculo->state,
             $vehiculo->vin,
         );
@@ -173,7 +176,7 @@ class Vehiculo{
         if (!$result) {
             error_log($conn->error);
         } else if ($conn->affected_rows != 1) {
-            error_log("Se han borrado '$conn->affected_rows' !");
+            error_log(__CLASS__ . ": Se han borrado '$conn->affected_rows' !");
         }
 
         return $result;
