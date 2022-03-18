@@ -65,7 +65,7 @@ class FormularioLogin extends Formulario {
                 $_SESSION['login'] = true;
                 $_SESSION['email'] = $usuario->getEmail();
                 $_SESSION['esAdmin'] = $usuario->hasRole('admin');
-                $this->errores[] = "Logged in!";
+                header("Location: {$this->urlRedireccion}");
             }
         }
     }
