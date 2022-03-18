@@ -12,21 +12,18 @@ create table
   );
 
 -- Aux: check Model fields
-describe Model;
+-- describe Model;
 
 -- Image table creation
 create table
   Image (
     img_id serial primary key,
     absoluteUrl varchar(512) not null,
-    height integer not null,
-    width integer not null,
-    mimeType enum('jpg', 'png') not null,
-    imgBlob blob not null
+    mimeType enum('jpg', 'png') not null
   );
 
 -- Aux: check Image fields
-describe Image;
+-- describe Image;
 
 -- Vehicle table creation
 create table
@@ -44,7 +41,7 @@ create table
   );
 
 -- Aux: check Vehicle fields
-describe Vehicle;
+-- describe Vehicle;
 
 -- Damage table creation
 create table
@@ -72,14 +69,14 @@ create table
   );
 
 -- Aux: check Damage fields:
-describe Damage;
+-- describe Damage;
 
 -- EvidenceDamage table creation
 create table
   EvidenceDamage (damage bigint not null, image bigint not null, primary key (damage, image));
 
 -- Aux: check EvidenceDamage fields:
-describe EvidenceDamage;
+-- describe EvidenceDamage;
 
 -- User table creation
 create table
@@ -96,7 +93,7 @@ create table
   );
 
 -- Aux: check EvidenceDamage fields:
-describe User;
+-- describe User;
 
 -- Reserve table creation
 create table
@@ -116,4 +113,4 @@ create table
   );
 
 -- Aux: check Reserve fields:
-describe Reserve;
+-- describe Reserve;
