@@ -9,5 +9,6 @@
 <body>
     <p> <a href="login.php">Login</p>
     <p> <a href="logout.php">Logout</p>
+    <p> <a href="register_user.php">Registrarse</p>
 </body>
 </html>
