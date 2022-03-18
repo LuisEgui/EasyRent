@@ -8,5 +8,6 @@
 </head>
 <body>
     <p> <a href="login.php">Login</p>
+    <p> <a href="logout.php">Logout</p>
 </body>
 </html>
