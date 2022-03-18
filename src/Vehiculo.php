@@ -1,9 +1,9 @@
 <?php
 
-namespace ClaseVehiculo;
+//namespace ClaseVehiculo;
 
 class Vehiculo{
-    use MagicProperties;
+    //use MagicProperties;
 
 	private $vin;
     private $licensePlate;
@@ -28,12 +28,12 @@ class Vehiculo{
     }
 
     const DIESEL = 0;
-    const ELECTRIC-HYBRID = 1;
+    const ELECTRIC_HYBRID = 1;
     const ELECTRIC = 2;
     const PETROL = 3;
-    const PLUG-IN-HYBRID = 4;
+    const PLUG_IN_HYBRID = 4;
 
-    const TYPES_STATE = [self::DIESEL => 'Diesel', self::ELECTRIC-HYBRID => 'Hibrido', self::ELECTRIC => 'Electrico', self::PETROL => 'Gasolina', self::PLUG-IN-HYBRID => 'Hibrido enchufable'];
+    /*const TYPES_STATE = [ 'Diesel' => self::DIESEL, self::ELECTRIC_HYBRID => 'Hibrido', self::ELECTRIC => 'Electrico', self::PETROL => 'Gasolina', self::PLUG_IN_HYBRID => 'Hibrido enchufable'];
 
     public static function getStringEnumState($enum){
         if($enum < sizeof(self::TYPES_STATE) && $enum >= 0){
@@ -42,7 +42,7 @@ class Vehiculo{
         else{
             return null;
         }
-    }
+    }*/
 
     public static function crea($vin, $licensePlate, $model, $fuelType, $seatCount)
     {
@@ -55,9 +55,9 @@ class Vehiculo{
         $this->vin = intval($vin);
         $this->licensePlate = $licensePlate;
         $this->model = intval($model);
-        $this->fuelType = intval($fuelType);
+        $this->fuelType = $fuelType;
         $this->seatCount = intval($seatCount);
-        $this->state = intval($state);
+        $this->state = $state;
     }
 
     private static function getVehiculos($opciones = array())
@@ -88,7 +88,7 @@ class Vehiculo{
         $rs = $conn->query($query);
         if ($rs) {
             while ($fila = $rs->fetch_assoc()) {
-                $result[] = new Vehiculo($fila['vin'], $fila['licensePlate'], $fila['model'], $fila['fuelType'], $fila['seatCount']);
+                $result[] = new Vehiculo($fila['vin'], $fila['licensePlate'], $fila['model'], $fila['fuelType'], $fila['seatCount'], $fila['state']);
             }
             $rs->free();
         } else {
@@ -109,13 +109,12 @@ class Vehiculo{
 
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf(
-            "INSERT INTO Vehicle (vin, licensePlate, model, fuelType, seatCount, state) VALUES (%d, '%s', %d, %d, %d, %d)",
+            "INSERT INTO Vehicle (vin, licensePlate, model, fuelType, seatCount) VALUES (%d, '%s', %d, %d, %d)",
             $vehiculo->vin,
             $conn->real_escape_string($vehiculo->licensePlate), 
             $vehiculo->model,
             $vehiculo->fuelType,
-            $vehiculo->seatCount,
-            $vehiculo->state
+            $vehiculo->seatCount
         );
 
         $result = $conn->query($query);
