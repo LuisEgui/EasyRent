@@ -103,7 +103,7 @@ class User {
             return $result;
         } else
             return false;        
-    }    
+    } 
     
     private static function update($user) {
         $result = false;
@@ -137,6 +137,29 @@ class User {
     public static function createUser($email, $password, $role) {
         $user = new User(null, $email, self::hashPassword($password), $role);
         return $user->save();
+    }
+
+    public static function updateUser($user, $newPassword) {
+        $auxUser = User::findUserByEmail($user->getEmail());
+
+        if($auxUser) {
+            $conn = BD::getInstance()->getConexionBd();
+            $hashedPassword = self::hashPassword($newPassword);
+            $query=sprintf("update User U set email = '%s', password='%s', role='%s' where U.u_id=%d"
+            , $conn->real_escape_string($user->email)
+            , $conn->real_escape_string($hashedPassword)
+            , $conn->real_escape_string($user->role)
+            , $user->id
+            );
+
+            $result = $conn->query($query);
+
+            if (!$result)
+                error_log("Error BD ({$conn->errno}): {$conn->error}");
+        
+        return $result;
+        } else
+            return false;
     }
     
     private static function deleteUser($user) {

@@ -10,5 +10,6 @@
     <p> <a href="login.php">Login</p>
     <p> <a href="logout.php">Logout</p>
     <p> <a href="register_user.php">Registrarse</p>
+    <p> <a href="change_user_password.php">Modificar contraseña</p>
 </body>
 </html>
