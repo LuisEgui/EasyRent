@@ -1,14 +1,59 @@
 <?php
 function mostrarSaludo() {
 	if (isset($_SESSION['login']) && ($_SESSION['login']===true)) {
-		return "Bienvenido, {$_SESSION['nombre']} <a href='logout.php'>(salir)</a>";
+		return "Bienvenido, {$_SESSION['email']} <a href='logout.php'>(salir)</a>";
 		
 	} else {
 		return "Usuario desconocido. <a href='login.php'>Login</a> <a href='registro.php'>Registro</a>";
 	}
 }
 ?>
+<?php
+function mostrarMenu() {
+	$rutaApp = RUTA_APP;
+	$html='';
+	if (isset($_SESSION["login"]) && ($_SESSION["login"]===true) && ($_SESSION['esAdmin']==true)) {
+		return "<a href='{$rutaApp}/src/index.php'>Inicio</a>
+				<a href='{$rutaApp}/src/admin.php'>Administrar</a>
+				<a href='{$rutaApp}/src/perfil.php'>Tu perfil</a>
+				<a href='{$rutaApp}/src/foro.php'>Foro</a>
+				<a href='{$rutaApp}/src/logout.php'>Cerrar sesion</a>";
+	}
+	else if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
+		return "<a href='{$rutaApp}/src/index.php'>Inicio</a>
+				<a href='{$rutaApp}/src/incidente.php'>Generar Incidente</a>
+				<a href='{$rutaApp}/src/promociones.php'>Tus promociones</a>
+				<a href='{$rutaApp}/src/perfil.php'>Tu perfil</a>
+				<a href='{$rutaApp}/src/foro.php'>Foro</a>
+				<a href='{$rutaApp}/src/logout.php'>Cerrar sesion</a>";
+	} else {
+		return "<a href='{$rutaApp}/src/index.php'>Inicio</a>
+				<a href='{$rutaApp}/src/registro.php'>Registrarse</a>
+				<a href='{$rutaApp}/src/foro.php'>Foro</a>
+				<a href='{$rutaApp}/src/Contacto.php'>Contacto</a>";
+	}
+	return $html;
+}
+?>
 <header>
-	<h1>Mi gran página web</h1>
-	<div class="saludo"><?= mostrarSaludo(); ?></div>
+	
+	<div class="navegador">
+		<div class="logo"  style="position: relative;"><img src="<?= RUTA_IMGS ?>/logo_easyRent.png" width="135" height="75" /></div>
+	  
+		<div class="dropdown">
+		<button class="dropbtn" style="float:left">Menu</button>
+		<div class="dropdown-content">
+			<?= mostrarMenu() ?>
+		</div>
+		</div>
+		
+		<div class="saludo" ><?= mostrarSaludo(); ?></div>
+	
+	</div>
+	
 </header>
+
+
+
+
+
