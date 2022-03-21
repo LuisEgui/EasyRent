@@ -1,191 +1,309 @@
 body {
-	background-color: #CDCDCD;
+  background-color: #cdcdcd;
 }
 
 div#contenedor {
-	width: 900px;
-	margin: auto;
-	border: 1px solid black;
-	background-color: #aaaaaa;
-	margin-top: 30px;
+  width: 900px;
+  margin: auto;
+  border: 1px solid black;
+  background-color: #aaaaaa;
+  margin-top: 30px;
+}
+
+div.buscadorVehiculo {
+  text-align: center;
+  margin: auto;
+  width: 60%;
+  border: 3px solid #303030;
+  padding: 10px;
+}
+
+div.promociones {
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+}
+
+div.v {
+  margin: 20px;
+  padding: 10px;
+}
+
+div.v h2 {
+  text-align: center;
+}
+
+div#info {
+  margin: auto;
+  border: 3px solid #303030;
+  padding: 10px;
+}
+
+div#promo {
+  float: left;
+  margin: 10px;
+  width: 20%;
+  height: 20%;
+  border: 3px solid #303030;
+  padding: 10px;
+}
+
+div.vehiculos {
+  display: flex;
+  justify-content: center;
+}
+
+div#vehiculo {
+  margin: 10px;
+  width: 50%;
+  border: 3px solid #303030;
+  padding: 10px;
+  text-align: center;
+}
+
+div#fechas {
+  display: flex; /* 2. display flex to the rescue */
+  align-items: center;
+  justify-content: center;
 }
 
 header {
-	padding: 30px;
-	height: 100px;
-	background-color: #303030;
-	color: white;
+  padding: 30px;
+  height: 100px;
+  background-color: #303030;
+  color: white;
 }
 
-header a, header a:visited {
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-} 
+header a,
+header a:visited {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
 
 header a:hover {
-	color: red;
-	font-weight: bold;
-	text-decoration: underline;
-} 
-
-
-nav {
-	padding: 10px;
-	float: left;
-	width: 170px;
-	height: 400px;
-	background-color: #dddddd;
+  color: red;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
-nav a, nav a:visited {
-	color: red;
-	font-weight: bold;
-	text-decoration: none;
-} 
+nav {
+  padding: 10px;
+  float: left;
+  width: 170px;
+  height: 400px;
+  background-color: #dddddd;
+}
+
+nav a,
+nav a:visited {
+  color: red;
+  font-weight: bold;
+  text-decoration: none;
+}
 
 nav a:hover {
-	color: red;
-	text-decoration: underline;
-} 
-
+  color: red;
+  text-decoration: underline;
+}
 
 aside {
-	padding: 10px;
-	float: right;
-	width: 170px;
-	height: 400px;
-	background-color: #dddddd;
+  padding: 10px;
+  float: right;
+  width: 170px;
+  height: 400px;
+  background-color: #dddddd;
 }
 
 main {
-	padding: 10px;
-	float: left;
-	min-height: 600px;
-	width: 500px;
-	background-color: white;
+  padding: 10px;
+  min-height: 600px;
+  width: auto;
+  background-color: white;
 }
 
 footer {
-	clear: both;
-	padding: 20px;
-	background-color: #303030;
-	color: white;
-	text-align: center;
+  clear: both;
+  padding: 20px;
+  background-color: #303030;
+  color: white;
+  text-align: center;
+}
+
+footer a,
+footer a:visited {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: red;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 div.saludo {
-	width: 100%;
-	text-align: right;
+  width: 100%;
+  text-align: right;
+}
+
+button.dropbtn {
+  background-color: #303030;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+div.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+div.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+div.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+div.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+div.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+div.dropdown:hover .dropbtn {
+  background-color: white;
 }
 
 fieldset {
-	border: 1px solid black;
-	margin: auto;
+  border: 1px solid black;
+  margin: auto;
 }
 
 fieldset div {
-	justify-content: center;
-	margin: 5px auto;
+  justify-content: center;
+  margin: 5px auto;
 }
 
 legend {
-	color: #fff;
-	background: #303030;
-	border: 1px solid black;
-	padding: 2px 6px;
-} 
+  color: #fff;
+  background: #303030;
+  border: 1px solid black;
+  padding: 2px 6px;
+}
 
 label {
-	margin-right: 0.5em;
-	display: block;
+  margin-right: 0.5em;
+  display: block;
 }
 
 input {
-	display: block;
+  display: block;
 }
 
 .form-field-error {
-	display: block;
+  display: block;
 }
 
 .mensajes {
-	position: fixed;
-	width: 100%;
-  }
-  
+  position: fixed;
+  width: 100%;
+}
+
 .mensaje {
-	border: 2px solid black;
-	border-radius: 5px;
-	width: 30%;
-	margin: 0.2em auto;
-	background-color: #b0f5f1;
+  border: 2px solid black;
+  border-radius: 5px;
+  width: 30%;
+  margin: 0.2em auto;
+  background-color: white;
 }
 
 .mensajes input {
-	display: none;
+  display: none;
 }
 
 .mensaje .cabecera {
-	font-size: 2em;
-	line-height: 0.7em;
-	text-align: right;
-	padding: 0 0.1em;
+  font-size: 2em;
+  line-height: 0.7em;
+  text-align: right;
+  padding: 0 0.1em;
 }
 
 .mensaje .contenido {
-	padding: 0.2em 1em;
-	text-align: center;
+  padding: 0.2em 1em;
+  text-align: center;
 }
 
 .mensajes input:checked + .mensaje {
-	display: none;
+  display: none;
+}
+
+form#inrow {
+  display: flex; /* 2. display flex to the rescue */
+  flex-direction: row;
 }
 
 form.inline {
-	display: inline;
+  display: inline;
 }
 
-form button.enlace, form button.enlace:visited {
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-	background-color: inherit;
-	border: none;
+form button.enlace,
+form button.enlace:visited {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: inherit;
+  border: none;
 }
 
 form button.enlace:hover {
-	color: red;
-	font-weight: bold;
-	text-decoration: underline;
+  color: red;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
-button, a.boton {
-	border: 1px solid black;
-	font-size: 0.9em;
-	font-family: Arial;
-	font-weight: 400;
+button,
+a.boton {
+  border: 1px solid black;
+  font-size: 0.9em;
+  font-family: Arial;
+  font-weight: 400;
 }
 
 a.boton {
-	color: inherit;
-	text-decoration: none;
-	background-color: rgb(239, 239, 239);
-	padding: 1px 6px;
-	margin: 1px 5px;
+  color: inherit;
+  text-decoration: none;
+  background-color: rgb(239, 239, 239);
+  padding: 1px 6px;
+  margin: 1px 5px;
 }
 
-button, a.boton {
-	border: 1px solid black;
-	font-size: 0.9em;
-	font-family: Arial;
-	font-weight: 400;
+button,
+a.boton {
+  border: 1px solid black;
+  font-size: 0.9em;
+  font-family: Arial;
+  font-weight: 400;
 }
 
 .inline {
-	display: inline;
+  display: inline;
 }
 
 a.deshabilitado {
-	color: rgba(16, 16, 16, 0.3);
+  color: rgba(16, 16, 16, 0.3);
 }
