@@ -1,12 +1,12 @@
 <?php
 
 require_once __DIR__.'\Formulario.php';
-require_once __DIR__.'\User.php';
+require_once __DIR__.'\Vehiculo.php';
 
 class FormularioVehiculo extends Formulario {
     
     public function __construct() {
-        parent::__construct('formVehiculo', ['urlRedireccion' => 'index.php']);
+        parent::__construct('formVehiculo', ['urlRedireccion' => 'annadido.php']);
     }
     
     protected function generaCamposFormulario(&$datos) {
@@ -115,4 +115,3 @@ class FormularioVehiculo extends Formulario {
         }
     }
 }
-
