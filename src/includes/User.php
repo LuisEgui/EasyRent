@@ -84,21 +84,26 @@ class User {
     }
    
     private static function insertUser($user) {
-        $result = false;
-        $conn = BD::getInstance()->getConexionBd();
-        $query= sprintf("insert into User(email, password, role) VALUES ('%s', '%s', '%s')"
-            , $conn->real_escape_string($user->email)
-            , $conn->real_escape_string($user->password)
-            , $conn->real_escape_string($user->role)
-        );
+        $auxUser = User::findUserByEmail($user->getEmail());
 
-        if ( ($result = $conn->query($query)) )
-            $user->id = $conn->insert_id;
-        else
-            error_log("Error BD ({$conn->errno}): {$conn->error}");
-        
-        return $result;
-    }    
+        if(!$auxUser) {
+            $result = false;
+            $conn = BD::getInstance()->getConexionBd();
+            $query= sprintf("insert into User(email, password, role) VALUES ('%s', '%s', '%s')"
+                , $conn->real_escape_string($user->email)
+                , $conn->real_escape_string($user->password)
+                , $conn->real_escape_string($user->role)
+            );
+
+            if ( ($result = $conn->query($query)) )
+                $user->id = $conn->insert_id;
+            else
+                error_log("Error BD ({$conn->errno}): {$conn->error}");
+            
+            return $result;
+        } else
+            return false;        
+    } 
     
     private static function update($user) {
         $result = false;
@@ -130,8 +135,31 @@ class User {
     }
 
     public static function createUser($email, $password, $role) {
-        $user = new User(null, $email, self::changePassword($password), $role);
+        $user = new User(null, $email, self::hashPassword($password), $role);
         return $user->save();
+    }
+
+    public static function updateUser($user, $newPassword) {
+        $auxUser = User::findUserByEmail($user->getEmail());
+
+        if($auxUser) {
+            $conn = BD::getInstance()->getConexionBd();
+            $hashedPassword = self::hashPassword($newPassword);
+            $query=sprintf("update User U set email = '%s', password='%s', role='%s' where U.u_id=%d"
+            , $conn->real_escape_string($user->email)
+            , $conn->real_escape_string($hashedPassword)
+            , $conn->real_escape_string($user->role)
+            , $user->id
+            );
+
+            $result = $conn->query($query);
+
+            if (!$result)
+                error_log("Error BD ({$conn->errno}): {$conn->error}");
+        
+        return $result;
+        } else
+            return false;
     }
     
     private static function deleteUser($user) {
