@@ -1,6 +1,9 @@
 <?php
 
+//namespace ClaseVehiculo;
+
 class Vehiculo{
+    //use MagicProperties;
 
 	private $vin;
     private $licensePlate;

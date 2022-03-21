@@ -99,7 +99,8 @@ class Aplicacion
 	/**
 	 * Comprueba si la aplicación está inicializada. Si no lo está muestra un mensaje y termina la ejecución.
 	 */
-	private function compruebaInstanciaInicializada() {
+	private function compruebaInstanciaInicializada()
+	{
 	    if (! $this->inicializada ) {
 	        echo "Aplicacion no inicializa";
 	        exit();
