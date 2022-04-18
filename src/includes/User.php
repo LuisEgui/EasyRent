@@ -1,5 +1,5 @@
 <?php
-  
+
 /**
  * Class for user entity.
  */

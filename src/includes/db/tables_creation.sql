@@ -19,6 +19,8 @@ create table
   Image (
     img_id serial primary key,
     absoluteUrl varchar(512) not null,
+    height bigint not null,
+    width bigint not null,
     mimeType enum('jpg', 'png') not null
   );
 
@@ -29,7 +31,7 @@ create table
 create table
   Vehicle (
     vin mediumint primary key,
-    licensePlate varchar(10) not null,
+    licensePlate varchar(10) unique not null,
     model bigint unsigned,
     vehicleImg bigint unsigned,
     fuelType enum ('diesel', 'electric-hybrid', 'electric', 'petrol', 'plug-in-hybrid') not null,
