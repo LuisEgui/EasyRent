@@ -8,39 +8,6 @@ values ('Audi', 'S8', '5.2 V10 FSI', 'automatic', 'sedan');
 select *
 from Model;
 
--- Insert example image row:
--- We check the file directory to upload the images in our system
-select @@secure_file_priv;
-
--- In Windows:
-insert into Image(absoluteUrl, height, width, mimeType, imgBlob)
-values (
-    'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/6.jpg',
-    960,
-    640,
-    'jpg',
-    load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/6.jpg')
-  );
-
--- In Linux:
-insert into Image(absoluteUrl, height, width, mimeType, imgBlob)
-values (
-    'var/lib/mysql-files/6.jpg',
-    960,
-    640,
-    'jpg',
-    load_file('var/lib/mysql-files/6.jpg')
-  ); 
-
--- View inserted data:
-select
-  img_id,
-  absoluteUrl,
-  height,
-  width,
-  mimeType
-from Image;
-
 -- Insert example Vehicle row:
 insert into Vehicle(vin, licensePlate, model, fuelType, seatCount, vehicleImg)
 values (123456, 'X-XX-1234', 1, 'petrol', '5', 1);

@@ -18,8 +18,8 @@ create table
 create table
   Image (
     img_id serial primary key,
-    absoluteUrl varchar(512) not null,
-    mimeType enum('jpg', 'png') not null
+    path varchar(256) not null,
+    mimeType enum('image/jpeg','image/jpg','image/png') not null
   );
 
 -- Aux: check Image fields
