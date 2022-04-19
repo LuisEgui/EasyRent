@@ -18,8 +18,8 @@ create table
 create table
   Image (
     img_id serial primary key,
-    absoluteUrl varchar(512) not null,
-    mimeType enum('jpg', 'png') not null
+    path varchar(256) not null,
+    mimeType enum('image/jpeg','image/jpg','image/png') not null
   );
 
 -- Aux: check Image fields
@@ -112,5 +112,17 @@ create table
     check (timediff(returnTime, pickupTime) > 0)
   );
 
--- Aux: check Reserve fields:
--- describe Reserve;
+-- Message table creation
+create table 
+  Message (
+    id serial primary key,
+    author bigint unsigned not null,
+    message varchar(140) not null,
+    sendTime datetime not null,
+    idParentMessage bigint unsigned default null,
+    foreign key (idParentMessage) references Message(id),
+    foreign key (author) references User(u_id)
+);
+
+-- Aux: check Message fields:
+-- describe Message;
