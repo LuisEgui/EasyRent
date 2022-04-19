@@ -12,7 +12,8 @@ interface ReserveRepository extends Repository {
      * @param string $email User's email.
      * @return Reserve or null
      */
-   // public function findByEmail($email); CUAL SERÍA AQUI?¿
+   
+   public function findByVehicleUserPickUptime($vehicle, $user, $pickUpTime);
 
    //FindbyUser and vehicle y pickup
 

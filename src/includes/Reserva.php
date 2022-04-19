@@ -32,7 +32,6 @@ class Reserve{
     }
 
    
-
     public function __construct($vehicle, $user, $state, $pickupLocation, $returnLocation, $pickupTime,$returnTime,$price){
         $this->vehicle = intval($vehicle);
         $this->user = $user;
@@ -43,8 +42,6 @@ class Reserve{
         $this->returnTime = $returnTime;
         $this->price = $price;
     }
-
-   
 
    
 
