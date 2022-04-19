@@ -1,21 +1,44 @@
 <?php
 
-require_once __DIR__.'\Formulario.php';
-require_once __DIR__.'\User.php';
+require_once RAIZ_APP.'/Formulario.php';
+require_once RAIZ_APP.'/UserService.php';
 
 class FormularioRegistroUsuario extends Formulario {
+
+    private $userService;
+    const PARTICULAR = 'particular', ENTERPRISE = 'enterprise';
+    const ROLES = [self::PARTICULAR => 'Particular', self::ENTERPRISE => 'Enterprise'];
     
     public function __construct() {
-        parent::__construct('formLogin', ['urlRedireccion' => 'index.php']);
+        parent::__construct('formRegisterUser', ['urlRedireccion' => 'index.php']);
+        $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
+    }
+
+    private static function generateRoleSelector($name, $tipoSeleccionado=null)
+    {
+        $html = '';
+        foreach(self::ROLES as $clave => $valor) {
+            $html .= "<label>";
+            $html .= "<input type='radio' name=\"{$name}\" ";
+            $selected='';
+            if ($tipoSeleccionado && $clave == $tipoSeleccionado)
+                $selected='checked';
+            $html .= "value=\"{$clave}\" {$selected}>{$valor} </label>";
+        }
+        $html .= '';
+
+        return $html;
     }
     
     protected function generaCamposFormulario(&$datos) {
         // Se reutiliza el email introducido previamente o se deja en blanco
         $email = $datos['email'] ?? '';
+        $role = $datos['role'] ?? self::PARTICULAR;
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['email', 'password', 'role'], $this->errores, 'span', array('class' => 'error'));
+        $roleSelector = self::generateRoleSelector('role', $role);
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
         $html = <<<EOF
@@ -24,18 +47,16 @@ class FormularioRegistroUsuario extends Formulario {
             <legend>Email, contraseña y role</legend>
             <div>
                 <label for="email">Email:</label>
-                <input id="email" type="text" name="email" value="$email" />
-                {$erroresCampos['email']}
+                <input id="email" type="text" name="email" value="$email" />{$erroresCampos['email']}
             </div>
             <div>
                 <label for="password">Password:</label>
-                <input id="password" type="password" name="password" />
-                {$erroresCampos['password']}
+                <input id="password" type="password" name="password" autocomplete="on"/>{$erroresCampos['password']}
             </div>
-            <di>
-                <label for="role">Role:</label>
-                <input id="role" type="text" name="role" />
-                {$erroresCampos['role']}
+            <div>
+                <label>Role: </label>
+                $roleSelector{$erroresCampos['role']}
+            </div>
             <div>
                 <button type="submit" name="register">Registrarse</button>
             </div>
@@ -72,10 +93,10 @@ class FormularioRegistroUsuario extends Formulario {
             $this->errores['role'] = "El role no es válido. Introduce uno de los siguientes: admin, particular, enterprise.";
         
         if (count($this->errores) === 0) {
-            $usuario = User::createUser($email, $password, $role);
+            $usuario = $this->userService->createUser($email, $password, $role);
         
             if (!$usuario)
-                $this->errores[] = "";
+                $this->errores[] = "User already exists!";
             else
                 header("Location: {$this->urlRedireccion}");
         }

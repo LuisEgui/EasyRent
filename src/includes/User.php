@@ -1,188 +1,146 @@
 <?php
 
-require_once __DIR__.'\BD.php';
-
+/**
+ * Class for user entity.
+ */
 class User {
+
+    /**
+     * @var string Unique user identifier
+     */
     private $id;
+
+    /**
+     * @var string Unique user email
+     */
     private $email;
+
+    /**
+     * @var string Encrypted user password.
+     */
     private $password;
+
+    /**
+     * @var string User role
+     */
     private $role;
 
-    private function __construct($id = null, $email, $password, $role) {
+    /**
+     * @var string Profile user image.
+     */
+    private $image;
+
+    /**
+     * Creates an User
+     * 
+     * @param string $id Unique user identifier
+     * @param string $email Unique user email
+     * @param string $password Encrypted user password.
+     * @param string $role User role. Possible values: 'admin', 'particular',
+     * 'enterprise'.
+     * @return User
+     */
+    public function __construct($id = null, $email, $password, $role, $image) {
         $this->id = $id;
         $this->email = $email;
         $this->password = $password;
         $this->role = $role;
+        $this->image = $image;
     }
 
+    /**
+     * Returns user's id
+     * @return string id
+     */
     public function getId() {
         return $this->id;
     }
 
+    /**
+     * Returns user's email
+     * @return string email
+     */
     public function getEmail() {
         return $this->email;
     }
 
+    /**
+     * Returns user's password 
+     * @return string password
+     */
+    public function getPassword() {
+        return $this->password;
+    }
+
+    /**
+     * Returns user's role
+     * @return string role
+     */
     public function getRole() {
         return $this->role;
     }
 
+    /**
+     * Returns user's image id
+     * @return string image
+     */
+    public function getImage() {
+        return $this->image;
+    }
+
+    /**
+     * Sets user's id
+     * @param string $id User id
+     * @return void
+     */
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    /**
+     * Sets user's email
+     * @param string $email User email
+     * @return void
+     */
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    /**
+     * Sets user's password
+     * @param string $password
+     * @return void
+     */
+    public function setPassword($password) {
+        $this->password = $password;
+    }
+
+    /**
+     * Sets user's role
+     * @param string $role
+     * @return void
+     */
+    public function setRole($role) {
+        $this->role = $role;
+    }
+
+    /**
+     * Sets user's profile image.
+     * @param string $image Image ID
+     * @return void
+     */
+    public function setImage($image) {
+        $this->image = $image;
+    }
+
+    /**
+     * Check if an user has a determined role
+     * 
+     * @param string $role Check if the user has this role.
+     * @return bool
+     */
     public function hasRole($role) {
         return ($this->role === $role) ? true : false;
     }
 
-    public static function findUserByEmail($email) {
-        $conn = BD::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM User U WHERE U.email='%s'", $conn->real_escape_string($email));
-        $rs = $conn->query($query);
-        $user = false;
-
-        if ($rs) {
-            $row = $rs->fetch_assoc();  
-            if ($row)
-                $user = new User($row['u_id'], $row['email'], $row['password'], $row['role']);
-            $rs->free();
-        } else
-            error_log("Error BD ({$conn->errno}): {$conn->error}");
-        
-        return $user;
-    }
-
-    public static function findUserById($idUser) {
-        $conn = BD::getInstance()->getConexionBd();
-        $query = sprintf("select * from User where u_id=%d", $idUser);
-        $rs = $conn->query($query);
-        $result = false;
-
-        if ($rs) {
-            $row = $rs->fetch_assoc();
-            if ($row) {
-                $result = new User($row['id'], $row['email'], $row['password'], $row['role']);
-            }
-            $rs->free();
-        } else
-            error_log("Error BD ({$conn->errno}): {$conn->error}");
-        
-        return false;
-    }
-
-    public static function login($email, $password) {
-        $user = self::findUserByEmail($email);
-        
-        return ($user && $user->verifyPassword($password)) ? $user : false;
-    }
-
-    private static function hashPassword($password) {
-        $options = [
-            'cost' => 12
-        ];
-        return password_hash($password, PASSWORD_BCRYPT, $options);
-    }
-
-    public function verifyPassword($password) {
-        return password_verify($password, $this->password);
-    }
-   
-    private static function insertUser($user) {
-        $auxUser = User::findUserByEmail($user->getEmail());
-
-        if(!$auxUser) {
-            $result = false;
-            $conn = BD::getInstance()->getConexionBd();
-            $query= sprintf("insert into User(email, password, role) VALUES ('%s', '%s', '%s')"
-                , $conn->real_escape_string($user->email)
-                , $conn->real_escape_string($user->password)
-                , $conn->real_escape_string($user->role)
-            );
-
-            if ( ($result = $conn->query($query)) )
-                $user->id = $conn->insert_id;
-            else
-                error_log("Error BD ({$conn->errno}): {$conn->error}");
-            
-            return $result;
-        } else
-            return false;        
-    } 
-    
-    private static function update($user) {
-        $result = false;
-        $conn = BD::getInstance()->getConexionBd();
-        $query=sprintf("update User U set email = '%s', password='%s', role='%s' where U.u_id=%d"
-            , $conn->real_escape_string($user->email)
-            , $conn->real_escape_string($user->password)
-            , $conn->real_escape_string($user->role)
-            , $user->id
-        );
-
-        $result = $conn->query($query);
-
-        if (!$result)
-            error_log("Error BD ({$conn->errno}): {$conn->error}");
-        
-        return $result;
-    }
-
-    public function save() {
-        if ($this->id !== null) {
-            return self::update($this);
-        }
-        return self::insertUser($this);
-    }
-
-    public function changePassword($newPassword) {
-        $this->password = self::hashPassword($newPassword);
-    }
-
-    public static function createUser($email, $password, $role) {
-        $user = new User(null, $email, self::hashPassword($password), $role);
-        return $user->save();
-    }
-
-    public static function updateUser($user, $newPassword) {
-        $auxUser = User::findUserByEmail($user->getEmail());
-
-        if($auxUser) {
-            $conn = BD::getInstance()->getConexionBd();
-            $hashedPassword = self::hashPassword($newPassword);
-            $query=sprintf("update User U set email = '%s', password='%s', role='%s' where U.u_id=%d"
-            , $conn->real_escape_string($user->email)
-            , $conn->real_escape_string($hashedPassword)
-            , $conn->real_escape_string($user->role)
-            , $user->id
-            );
-
-            $result = $conn->query($query);
-
-            if (!$result)
-                error_log("Error BD ({$conn->errno}): {$conn->error}");
-        
-        return $result;
-        } else
-            return false;
-    }
-    
-    private static function deleteUser($user) {
-        return self::deleteUserById($user->id);
-    }
-    
-    private static function deleteUserById($idUser) {
-        if (!$idUser)
-            return false;
-        
-        $conn = BD::getInstance()->getConexionBd();
-        $query = sprintf("delete from User U where U.u_id = %d", $idUser);
-
-        if ( !$conn->query($query) ) {
-            error_log("Error BD ({$conn->errno}): {$conn->error}");
-            return false;
-        }
-
-        return true;
-    }
-
-    public function delete() {
-        return ($this->id !== null) ? self::deleteUser($this) : false;
-    }
-    
 }

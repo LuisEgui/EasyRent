@@ -1,12 +1,16 @@
 <?php
 
-require_once __DIR__.'\Formulario.php';
-require_once __DIR__.'\User.php';
+require_once RAIZ_APP.'/config.php';
+require_once RAIZ_APP.'/Formulario.php';
+require_once RAIZ_APP.'/UserService.php';
 
 class FormularioLogin extends Formulario {
+
+    private $userService;
     
     public function __construct() {
         parent::__construct('formLogin', ['urlRedireccion' => 'index.php']);
+        $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
     
     protected function generaCamposFormulario(&$datos) {
@@ -29,7 +33,7 @@ class FormularioLogin extends Formulario {
             </div>
             <div>
                 <label for="password">Password:</label>
-                <input id="password" type="password" name="password" />
+                <input id="password" type="password" name="password" autocomplete="on"/>
                 {$erroresCampos['password']}
             </div>
             <div>
@@ -42,6 +46,7 @@ class FormularioLogin extends Formulario {
 
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
+
         $email = trim($datos['email'] ?? '');
         $email = filter_var($email, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -57,11 +62,12 @@ class FormularioLogin extends Formulario {
         }
         
         if (count($this->errores) === 0) {
-            $usuario = User::login($email, $password);
+            $logged = $this->userService->login($email, $password);
         
-            if (!$usuario) {
+            if (!$logged) {
                 $this->errores[] = "El email del usuario o el password no coinciden";
             } else {
+                $usuario = $this->userService->readUserByEmail($email);
                 $_SESSION['login'] = true;
                 $_SESSION['email'] = $usuario->getEmail();
                 $_SESSION['esAdmin'] = $usuario->hasRole('admin');
