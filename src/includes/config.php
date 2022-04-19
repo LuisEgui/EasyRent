@@ -1,37 +1,31 @@
 <?php
 
-require_once __DIR__.'/Aplicacion.php';
-require_once __DIR__.'/BD.php';
-
 /**
- * Parámetros de conexión a la BD
- */
-define('BD_HOST', 'localhost');
-define('BD_NAME', 'easyrent_db');
-define('BD_USER', 'user');
-define('BD_PASS', '1234');
-define('BD_PORT', '3306');
-
-/**
- * Parámetros de configuración utilizados para generar las URLs y las rutas a ficheros en la aplicación
+ * Config parameters used to generate URLs and routings for files in the app
  */
 define('RAIZ_APP', __DIR__);
 define('RUTA_APP', '/sw-practices');
+define('RUTA_USER_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\img', 'usr']));
 define('RUTA_IMGS', RUTA_APP.'/doc/web/images');
 
 /**
- * Configuración del soporte de UTF-8, localización (idioma y país) y zona horaria
+ * UTF-8 support configuration, location (language and country) and time-zone
  */
 ini_set('default_charset', 'UTF-8');
 setLocale(LC_ALL, 'es_ES.UTF.8');
 date_default_timezone_set('Europe/Madrid');
 
-// Inicializa la aplicación
-$app = Aplicacion::getInstance();
-$app->init(['host'=>BD_HOST, 'bd'=>BD_NAME, 'user'=>BD_USER, 'pass'=>BD_PASS, 'port'=>BD_PORT]);
-
 /**
- * @see http://php.net/manual/en/function.register-shutdown-function.php
- * @see http://php.net/manual/en/language.types.callable.php
+ * Initialize the database connection and session_start()
  */
-register_shutdown_function([$app, 'shutdown']);
+require_once RAIZ_APP.'/MysqlConnector.php';
+require_once RAIZ_APP.'/UserService.php';
+
+session_start();
+
+$db = MysqlConnector::getInstance();
+$GLOBALS['db_connector'] = $db;
+$userRepository = new MysqlUserRepository($db);
+$imageRepository = new MysqlImageRepository($db);
+$GLOBALS['db_user_repository'] = $userRepository;
+$GLOBALS['db_image_repository'] = $imageRepository;
