@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__.'/MysqlConnector.php';
-require_once __DIR__.'/UserRepository.php';
-require_once __DIR__.'/User.php';
-require_once __DIR__.'/AbstractMysqlRepository.php';
+require_once RAIZ_APP.'/MysqlConnector.php';
+require_once RAIZ_APP.'/UserRepository.php';
+require_once RAIZ_APP.'/User.php';
+require_once RAIZ_APP.'/AbstractMysqlRepository.php';
 
 class MysqlUserRepository extends AbstractMysqlRepository implements UserRepository {
 

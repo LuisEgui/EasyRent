@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__.'/MysqlConnector.php';
-require_once __DIR__.'/Repository.php';
-require_once __DIR__.'/AbstractMysqlRepository.php';
-require_once __DIR__.'/Image.php';
+require_once RAIZ_APP.'/MysqlConnector.php';
+require_once RAIZ_APP.'/Repository.php';
+require_once RAIZ_APP.'/AbstractMysqlRepository.php';
+require_once RAIZ_APP.'/Image.php';
 
 class MysqlImageRepository extends AbstractMysqlRepository implements Repository {
 
