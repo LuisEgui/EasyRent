@@ -11,13 +11,13 @@ require __DIR__.'/MysqlImageRepository.php';
 class ReserveService {
 
     /**
-     * @var ReserveRepository User repository
+     * @var ReserveRepository Reserve repository
      */
     private $reserveRepository;
 
 
     /**
-     * Creates an UserService
+     * Creates an ReserveService
      * 
      * @param ReserveRepository $reserveRepository Instance of an ReserveRepository
      * @return void
@@ -27,43 +27,11 @@ class ReserveService {
        
     }
 
-    /**
-     * Logs in an user into the system.
-     * 
-     * @param string $email User's email.
-     * @param string $password User's password, not hashed.
-     * @return bool Returns true if the email and password corresponds to a valid user.
-     * Returns false otherwise.
-     */
-    public function login($email, $password) {
-        $user = $this->userRepository->findByEmail($email);
-        return ($user && password_verify($password, $user->getPassword()));
-    }
+    /
 
-    /**
-     * Returns the user from the system given an user's email.
-     * 
-     * @param string $email User's email.
-     * @return User|null Returns the user from the database.
-     */
-    public function readUserByEmail($email) {
-        $user = $this->userRepository->findByEmail($email);
-        return $user;
-    }
+   
 
-    /**
-     * Creates a password hash.
-     * This algorithm is using BCrypt with 12 rounds by default.
-     * @link https://www.php.net/manual/en/function.password-hash
-     * @param string $password The user's password.
-     * @return string Returns the hashed password.
-     */
-    private static function hashPassword($password) {
-        $options = [
-            'cost' => 12
-        ];
-        return password_hash($password, PASSWORD_BCRYPT, $options);
-    }
+    
 
     /**
      * Persists a new user into the system if the user is not register before.
@@ -83,14 +51,20 @@ class ReserveService {
     }
 
     /**
-     * Checks if there's a logged user into the system, at the moment of the
-     * call to this function. 
+     * Find a reserve seaching by vehicle(vin), user and pickUpTime
+     * @param mediumint $vehicle vehicle´s vin.
+     * @param bigint $user user´s id
+     * @param datetime $user user´s e-mail.
      * @return bool
      */
-    private function isLogged() {
-        return isset($_SESSION['email']) && isset($_SESSION['login']);
+    private function findByVehicleUserPickUptime($vehicle, $user, $pickUpTime){
+        //return isset($_SESSION['email']) && isset($_SESSION['login']); poner esto bien cuando este implementada la funcion
     }
 
+    
+    
+    
+    /*
     /**
      * Changes the user's email given a new email.
      * 
@@ -118,12 +92,12 @@ class ReserveService {
         return false;
     }
     
-    /**
+    /*
      * Updates the user's password.
      * 
      * @param string $newPassword User's new password.
      * @return bool True if the user is already logged in. False otherwise.
-     */
+     
     public function updateUserPassword($newPassword) {
         if (self::isLogged()) {
             $user = $this->readUserByEmail($_SESSION['email']);
@@ -134,6 +108,13 @@ class ReserveService {
         return false;
     }
 
+
+
+
+
+
+    // _--------------------------------------- CAMBIAR A FUNCIONES DE RESERVA ------------------------------------------
+    
     /**
      * Checks if the given role is valid to change.
      * 
@@ -210,6 +191,7 @@ class ReserveService {
             return $image;
         }
         return null;
-    }
+    }/*
+    
 
 }

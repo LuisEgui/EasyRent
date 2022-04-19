@@ -14,4 +14,6 @@ interface ReserveRepository extends Repository {
      */
    // public function findByEmail($email); CUAL SERÍA AQUI?¿
 
+   //FindbyUser and vehicle y pickup
+
 }
