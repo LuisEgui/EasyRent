@@ -13,6 +13,7 @@ $contenidoPrincipal = <<<EOS
 <h1>Listar vehiculos</h1>
 EOS;
 for ($i = 0; $i < count($vehiculos); $i++) {
+    //hacer algo para que vehiculos reservados no salgan
     $contenidoPrincipal .= <<<EOS
     <div class="v">
         <h2>Vehiculo 
@@ -54,13 +55,27 @@ for ($i = 0; $i < count($vehiculos); $i++) {
         State: 
     EOS;
     $contenidoPrincipal .= $vehiculos[$i]->getState();
-    $contenidoPrincipal .= <<<EOS
+    if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
+        $contenidoPrincipal .= <<<EOS
         </p>
         <h4>TARIFA</h4>
         <h4>20€</h4>
-        <a href="index.php">Reservar</a> 
-    </div>
+        <a href="reserva.php?id=
     EOS;
+        $contenidoPrincipal .= $vehiculos[$i]->getVin();
+        $contenidoPrincipal .= <<<EOS
+        ">Reservar</a> 
+        </div>
+    EOS;
+    }
+    else{
+        $contenidoPrincipal .= <<<EOS
+        </p>
+        <h4>TARIFA</h4>
+        <h4>20€</h4>
+        <p>[Para reservar inicie sesión]</p>
+    EOS;
+    }
     
 }
 

@@ -21,6 +21,7 @@ function mostrarMenu() {
 	}
 	else if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
 		return "<a href='{$rutaApp}/src/index.php'>Inicio</a>
+				<a href='{$rutaApp}/src/tusreservas.php'>Tus reservas</a>
 				<a href='{$rutaApp}/src/incidente.php'>Generar Incidente</a>
 				<a href='{$rutaApp}/src/promociones.php'>Tus promociones</a>
 				<a href='{$rutaApp}/src/perfil.php'>Tu perfil</a>

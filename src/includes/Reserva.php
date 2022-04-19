@@ -1,6 +1,8 @@
 <?php
 
 //namespace ClaseVehiculo;
+require_once __DIR__.'\BD.php';
+require_once __DIR__.'\User.php';
 
 class Reserve{
     //use MagicProperties;
@@ -33,8 +35,8 @@ class Reserve{
 
     public static function crea($vehicle, $user, $state, $pickupLocation, $returnLocation, $pickupTime,$returnTime,$price)
     {
-        $vehiculo = new Vehiculo($vehicle, $user, $state, $pickupLocation, $returnLocation, $pickupTime,$returnTime,$price, self::RESERVED);
-        return $vehiculo;
+        $reserva = new Reserve($vehicle, $user, $state, $pickupLocation, $returnLocation, $pickupTime,$returnTime,$price, self::RESERVED);
+        return $reserva;
     }
 
     public function __construct($vehicle, $user, $state, $pickupLocation, $returnLocation, $pickupTime,$returnTime,$price){
@@ -49,7 +51,52 @@ class Reserve{
         $this->price = $price;
     }
 
-    
+    private static function getReservas()
+    { 
+        $result = [];
+        
+        $conn = BD::getInstance()->getConexionBd();
+
+        $query = 'SELECT * FROM Reserve';
+
+        $user = User::findUserByEmail($_SESSION['email']);
+
+        if(!empty($opciones)){
+            if($array_key_exists('user', $user)){
+                $opciones['user'] = $conn->real_escape_string($opciones['user']);
+            }
+            $query .= 'WHERE ';
+            $contadorFiltros = 0;
+            foreach ($opciones as $columna => $valor){
+                if($contadorFiltros == 0){
+                    $query .= $columna.' = '.$valor;
+                }
+                else if($contadorFiltros > 0){
+                    $query .= 'AND '.$columna.' = '.$valor;
+                }
+                $contadorFiltros++;
+            }
+        }
+
+        $conn = BD::getInstance()->getConexionBd();
+        $query = sprintf("select * from reserve where user=%d", $user->getId());
+        $rs = $conn->query($query);
+
+        if (mysqli_num_rows($rs) > 0) {
+            while($row = mysqli_fetch_array($rs)) {
+                $result[] = new Reserve($row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'], $row['pickupTime'], $row['returnTime'], $row['price']);
+            }
+        } else
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        
+        return $result;
+    }
+
+
+    public static function reservasPersonales()
+    {
+        return self::getReservas();
+    }
 
     public function getVehicle()
     {
