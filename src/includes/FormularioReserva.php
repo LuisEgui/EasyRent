@@ -82,7 +82,7 @@ class FormularioReserva extends Formulario {
 
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
-        $vehicle = $datos['vin'];
+        $vehicle = $_GET["id"];
         $usuario = $datos['usuario'];
         $state = 0;
         $pickupLocation = $datos['pickupLocation'];
@@ -92,7 +92,7 @@ class FormularioReserva extends Formulario {
         $price = $datos['price'];
 
         if (count($this->errores) === 0) {
-            $reserva = Reserve::crea($vehicle, $usuario, $state, $pickupLocation, $returnLocation, $pickupTime,$returnTime,$price);
+            $reserva = new Reserve($vehicle, $usuario, $state, $pickupLocation, $returnLocation, $pickupTime,$returnTime,$price);
         
             if (!$reserva)
                 $this->errores[] = "";

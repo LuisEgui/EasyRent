@@ -50,148 +50,17 @@ class ReserveService {
         return null;
     }
 
-    /**
-     * Find a reserve seaching by vehicle(vin), user and pickUpTime
-     * @param mediumint $vehicle vehicle´s vin.
-     * @param bigint $user user´s id
-     * @param datetime $user user´s e-mail.
-     * @return bool
-     */
-    private function findByVehicleUserPickUptime($vehicle, $user, $pickUpTime){
-        //return isset($_SESSION['email']) && isset($_SESSION['login']); poner esto bien cuando este implementada la funcion
+    public function readAllReserves(){
+        return $this->reserveRepository->reservasPersonales();
     }
 
-    
-    
-    
-    /*
-    /**
-     * Changes the user's email given a new email.
-     * 
-     * @param string $newEmail User's new email.
-     * @return bool True if the user is already logged in and the $newEmail
-     * is not registered before. False otherwise.
-     */
-    public function updateUserEmail($newEmail) {
-        // If its logged in and the new email is not used by any other user
-        if ($this->isLogged()) {
-            $presentUser = $this->readUserByEmail($_SESSION['email']);
-            $referenceUser = $this->readUserByEmail($newEmail);
-            if ($referenceUser === null) {
-                // We remove the old user email by deleting the user object
-                $this->userRepository->delete($presentUser);
-                // And save the new one
-                $presentUser->setEmail($newEmail);
-                $this->userRepository->save($presentUser);
-                // Set the session email to the new email
-                $_SESSION['email'] = $presentUser->getEmail();
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-    
-    /*
-     * Updates the user's password.
-     * 
-     * @param string $newPassword User's new password.
-     * @return bool True if the user is already logged in. False otherwise.
+
      
-    public function updateUserPassword($newPassword) {
-        if (self::isLogged()) {
-            $user = $this->readUserByEmail($_SESSION['email']);
-            $user->setPassword(self::hashPassword($newPassword));
-            $this->userRepository->save($user);
-            return true;
-        }
-        return false;
-    }
 
 
 
 
 
 
-    // _--------------------------------------- CAMBIAR A FUNCIONES DE RESERVA ------------------------------------------
-    
-    /**
-     * Checks if the given role is valid to change.
-     * 
-     * @param string $role Desired role.
-     * @return bool True if the $role is in the array: ('particular', enterprise').
-     * False otherwise.
-     */
-    private function validRole($role) {
-        $validRoles = array('particular', 'enterprise');
-        return in_array($role, $validRoles);
-    }
 
-    /**
-     * Updates the user's role.
-     * 
-     * @param string $role User's new role.
-     * @return bool True if the user is already logged in and the $role is valid.
-     * Returns false otherwise.
-     */
-    public function updateUserRole($role) {
-        if (self::isLogged()) {
-            $user = $this->readUserByEmail($_SESSION['email']);
-            if (self::validRole($role) && $user->getRole() !== $role) {
-                $user->setRole($role);
-                $this->userRepository->save($user);
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-
-    /**
-     * Uploads the user's profile image.
-     * 
-     * @param string $path Image's path.
-     * @param string $mimeType Image's MIME Type.
-     * @return bool
-     */
-    public function uploadUserImage($path, $mimeType) {
-        if (self::isLogged()) {
-            $user = $this->readUserByEmail($_SESSION['email']);
-            $image = new Image(null, $path, $mimeType);
-            /**
-             * 1. Store temp the old user image key
-             * 2. Remove it from the user table
-             * 3. Remove it from the image table
-             * 4. Insert the new image in the user
-             * 5. Save the user
-             */
-            if ($user->getImage() !== null) {
-                $oldUserImage = $user->getImage();
-                $user->setImage(null);
-                $this->userRepository->save($user);
-                $this->imageRepository->deleteById($oldUserImage);
-            }
-
-            $image = $this->imageRepository->save($image);
-            $user->setImage($image->getId());
-            $this->userRepository->save($user);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Gets the user's profile image 
-     * @return Image|null
-     */
-    public function getUserImage() {
-        if (self::isLogged()) {
-            $user = $this->readUserByEmail($_SESSION['email']);
-            $image = $this->imageRepository->findById($user->getImage());
-            return $image;
-        }
-        return null;
-    }/*
-    
-
-}
+   

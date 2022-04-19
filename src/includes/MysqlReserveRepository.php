@@ -2,8 +2,9 @@
 
 require_once __DIR__.'/MysqlConnector.php';
 require_once __DIR__.'/ReserveRepository.php';
-require_once __DIR__.'/Reserve.php';
+require_once __DIR__.'/Reserva.php';
 require_once __DIR__.'/AbstractMysqlRepository.php';
+require_once __DIR__.'/config.php';
 
 class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveRepository {
 
@@ -21,33 +22,48 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         return $num_users;
     }
 
-
+    private function getReservas()
+    { 
+        $reservas = [];
     
+        $user = User::findUserByEmail($_SESSION['email']);
 
-    public function findByVehicleUserPickUptime($vehicle, $user, $pickUpTime){
+        $sql = sprintf("select vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from reserve where user = %d", $user->getId());
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
 
+        $result = $stmt->get_result();
+        $stmt->close();
 
-
-        
-   /* }($id) {
-        $user = null;
-
-        if(!isset($id))
-            return null;
-
-        $sql = sprintf("select u_id, email, password, role, userImg from User where u_id = %d", $id);
-        $result = $this->db->query($sql);
-
-        if ($result !== false && $result->num_rows > 0) {
-            $obj = $result->fetch_object();
-            $user = new User($obj->u_id, $obj->email, $obj->password, $obj->role, $obj->userImg);
+        while ($row = $result->fetch_assoc()) {
+            $reserva = new Reserve($row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'], $row['pickupTime'], $row['returnTime'], $row['price']);
+            $reservas[] = $reserva;
         }
+        
+        return $reservas;
+    }
 
-        $result->close();
+    public function reservasPersonales() {
+        return self::getReservas();
+    }
 
-        return $user;
-    }*/
-    
+    public function findById($id){}
+
+    public function findAll(){}
+
+    public function deleteById($id){}
+
+    public function delete($entity){}
+
+    public function save($entity){}
+
+    public function findByVehicleUserPickUptime($vehicle, $user, $pickUpTime){}
+
 }
 
-}
+
+
+
+
+
+

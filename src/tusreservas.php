@@ -1,12 +1,15 @@
 <?php
 
 require_once __DIR__.'\includes\config.php';
-require_once __DIR__.'\includes\FormularioReserva.php';
 require_once __DIR__.'\includes\Reserva.php';
+require_once __DIR__.'\includes\MysqlReserveRepository.php';
+require_once __DIR__.'\includes\ReserveService.php';
 
+$reserveService = new ReserveService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
 
 $tituloPagina = 'Lista reservas';
-$reservas = Reserve::reservasPersonales();
+
+$reservas = $reserveService->readAllReserves();;
 $contenidoPrincipal = <<<EOS
 <h1>Lista reservas</h1>
 EOS;
