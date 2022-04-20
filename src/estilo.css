@@ -18,9 +18,24 @@ div.buscadorVehiculo {
   padding: 10px;
 }
 
+div.administracion {
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+}
+
 div.promociones {
   margin: auto;
   text-align: center;
+  padding: 10px;
+}
+
+div#admin {
+  float: left;
+  margin: 10px;
+  width: 20%;
+  height: 20%;
+  border: 3px solid #303030;
   padding: 10px;
 }
 
