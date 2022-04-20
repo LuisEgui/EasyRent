@@ -1,14 +1,12 @@
 <?php
 
 require_once __DIR__.'\includes\config.php';
-require_once __DIR__.'\includes\FormularioVehiculo.php';
-require_once __DIR__.'\includes\Vehiculo.php';
-
-//$form = new FormularioVehiculo();
-//$htmlFormVehiculo = $form->gestiona();
+require_once __DIR__.'\includes\Vehicle.php';
+require_once __DIR__.'\includes\VehicleService.php';
 
 $tituloPagina = 'Lista vehiculos';
-$vehiculos = Vehiculo::buscaPorFiltros();
+$vehicleService = new VehicleService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
+$vehiculos = $vehicleService->readAllVehicles();
 $contenidoPrincipal = <<<EOS
 <h1>Listar vehiculos</h1>
 EOS;

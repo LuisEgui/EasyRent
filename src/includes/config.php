@@ -6,6 +6,7 @@
 define('RAIZ_APP', __DIR__);
 define('RUTA_APP', '/sw-practices');
 define('RUTA_USER_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\img', 'usr']));
+define('RUTA_VEHICLE_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\img', 'vehicle']));
 define('RUTA_IMGS', RUTA_APP.'/doc/web/images');
 
 /**
@@ -20,6 +21,7 @@ date_default_timezone_set('Europe/Madrid');
  */
 require_once RAIZ_APP.'/MysqlConnector.php';
 require_once RAIZ_APP.'/UserService.php';
+require_once RAIZ_APP.'/VehicleService.php';
 
 session_start();
 
@@ -29,3 +31,5 @@ $userRepository = new MysqlUserRepository($db);
 $imageRepository = new MysqlImageRepository($db);
 $GLOBALS['db_user_repository'] = $userRepository;
 $GLOBALS['db_image_repository'] = $imageRepository;
+$vehicleRepository = new MysqlVehicleRepository($db);
+$GLOBALS['db_vehicle_repository'] = $vehicleRepository;

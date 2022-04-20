@@ -28,7 +28,7 @@ create table
 -- Vehicle table creation
 create table
   Vehicle (
-    vin mediumint primary key,
+    vin bigint primary key,
     licensePlate varchar(10) not null,
     model bigint unsigned,
     vehicleImg bigint unsigned,
@@ -37,7 +37,9 @@ create table
     state enum ('available', 'unavailable', 'reserved') default 'available',
     foreign key (model) references Model(m_id),
     foreign key (vehicleImg) references Image(img_id),
-    check (licensePlate regexp '^[A-Z]{1}-[A-Z]{1,2}-[0-9]{1,4}$')
+    check (vin regexp '^[0-9]{6}$'), 
+    check (seatCount regexp '^[2-9]{1}$'),
+    check (licensePlate regexp '^[0-9]{4}-(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{1,3}$')
   );
 
 -- Aux: check Vehicle fields
@@ -47,7 +49,7 @@ create table
 create table
   Damage (
     d_id serial primary key,
-    vehicle mediumint not null,
+    vehicle bigint not null,
     area enum (
       'brakes',
       'controls',
@@ -73,7 +75,11 @@ create table
 
 -- EvidenceDamage table creation
 create table
-  EvidenceDamage (damage bigint not null, image bigint not null, primary key (damage, image));
+  EvidenceDamage (
+    damage bigint not null, 
+    image bigint not null, 
+    primary key (damage, image)
+  );
 
 -- Aux: check EvidenceDamage fields:
 -- describe EvidenceDamage;
