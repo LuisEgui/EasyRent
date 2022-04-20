@@ -137,7 +137,6 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
                 else 
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
                 
-                return null;
             // If the user is not in the database, we insert it.
             } else {
                 if ($user->getImage() !== null) {
@@ -163,8 +162,6 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
                     return $user;
                 } else
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-                
-                return null;
             }
         }
         return null;
