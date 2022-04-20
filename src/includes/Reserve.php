@@ -63,9 +63,10 @@ class Reserve {
      * @param string $returnLocation Reserve return location
      * @param string $pickupTime Reserve vehicle pickup time
      * @param string $returnTime Reserve vehicle return time
+     * @param float $price Reserve's price
      * @return void
      */
-    public function __construct($id = null, $vehicle, $user, $state, $pickupLocation, $returnLocation, $pickupTime, $returnTime,$price) {
+    public function __construct($id = null, $vehicle, $user, $state, $pickupLocation, $returnLocation, $pickupTime, $returnTime, $price) {
         $this->id = $id;
         $this->vehicle = intval($vehicle);
         $this->user = $user;
@@ -78,12 +79,10 @@ class Reserve {
     }
 
     public static function getStringEnumState($enum) {
-        if($enum < sizeof(self::TYPES_STATE) && $enum >= 0) {
+        if ($enum < sizeof(self::TYPES_STATE) && $enum >= 0)
             return self::TYPES_STATE[$enum];
-        }
-        else{
+        else
             return null;
-        }
     }
 
     /**

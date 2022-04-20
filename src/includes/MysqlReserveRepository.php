@@ -63,6 +63,25 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         return $reservas;
     }
 
+    public function findAllByUser($user) {
+        $reservas[] = array();
+
+        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where user = '%d'",
+                        $user->getId());
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_array(MYSQLI_NUM)) {
+            foreach ($row as $reserve)
+                $reservas[] = $reserve;
+        }
+
+        return $reservas;
+    }
+
     public function findAll() {
         $reservas[] = array();
 
@@ -107,14 +126,57 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
     }
 
     public function save($reserve) {
-        
+        // Check entity type
+        if ($reserve instanceof Reserve) {
+            /**
+             * If the reserve already exists, we do an update.
+             * We retrieve the reserve's id from the database.
+             */
+            $importedReserve = $this->findById($reserve->getId());
+            if ($importedReserve !== null) {
+                $reserve->setId($importedReserve->getId());
+                $sql = sprintf("update Reserve set vehicle = '%d', state = '%s', pickupLocation = '%s', " . 
+                        "returnLocation = '%s', pickupTime = '%s', returnTime = '%s', price = '%f' where id = %d",
+                        $this->db->getConnection()->real_escape_string($reserve->getVehicle()),
+                        $this->db->getConnection()->real_escape_string($reserve->getState()),
+                        $this->db->getConnection()->real_escape_string($reserve->getPickUpLocation()),
+                        $this->db->getConnection()->real_escape_string($reserve->getReturnLocation()),
+                        $this->db->getConnection()->real_escape_string($reserve->getPickUpTime()),
+                        $this->db->getConnection()->real_escape_string($reserve->getReturnTime()),
+                        $reserve->getPrice(), $reserve->getId());
+                
+                $stmt = $this->db->prepare($sql);
+                $result = $stmt->execute();
+                $stmt->close();
+
+                if ($result)
+                    return $reserve;
+                else 
+                    error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
+                // If the reserve is not in the database, we insert it.
+            } else {
+                $sql = sprintf("insert into Reserve (vehicle, user, pickupLocation, pickupTime, returnTime, price) values ('%s', '%s', '%s', '%s', '%f'",
+                        $this->db->getConnection()->real_escape_string($reserve->getVehicle()),
+                        $this->db->getConnection()->real_escape_string($reserve->getState()),
+                        $this->db->getConnection()->real_escape_string($reserve->getPickUpLocation()),
+                        $this->db->getConnection()->real_escape_string($reserve->getReturnLocation()),
+                        $this->db->getConnection()->real_escape_string($reserve->getPickUpTime()),
+                        $this->db->getConnection()->real_escape_string($reserve->getReturnTime()),
+                        $reserve->getPrice());
+                
+                $stmt = $this->db->prepare($sql);
+                $result = $stmt->execute();
+                $stmt->close();
+
+                if ($result) {
+                    // We get the asssociated id to this new reserve
+                    $reserve->setId($this->db->getConnection()->insert_id);
+                    return $reserve;
+                } else
+                    error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
+            }
+        }
+        return null;
     }
 
 }
-
-
-
-
-
-
-
