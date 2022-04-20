@@ -6,9 +6,14 @@ require_once __DIR__.'\User.php';
 require_once __DIR__.'\BD.php';
 
 class FormularioReserva extends Formulario {
+
+    private $reserveService;
+    private $userService;
     
     public function __construct() {
         parent::__construct('formReserve', ['urlRedireccion' => 'reservado.php']);
+        $this->reserveService = new ReserveService($GLOBALS['db_reserve_repository'], $GLOBALS['db_vehicle_repository'], $GLOBALS['db_user_repository']);
+        $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
     
     protected function generaCamposFormulario(&$datos) {
@@ -17,7 +22,7 @@ class FormularioReserva extends Formulario {
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['id', 'email', 'localizacion', 'fecha'], $this->errores, 'span', array('class' => 'error'));
         
-        $user = User::findUserByEmail($_SESSION['email']);
+        $user = $this->userService->readUserByEmail($_SESSION['email']);
         $id = $user->getId();
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
         $html = <<<EOF
@@ -92,7 +97,7 @@ class FormularioReserva extends Formulario {
         $price = $datos['price'];
 
         if (count($this->errores) === 0) {
-            $reserva = new Reserve($vehicle, $usuario, $state, $pickupLocation, $returnLocation, $pickupTime,$returnTime,$price);
+            $reserva = $this->reserveService->createReserve($vehicle, $usuario, $state, $pickupLocation, $returnLocation, $pickupTime, $returnTime, $price);
         
             if (!$reserva)
                 $this->errores[] = "";
