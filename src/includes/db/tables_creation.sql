@@ -18,15 +18,8 @@ create table
 create table
   Image (
     img_id serial primary key,
-<<<<<<< HEAD
-    absoluteUrl varchar(512) not null,
-    height bigint not null,
-    width bigint not null,
-    mimeType enum('jpg', 'png') not null
-=======
     path varchar(256) not null,
     mimeType enum('image/jpeg','image/jpg','image/png') not null
->>>>>>> 3add064bf3092509a5aa16d71794f12f07ba66a9
   );
 
 -- Aux: check Image fields
@@ -35,8 +28,8 @@ create table
 -- Vehicle table creation
 create table
   Vehicle (
-    vin mediumint primary key,
-    licensePlate varchar(10) unique not null,
+    vin bigint primary key,
+    licensePlate varchar(10) not null,
     model bigint unsigned,
     vehicleImg bigint unsigned,
     fuelType enum ('diesel', 'electric-hybrid', 'electric', 'petrol', 'plug-in-hybrid') not null,
@@ -44,7 +37,9 @@ create table
     state enum ('available', 'unavailable', 'reserved') default 'available',
     foreign key (model) references Model(m_id),
     foreign key (vehicleImg) references Image(img_id),
-    check (licensePlate regexp '^[A-Z]{1}-[A-Z]{1,2}-[0-9]{1,4}$')
+    check (vin regexp '^[0-9]{6}$'), 
+    check (seatCount regexp '^[2-9]{1}$'),
+    check (licensePlate regexp '^[0-9]{4}-(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{1,3}$')
   );
 
 -- Aux: check Vehicle fields
@@ -54,7 +49,7 @@ create table
 create table
   Damage (
     d_id serial primary key,
-    vehicle mediumint not null,
+    vehicle bigint not null,
     area enum (
       'brakes',
       'controls',
@@ -80,7 +75,11 @@ create table
 
 -- EvidenceDamage table creation
 create table
-  EvidenceDamage (damage bigint not null, image bigint not null, primary key (damage, image));
+  EvidenceDamage (
+    damage bigint not null, 
+    image bigint not null, 
+    primary key (damage, image)
+  );
 
 -- Aux: check EvidenceDamage fields:
 -- describe EvidenceDamage;
