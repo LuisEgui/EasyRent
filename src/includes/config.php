@@ -22,6 +22,7 @@ date_default_timezone_set('Europe/Madrid');
 require_once RAIZ_APP.'/MysqlConnector.php';
 require_once RAIZ_APP.'/UserService.php';
 require_once RAIZ_APP.'/VehicleService.php';
+require_once RAIZ_APP.'/ReserveService.php';
 
 session_start();
 
