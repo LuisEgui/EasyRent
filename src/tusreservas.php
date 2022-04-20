@@ -1,15 +1,14 @@
 <?php
 
 require_once __DIR__.'\includes\config.php';
-require_once __DIR__.'\includes\Reserva.php';
+require_once __DIR__.'\includes\Reserve.php';
 require_once __DIR__.'\includes\MysqlReserveRepository.php';
 require_once __DIR__.'\includes\ReserveService.php';
 
-$reserveService = new ReserveService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
-
+$reserveService = new ReserveService($GLOBALS['db_reserve_repository'], $GLOBALS['db_vehicle_repository'], $GLOBALS['db_user_repository']);
 $tituloPagina = 'Lista reservas';
 
-$reservas = $reserveService->readAllReserves();;
+$reservas = $reserveService->getAllReserves();
 $contenidoPrincipal = <<<EOS
 <h1>Lista reservas</h1>
 EOS;
@@ -66,8 +65,7 @@ for ($i = 0; $i < count($reservas); $i++) {
         <p>
         </div>
     EOS;
-    
-    
+
 }
 
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';
