@@ -5,6 +5,8 @@
  */
 class Reserve {
 
+    private $id;
+
     /**
      * @var string Unique vehicle identifier
      */
@@ -63,7 +65,8 @@ class Reserve {
      * @param string $returnTime Reserve vehicle return time
      * @return void
      */
-    public function __construct($vehicle, $user, $state, $pickupLocation, $returnLocation, $pickupTime, $returnTime,$price) {
+    public function __construct($id = null, $vehicle, $user, $state, $pickupLocation, $returnLocation, $pickupTime, $returnTime,$price) {
+        $this->id = $id;
         $this->vehicle = intval($vehicle);
         $this->user = $user;
         $this->state = intval($state);
@@ -81,6 +84,14 @@ class Reserve {
         else{
             return null;
         }
+    }
+
+    /**
+     * Returns reserve's id
+     * @return string id
+     */
+    public function getId() {
+        return $this->id;
     }
 
     /**
@@ -133,6 +144,10 @@ class Reserve {
     public function getPrice()
     {
         return $this->price;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
     }
 
     public function setVehicle($vehicle)
