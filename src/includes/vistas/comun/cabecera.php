@@ -39,7 +39,7 @@ function mostrarMenu() {
 <header>
 	
 	<div class="navegador">
-		<div class="logo"  style="position: relative;"><img src="<?= RUTA_IMGS ?>/logo_easyRent.png" width="135" height="75" /></div>
+		<div class="logo"  style="position: relative;"><img src="<?= RUTA_IMGS ?>/logo_easyRent.png" width="135" height="75" alt="EasyRent Logo"/></div>
 	  
 		<div class="dropdown">
 		<button class="dropbtn" style="float:left">Menu</button>

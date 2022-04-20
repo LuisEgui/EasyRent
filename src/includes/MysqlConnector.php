@@ -7,7 +7,7 @@ define('BD_USER', 'user');
 define('BD_PASS', '1234');
 define('BD_PORT', '3306');
 
-require_once __DIR__.'/DatabaseConnection.php';
+require_once RAIZ_APP.'/DatabaseConnection.php';
 
 class MysqlConnector implements DatabaseConnection {
     
