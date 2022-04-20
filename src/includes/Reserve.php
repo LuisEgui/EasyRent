@@ -111,58 +111,115 @@ class Reserve {
     }
 
     /**
-     * Returns reserve's state
-     * @return string state
+     * Returns reserve's pickUpLocation
+     * @return string pickUpLocation
      */
     public function getPickUpLocation()
     {
         return $this->pickupLocation;
     }
+    /**
+     * Returns reserve's returnLocation
+     * @return string returnLocation
+     */
     public function getReturnLocation()
     {
         return $this->returnLocation;
     }
+    /**
+     * Returns reserve's pickUpTime
+     * @return  datetime pickUpTime
+     */
     public function getPickUpTime()
     {
         return $this->pickupTime;
     }
+    /**
+     * Returns reserve's return Time
+     * @return  datetime returnocation
+     */
     public function getReturnTime()
     {
         return $this->returnTime;
     }
+    /**
+     * Returns reserve's price
+     * @return  float price
+     */
     public function getPrice()
     {
         return $this->price;
     }
 
+       /**
+     * Sets reserve´s vehicle
+     * @param mediumint $vehicle vehicle´s id
+     * @return void
+     */
     public function setVehicle($vehicle)
     {
         $this->vehicle = $vehicle;
     }
+        /**
+     * Sets reserve´s user
+     * @param mediumint $user user´s id who made the reserve
+     * @return void
+     */
     public function setUser($user)
     {
         $this->user = $user;
     }
+        /**
+     * Sets reserve´s pickUpLocation
+     * @param string $pickUpLocation reserve´s pickUpLocation
+     * @return void
+     */
     public function setPickUpLocation($pickupLocation)
     {
         $this->pickupLocation = $pickupLocation;
     }
+        /**
+     * Sets reserve´s pickUpTime
+     * @param datetime $pickUpTime reserve´s pickUpTime
+     * @return void
+     */
+
     public function setPickUpTime($pickUpTime)
     {
         $this->pickupTime = $pickUpTime;
     }
+        /**
+     * Sets reserve´s pickUpLocation
+     * @param string $returnLocation reserve´s returnLocation
+     * @return void
+     */
     public function setReturnLocation($returnLocation)
     {
         $this->returnLocation = $returnLocation;
     }
+        /**
+     * Sets reserve´s returnTime
+     * @param datetime $returnTime reserve´s returnTimme
+     * @return void
+     */
     public function setReturnTime($returnTime)
     {
         $this->returnTime = $returnTime;
     }
+        /**
+     * Sets reserve´s state
+     * @param string $state reserve´s state
+     * @return void
+     */
     public function setState($state)
     {
         $this->state = $state;
     }
+        /**
+     * Sets reserve´s price
+     * @param float $price reserve´s price
+     * @return void
+     */
     public function setPrice($price)
     {
         $this->price = $price;
