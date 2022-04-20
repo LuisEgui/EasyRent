@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/Repository.php';
+require_once RAIZ_APP.'/Repository.php';
 
 /**
  * A specific repository for Users
@@ -8,13 +8,12 @@ require_once __DIR__.'/Repository.php';
 interface ReserveRepository extends Repository {
     
     /**
-     * Returns an user entity from the repository given its email.
-     * @param string $email User's email.
+     * Returns an reserve entity from the repository given its primary key: vehicle, user, pickup time.
+     * @param string $vehicle Vehicle's identification number (vin)
+     * @param User $user User's id.
+     * @param string $pickUpTime Reserve's pickup time
      * @return Reserve or null
      */
-   
-   public function findByVehicleUserPickUptime($vehicle, $user, $pickUpTime);
-
-   //FindbyUser and vehicle y pickup
+    public function findByVehicleAndUserAndPickUptime($vehicle, $user, $pickUpTime);
 
 }
