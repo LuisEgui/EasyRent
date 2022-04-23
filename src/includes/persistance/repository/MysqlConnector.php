@@ -7,11 +7,13 @@ use mysqli;
 
 # Database parameters
 # Change 'localhost' to 'vm03.db.swarm.test' when uploading this projecto to the VPS
-define('BD_HOST', 'localhost');
+define('BD_HOST', 'vm03.db.swarm.test');
 define('BD_NAME', 'easyrent_db');
 define('BD_USER', 'user');
 define('BD_PASS', '1234');
 define('BD_PORT', '3306');
+
+require_once RAIZ_APP.'/DatabaseConnection.php';
 
 class MysqlConnector implements DatabaseConnection {
 
