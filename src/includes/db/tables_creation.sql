@@ -78,7 +78,9 @@ create table
   EvidenceDamage (
     damage bigint not null, 
     image bigint not null, 
-    primary key (damage, image)
+    primary key (damage, image),
+    foreign key (damage) references Damage(d_id),
+    foreign key (image) references Image(img_id)
   );
 
 -- Aux: check EvidenceDamage fields:
