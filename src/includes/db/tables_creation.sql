@@ -78,7 +78,9 @@ create table
   EvidenceDamage (
     damage bigint not null, 
     image bigint not null, 
-    primary key (damage, image)
+    primary key (damage, image),
+    foreign key (damage) references Damage(d_id),
+    foreign key (image) references Image(img_id)
   );
 
 -- Aux: check EvidenceDamage fields:
@@ -104,7 +106,8 @@ create table
 -- Reserve table creation
 create table
   Reserve (
-    vehicle mediumint not null,
+    id serial primary key,
+    vehicle bigint not null,
     user bigint unsigned not null,
     state enum ('reserved', 'pending', 'cancelled') default 'pending',
     pickupLocation varchar(40) not null,
@@ -114,7 +117,7 @@ create table
     price float,
     foreign key (vehicle) references Vehicle(vin),
     foreign key (user) references User(u_id),
-    primary key(vehicle, user, pickupTime),
+    unique (vehicle, user, pickupTime),
     check (timediff(returnTime, pickupTime) > 0)
   );
 
