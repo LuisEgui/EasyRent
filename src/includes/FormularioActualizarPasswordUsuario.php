@@ -1,7 +1,7 @@
 <?php
 
-require_once RAIZ_APP.'\Formulario.php';
-require_once RAIZ_APP.'\User.php';
+require_once RAIZ_APP.'/Formulario.php';
+require_once RAIZ_APP.'/User.php';
 
 class FormularioActualizarPasswordUsuario extends Formulario {
 

@@ -52,8 +52,3 @@ function mostrarMenu() {
 	</div>
 	
 </header>
-
-
-
-
-

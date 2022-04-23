@@ -1,7 +1,7 @@
 <?php
 
 # Database parameters
-define('BD_HOST', 'localhost');
+define('BD_HOST', 'localhost'); // Cambiar localhost por vm03.db.swarm.test al subir a vps
 define('BD_NAME', 'easyrent_db');
 define('BD_USER', 'user');
 define('BD_PASS', '1234');

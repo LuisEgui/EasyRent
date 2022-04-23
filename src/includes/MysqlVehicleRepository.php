@@ -138,7 +138,6 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
                         $vehicle->getSeatCount(),
                         $this->db->getConnection()->real_escape_string($vehicle->getState()));
                 }
-                echo $sql;
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
                 $stmt->close();
