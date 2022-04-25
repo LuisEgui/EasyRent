@@ -11,14 +11,14 @@ class Message {
     private $id;
 
     /**
-     * @var string Único autor del mensaje
+     * @var string Message's unique author's identifier
      */
-    private $autor;
+    private $author;
 
     /**
-     * @var string Texto del mensaje
+     * @var string Message's text
      */
-    private $mensaje;
+    private $message;
 
     /**
      * @var string Profile user image.
@@ -26,14 +26,14 @@ class Message {
     private $image;
 
     /**
-     * @var string fecha y hora
+     * @var string date and time
      */
-    private $fecha;
+    private $date;
 
     /**
-     * @var string idmensajeanterior
+     * @var string Previous message's ID
      */
-    private $idMensajePadre;
+    private $idParentMessage;
 
     /**
      * Creates an Message

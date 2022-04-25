@@ -1,5 +1,5 @@
 <?php
-//HAY QUE HACER EL DELETE Y EL SAVE AUNN
+//EN EL SAVE COMO SE GUARDA LA IMAGEN, QUE TIPO DE DATO ES??
 require_once RAIZ_APP.'/MysqlConnector.php';
 require_once RAIZ_APP.'/MessageRepository.php';
 require_once RAIZ_APP.'/Message.php';
@@ -40,26 +40,6 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
         return $message;
     }
 
-    public function findByAuthor($author) {
-        $message = null;
-
-        if(!isset($author))
-            return null;
-
-            $sql = sprintf("select m_id, author, message, date, image, idParentMessage from Message where author = %d", 
-                            $this->db->getConnection()->real_escape_string($author));
-            $result = $this->db->query($sql);
-    
-            if ($result !== false && $result->num_rows > 0) {
-                $obj = $result->fetch_object();
-                $message = new Message($obj->m_id, $obj->author, $obj->message, $obj->date, $obj->image, $obj->idParentMessage);
-            }
-    
-            $result->close();
-    
-            return $message;
-    }
-
     public function findAll() {
         $messages[] = array();
 
@@ -78,10 +58,29 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
         return $messages;
     }
 
+    public function findAllByAuthor($author) {
+        $messages[] = array();
+
+        $sql = sprintf("select m_id, author, message, date, image, idParentMessage from Message where author = '%d'",
+                        $author->getId());
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_array(MYSQLI_NUM)) {
+            foreach ($row as $message)
+                $messages[] = $message;
+        }
+
+        return $messages;
+    }
+
     public function deleteById($id) {
-        // Check if the user already exists
+        // Check if the message already exists
         if ($this->findById($id) !== null) {
-            $sql = sprintf("delete from Message where m_id = %d", $id);
+            $sql = sprintf("delete from Message where id = %d", $id);
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
             $stmt->close();
@@ -96,8 +95,8 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
     }
 
     public function delete($message) {
-        // Check entity type and we check first if the message already exists
-        $importedMessage = $this->findByAuthor($message->getAuthor());
+        // Check entity type and we check first if the user already exists
+        $importedMessage = $this->findById($message->getId());
         if ($message instanceof Message && ($importedMessage !== null))
             return $this->deleteById($importedMessage->getId());
         return false;
@@ -107,67 +106,51 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
         // Check entity type
         if ($message instanceof Message) {
             /**
-             * If the user already exists, we do an update.
-             * We retrieve the user's id from the database.
+             * If the message already exists, we do an update.
+             * We retrieve the message's id from the database.
              */
-            $importedMessage = $this->findByEmail($user->getEmail());
-            if ($importedUser !== null) {
-                $user->setId($importedUser->getId());
-                if ($user->getImage() !== null) {
-                    $sql = sprintf("update User set email = '%s', password = '%s', role = '%s', userImg = '%d' where u_id = %d",
-                        $this->db->getConnection()->real_escape_string($user->getEmail()),
-                        $this->db->getConnection()->real_escape_string($user->getPassword()),
-                        $this->db->getConnection()->real_escape_string($user->getRole()),
-                        $this->db->getConnection()->real_escape_string($user->getImage()),
-                        $user->getId());
-                } else {
-                    $sql = sprintf("update User set email = '%s', password = '%s', role = '%s', userImg = NULL where u_id = %d",
-                        $this->db->getConnection()->real_escape_string($user->getEmail()),
-                        $this->db->getConnection()->real_escape_string($user->getPassword()),
-                        $this->db->getConnection()->real_escape_string($user->getRole()),
-                        $user->getId());
-                }
-
+            $importedMessage = $this->findById($message->getId());
+            if ($importedMessage !== null) {
+                $message->setId($importedMessage->getId());
+                $sql = sprintf("update Message set author = '%d', message = '%s', image = '%s', " . 
+                        "date = '%s', idParentMessage = '%s'",
+                        $this->db->getConnection()->real_escape_string($message->getAuthor()),
+                        $this->db->getConnection()->real_escape_string($message->getMessage()),
+                        $this->db->getConnection()->real_escape_string($message->getImage()),
+                        $this->db->getConnection()->real_escape_string($message->getDate()),
+                        $this->db->getConnection()->real_escape_string($message->getIdParentMessage()),
+                        $message->getId());
+                
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
                 $stmt->close();
 
                 if ($result)
-                    return $user;
+                    return $message;
                 else 
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-                
-                return null;
-            // If the user is not in the database, we insert it.
+                // If the reserve is not in the database, we insert it.
             } else {
-                if ($user->getImage() !== null) {
-                    $sql = sprintf("insert into User (email, password, role, userImg) values ('%s', '%s', '%s', '%d')",
-                        $this->db->getConnection()->real_escape_string($user->getEmail()),
-                        $this->db->getConnection()->real_escape_string($user->getPassword()),
-                        $this->db->getConnection()->real_escape_string($user->getRole()),
-                        $user->getImage());
-                } else {
-                    $sql = sprintf("insert into User (email, password, role) values ('%s', '%s', '%s')",
-                        $this->db->getConnection()->real_escape_string($user->getEmail()),
-                        $this->db->getConnection()->real_escape_string($user->getPassword()),
-                        $this->db->getConnection()->real_escape_string($user->getRole()));
-                }
-
+                $sql = sprintf("insert into Message (author, message, date, image, idParentMessage) values ('%s', '%s', '%s', '%s', '%s'",
+                        $this->db->getConnection()->real_escape_string($message->getAuthor()),
+                        $this->db->getConnection()->real_escape_string($message->getMessage()),
+                        $this->db->getConnection()->real_escape_string($message->getImage()),
+                        $this->db->getConnection()->real_escape_string($message->getDate()),
+                        $this->db->getConnection()->real_escape_string($message->getIdParentMessage());
+                
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
                 $stmt->close();
 
-                if($result) {
-                    // We get the asssociated id to this new user
-                    $user->setId($this->db->getConnection()->insert_id);
-                    return $user;
+                if ($result) {
+                    // We get the asssociated id to this new reserve
+                    $message->setId($this->db->getConnection()->insert_id);
+                    return $message;
                 } else
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-                
-                return null;
             }
         }
         return null;
     }
-    
+
 }
