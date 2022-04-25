@@ -39,20 +39,20 @@ class Message {
      * Creates an Message
      * 
      * @param string $id Unique message identifier
-     * @param string $autor Único autor del mensaje
-     * @param string $mensaje Texto del mensaje
-     * @param string $image Profile user image.
-     * @param string $fecha fecha y hora
-     * @param string $idMensajePadre idmensajeanterior
+     * @param string $author message's unique author
+     * @param string $message message's text
+     * @param string $image user's image
+     * @param string $date date and time
+     * @param string $idParentMessage previous message's ID
      * @return Message
      */
-    public function __construct($id = null, $autor, $mensaje, $fecha, $image, $idMensajePadre) {
+    public function __construct($id = null, $author, $message, $date, $image, $idParentMessage) {
         $this->id = $id;
-        $this->autor = $autor;
-        $this->mensaje = $mensaje;
-        $this->fecha = $fecha;
+        $this->author = $autor;
+        $this->message = $message;
+        $this->date = $date;
         $this->image = $image;
-        $this->idMensajePadre = $idMensajePadre;
+        $this->idParentMessage = $idParentMessage;
     }
 
     /**
@@ -64,27 +64,27 @@ class Message {
     }
 
     /**
-     * Returns message's autor
-     * @return string autor
+     * Returns message's author
+     * @return string author
      */
-    public function getAutor() {
-        return $this->autor;
+    public function getAuthor() {
+        return $this->author;
     }
 
     /**
-     * Returns message's mensaje 
-     * @return string mensaje
+     * Returns message's message 
+     * @return string message
      */
-    public function getMensaje() {
-        return $this->mensaje;
+    public function getMessage() {
+        return $this->message;
     }
 
     /**
-     * Returns message's fecha
-     * @return string fecha
+     * Returns message's date
+     * @return string date
      */
-    public function getFecha() {
-        return $this->fecha;
+    public function getDate() {
+        return $this->date;
     }
 
     /**
@@ -96,11 +96,11 @@ class Message {
     }
 
     /**
-     * Returns message's idMensajePadre
-     * @return string idMensajePadre
+     * Returns message's idParentMessage
+     * @return string idParentMessage
      */
-    public function getIdMensajePadre() {
-        return $this->idMensajePadre;
+    public function getidParentMessage() {
+        return $this->idParentMessage;
     }
 
     /**
@@ -113,30 +113,30 @@ class Message {
     }
 
     /**
-     * Sets message's autor
-     * @param string autor
+     * Sets message's author
+     * @param string author
      * @return void
      */
-    public function setAutor($autor) {
-        $this->autor = $autor;
+    public function setAuthor($author) {
+        $this->autor = $author;
     }
 
     /**
-     * Sets message's mensaje 
-     * @param string mensaje
+     * Sets message's message 
+     * @param string message
      * @return void
      */
-    public function setMensaje($mensaje) {
-        $this->mensaje = $mensaje;
+    public function setMessage($message) {
+        $this->mensaje = $message;
     }
 
     /**
-     * Sets message's fecha
-     * @param string fecha
+     * Sets message's date
+     * @param string date
      * @return void
      */
-    public function setFecha($fecha) {
-        $this->fecha = $fecha;
+    public function setDate($date) {
+        $this->date = $date;
     }
 
     /**
@@ -149,12 +149,12 @@ class Message {
     }
 
     /**
-     * Sets message's idMensajePadre
-     * @param string idMensajePadre
+     * Sets message's idParentMessage
+     * @param string idParentMessage
      * @return void
      */
-    public function setIdMensajePadre($idMensajePadre) {
-        $this->idMensajePadre = $idMensajePadre;
+    public function setidParentMessage($idParentMessage) {
+        $this->idParentMessage = $idParentMessage;
     }
 
 }
