@@ -1,31 +1,19 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
+require_once __DIR__.'/includes/UserService.php';
+require_once __DIR__.'/includes/MessageService.php';
 
 $tituloPagina = 'Foro';
 
-$contenidoPrincipal = <<<EOS
-<div>
-    <div class="mensaje">
-    <div class="cabecera">
-        <h4>Aparcamiento centro de madrid</h4>
-    </div>
-    <div class="contenido">
-        <p>¿Cuál es el mejor parking por Gran Vía?</p>
-    </div>
-    </div>
-</div>
-
-<div>
-    <div class="mensaje">
-    <div class="cabecera">
-        <h4>Respuesta</h4>
-    </div>
-    <div class="contenido">
-        <p>No aparquéis en el que está en el metro de Sevilla porque se llena rápido. Es mejor aparcar en el siguiente</p>
-    </div>
-    </div>
-</div>
+$contenidoPrincipal = '<h1>Mensajes del foro</h1>';
+$MessageForm = new MessageService();
+$contenidoPrincipal .= $MessageForm->readAllMessages();
+if (isLogged()) {
+	$contenidoPrincipal .= <<<EOS
+		<h1>Nuevo Mensaje</h1>
+	EOS;
+}
 
 EOS;
 
