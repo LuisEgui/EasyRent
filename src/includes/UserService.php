@@ -91,7 +91,7 @@ class UserService {
      * call to this function. 
      * @return bool
      */
-    private function isLogged() {
+    public function isLogged() {
         return isset($_SESSION['email']) && isset($_SESSION['login']);
     }
 

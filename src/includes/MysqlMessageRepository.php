@@ -58,7 +58,7 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
         return $messages;
     }
 
-    public function findAllByAuthor($author) {
+    public function findByAuthor($author) {
         $messages[] = array();
 
         $sql = sprintf("select m_id, author, message, date, image, idParentMessage from Message where author = '%d'",
@@ -131,12 +131,12 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
                 // If the reserve is not in the database, we insert it.
             } else {
-                $sql = sprintf("insert into Message (author, message, date, image, idParentMessage) values ('%s', '%s', '%s', '%s', '%s'",
+                $sql = sprintf("insert into Message (author, message, date, image, idParentMessage) values ('%s', '%s', '%s', '%s', '%s')",
                         $this->db->getConnection()->real_escape_string($message->getAuthor()),
                         $this->db->getConnection()->real_escape_string($message->getMessage()),
                         $this->db->getConnection()->real_escape_string($message->getImage()),
                         $this->db->getConnection()->real_escape_string($message->getDate()),
-                        $this->db->getConnection()->real_escape_string($message->getIdParentMessage());
+                        $this->db->getConnection()->real_escape_string($message->getIdParentMessage()));
                 
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
