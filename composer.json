@@ -1,0 +1,20 @@
+{
+  "name": "mission/php-test-refactor",
+  "require": {
+    "phpunit/phpunit": "9.5.19",
+    "phpunit/php-code-coverage": "^9.2",
+    "ext-mysqli": "*",
+    "squizlabs/php_codesniffer": "3.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mission\\php-test-refactor\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Luis Egui",
+      "email": "luisegui@ucm.es"
+    }
+  ]
+}
