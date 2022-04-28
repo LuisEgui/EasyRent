@@ -47,20 +47,20 @@ interface DatabaseConnection {
      * @link https://www.php.net/manual/en/mysqli.begin-transaction.php
      * @return true|false on success or failure.
      */
-    public function beginTransaction();
+    public function beginTransaction(): bool;
 
     /**
      * Commits the current transaction for the database connection.
      * @link https://www.php.net/manual/en/mysqli.commit
      * @return true|false on success or failure.
      */
-    public function commit();
+    public function commit(): bool;
 
     /**
      * Rollbacks the current transaction for the database.
      * @link https://www.php.net/manual/en/mysqli.rollback
      * @return true|false on success or failure.
      */
-    public function rollback();
+    public function rollback(): bool;
 
 }

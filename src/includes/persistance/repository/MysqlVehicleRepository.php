@@ -10,7 +10,8 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         parent::__construct($connector);
     }
 
-    public function count() {
+    public function count() : int
+    {
         $sql = 'select count(vin) as num_vehicles from Vehicle';
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
@@ -20,7 +21,8 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         return $num_vehicles;
     }
 
-    public function findById($vin) {
+    public function findById($vin) : ?Vehicle
+    {
         $vehicle = null;
 
         if(!isset($vin))
@@ -39,7 +41,8 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         return $vehicle;
     }
 
-    public function findAll() {
+    public function findAll() : array
+    {
         $vehicles = [];
 
         $sql = sprintf("select vin, licensePlate, model, vehicleImg, fuelType, seatCount, state from Vehicle");
@@ -57,7 +60,8 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         return $vehicles;
     }
 
-    public function deleteById($vin) {
+    public function deleteById($vin) : bool
+    {
         // Check if the vehicle already exists
         if ($this->findById($vin) !== null) {
             $sql = sprintf("delete from Vehicle where vin = %d", $vin);
@@ -74,7 +78,8 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         return false;
     }
 
-    public function delete($vehicle) {
+    public function delete($vehicle) : bool
+    {
         // Check entity type and we check first if the user already exists
         $importedVehicle = $this->findById($vehicle->getVin());
         if ($vehicle instanceof Vehicle && ($importedVehicle !== null))
@@ -82,7 +87,8 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         return false;
     }
 
-    public function save($vehicle) {
+    public function save($vehicle)
+    {
         // Check entity type
         if ($vehicle instanceof Vehicle) {
             /**

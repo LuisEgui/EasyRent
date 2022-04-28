@@ -14,6 +14,6 @@ interface UserRepository extends Repository {
      * @param string $email User's email.
      * @return User|null
      */
-    public function findByEmail($email);
+    public function findByEmail($email): ?User;
 
 }

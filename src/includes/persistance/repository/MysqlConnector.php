@@ -18,17 +18,20 @@ class MysqlConnector implements DatabaseConnection {
     private static $instance;
     private $mysqli;
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->mysqli = null;
     }
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (self::$instance === null)
             self::$instance = new self;
         return self::$instance;
     }
 
-    public function getConnection() {
+    public function getConnection()
+    {
         if ($this->mysqli == null) {
             $mysqli = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME, BD_PORT);
 
@@ -60,15 +63,18 @@ class MysqlConnector implements DatabaseConnection {
         return self::getInstance()->getConnection()->prepare($sql);
     }
 
-    public function beginTransaction() {
+    public function beginTransaction() : bool
+    {
         return $this->getConnection()->begin_transaction();
     }
 
-    public function commit() {
+    public function commit() : bool
+    {
         return $this->getConnection()->commit();
     }
 
-    public function rollback() {
+    public function rollback() : bool
+    {
         return $this->getConnection()->rollback();
     }
 }

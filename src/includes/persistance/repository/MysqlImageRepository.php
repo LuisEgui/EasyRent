@@ -10,7 +10,8 @@ class MysqlImageRepository extends AbstractMysqlRepository implements Repository
         parent::__construct($connector);
     }
 
-    public function count() {
+    public function count() : int
+    {
         $sql = 'select count(img_id) as num_images from Image';
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
@@ -20,7 +21,8 @@ class MysqlImageRepository extends AbstractMysqlRepository implements Repository
         return $num_images;
     }
 
-    public function findById($id) {
+    public function findById($id) : ?Image
+    {
         $image = null;
 
         if(!isset($id))
@@ -39,7 +41,8 @@ class MysqlImageRepository extends AbstractMysqlRepository implements Repository
         return $image;
     }
 
-    public function findAll() {
+    public function findAll() : array
+    {
         $images[] = array();
 
         $sql = sprintf("select img_id, path, mimeType from Image");
@@ -57,7 +60,8 @@ class MysqlImageRepository extends AbstractMysqlRepository implements Repository
         return $images;
     }
 
-    public function deleteById($id) {
+    public function deleteById($id) : bool
+    {
         // Check if the image already exists
         if ($this->findById($id) !== null) {
             $sql = sprintf("delete from Image where img_id = %d", $id);
@@ -74,7 +78,8 @@ class MysqlImageRepository extends AbstractMysqlRepository implements Repository
         return false;
     }
 
-    public function delete($image) {
+    public function delete($image) : bool
+    {
         // Check entity type and we check first if the image already exists
         $importedImage = $this->findById($image->getId());
         if ($image instanceof Image && ($importedImage !== null))
@@ -82,7 +87,8 @@ class MysqlImageRepository extends AbstractMysqlRepository implements Repository
         return false;
     }
 
-    public function save($image) {
+    public function save($image)
+    {
         // Check entity type
         if ($image instanceof Image) {
             // If the image already exists, we do an update.

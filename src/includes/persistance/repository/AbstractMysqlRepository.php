@@ -10,15 +10,15 @@ abstract class AbstractMysqlRepository implements Repository {
         $this->db = $connector;
     }
 
-    public abstract function count();
+    public abstract function count() : int;
 
     public abstract function findById($id);
 
-    public abstract function findAll();
+    public abstract function findAll() : array;
 
-    public abstract function deleteById($id);
+    public abstract function deleteById($id) : bool;
 
-    public abstract function delete($entity);
+    public abstract function delete($entity) : bool;
 
     public abstract function save($entity);
 

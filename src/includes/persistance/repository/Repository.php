@@ -13,27 +13,27 @@ interface Repository {
      * Counts the number of rows from a repository.
      * @return int Number of rows
      */
-    public function count();
+    public function count(): int;
 
     /**
      * Deletes a given entity from the repository.
      * @param mixed $entity Entity to be deleted
      * @return bool
      */
-    public function delete($entity);
+    public function delete($entity): bool;
 
     /**
      * Deletes a given entity by its id
      * @param string $id Entity's id
      * @return bool
      */
-    public function deleteById($id);
+    public function deleteById($id): bool;
 
     /**
      * Reads all entities from the reposity.
      * @return array of entities or null.
      */
-    public function findAll();
+    public function findAll(): array;
 
     /**
      * Returns a entity object given its id

@@ -10,7 +10,8 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
         parent::__construct($connector);
     }
 
-    public function count() {
+    public function count() : int
+    {
         $sql = 'select count(u_id) as num_users from User';
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
@@ -20,7 +21,8 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
         return $num_users;
     }
 
-    public function findById($id) {
+    public function findById($id): ?User
+    {
         $user = null;
 
         if(!isset($id))
@@ -39,7 +41,8 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
         return $user;
     }
 
-    public function findByEmail($email) {
+    public function findByEmail($email) : ?User
+    {
         $user = null;
 
         if(!isset($email))
@@ -59,7 +62,8 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
         return $user;
     }
 
-    public function findAll() {
+    public function findAll() : array
+    {
         $users[] = array();
 
         $sql = "select u_id, email, password, role, userImg from User";
@@ -77,7 +81,8 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
         return $users;
     }
 
-    public function deleteById($id) {
+    public function deleteById($id) : bool
+    {
         // Check if the user already exists
         if ($this->findById($id) !== null) {
             $sql = sprintf("delete from User where u_id = %d", $id);
@@ -94,7 +99,8 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
         return false;
     }
 
-    public function delete($user) {
+    public function delete($user) : bool
+    {
         // Check entity type and we check first if the user already exists
         $importedUser = $this->findByEmail($user->getEmail());
         if ($user instanceof User && ($importedUser !== null))
@@ -102,7 +108,8 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
         return false;
     }
 
-    public function save($user) {
+    public function save($user)
+    {
         // Check entity type
         if ($user instanceof User) {
             /**
