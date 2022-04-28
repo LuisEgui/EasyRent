@@ -1,5 +1,7 @@
 <?php
 
+namespace easyrent\includes\persistance\entity;
+
 /**
  * Class for Image entity.
  */
@@ -22,11 +24,11 @@ class Image {
 
     /**
      * Creates an Image
-     * 
+     *
      * @param string $id Unique image identifier
      * @param string $path Image relative path
      * @param string mimeType Image MIME Type.
-     * @return Image
+     * @return void
      */
     public function __construct($id = null, $path, $mimeType) {
         $this->img_id = $id;

@@ -1,16 +1,15 @@
 <?php
 
-require_once RAIZ_APP.'/MysqlConnector.php';
-require_once RAIZ_APP.'/UserRepository.php';
-require_once RAIZ_APP.'/User.php';
-require_once RAIZ_APP.'/AbstractMysqlRepository.php';
+namespace easyrent\includes\persistance\repository;
+
+use easyrent\includes\persistance\entity\User;
 
 class MysqlUserRepository extends AbstractMysqlRepository implements UserRepository {
 
     public function __construct(MysqlConnector $connector) {
         parent::__construct($connector);
     }
-    
+
     public function count() {
         $sql = 'select count(u_id) as num_users from User';
         $stmt = $this->db->prepare($sql);
@@ -56,14 +55,14 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
         }
 
         $result->close();
-        
+
         return $user;
     }
 
     public function findAll() {
         $users[] = array();
 
-        $sql = sprintf("select u_id, email, password, role, userImg from User");
+        $sql = "select u_id, email, password, role, userImg from User";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -85,10 +84,10 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
             $stmt->close();
-            
+
             if (!$result)
                 error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-            
+
             return $result;
         }
 
@@ -134,9 +133,9 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
 
                 if ($result)
                     return $user;
-                else 
+                else
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-                
+
                 return null;
             // If the user is not in the database, we insert it.
             } else {
@@ -163,11 +162,11 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
                     return $user;
                 } else
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-                
+
                 return null;
             }
         }
         return null;
     }
-    
+
 }

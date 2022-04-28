@@ -1,11 +1,16 @@
 <?php
 
-require RAIZ_APP.'/MysqlVehicleRepository.php';
+namespace easyrent\includes\service;
+
+use easyrent\includes\persistance\entity\Image;
+use easyrent\includes\persistance\entity\Vehicle;
+use easyrent\includes\persistance\repository\MysqlVehicleRepository;
+use easyrent\includes\persistance\repository\Repository;
 
 /**
  * Vehicle Service class.
- * 
- * It manages the logic of the vehicle's actions. 
+ *
+ * It manages the logic of the vehicle's actions.
  */
 class VehicleService {
 
@@ -21,7 +26,7 @@ class VehicleService {
 
     /**
      * Creates a VehicleService
-     * 
+     *
      * @param MysqlVehicleRepository $vehicleRepository Instance of an MysqlVehicleRepository
      * @param Repository $imageRepository Instance of an MysqlImageRepository
      * @return void
@@ -33,7 +38,7 @@ class VehicleService {
 
     /**
      * Persists a new vehicle into the system if the vehicle is not register before.
-     * 
+     *
      * @param string $vin Vehicle's VIN. Valid vehicle's vin.
      * @param string $licensePlate Vehicle's license plate. Valid vehicle's license plate.
      * @param string $model Vehicle's model. Valid vehicle's model.
@@ -53,7 +58,7 @@ class VehicleService {
 
     /**
      * Deletes a vehicle from the system given the VIN.
-     * 
+     *
      * @param string $vin Vehicle's identification number.
      * @return bool
      */
@@ -63,7 +68,7 @@ class VehicleService {
 
     /**
      * Returns all the vehicles in the system.
-     * 
+     *
      * @return Vehicle[] Returns the vehicles from the database.
      */
     public function readAllVehicles(){
@@ -72,7 +77,7 @@ class VehicleService {
 
     /**
      * Checks if the current user is an admin in the system, at the moment of the
-     * call to this function. 
+     * call to this function.
      * @return bool
      */
     private function isAdmin() {
@@ -81,7 +86,7 @@ class VehicleService {
 
     /**
      * Uploads the vehicle's image
-     * 
+     *
      * @param string $vin Vehicle identification number
      * @param string $path Image's path.
      * @param string $mimeType Image's MIME Type.
@@ -96,7 +101,7 @@ class VehicleService {
              * 2. Remove it from the vehicle table
              * 3. Remove it from the image table
              * 4. Insert the new image in the vehicle
-             * 5. Save the vehicle 
+             * 5. Save the vehicle
              */
             if ($vehicle->getImage() !== null) {
                 $oldVehicleImage = $vehicle->getImage();

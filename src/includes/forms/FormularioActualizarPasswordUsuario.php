@@ -1,24 +1,25 @@
 <?php
 
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/User.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\UserService;
 
 class FormularioActualizarPasswordUsuario extends Formulario {
 
     private $userService;
-    
+
     public function __construct() {
         parent::__construct('formPasswordUpdate', ['urlRedireccion' => 'index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['password', 'previousPassword'], $this->errores, 'span', array('class' => 'error'));
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
-        $html = <<<EOF
+        return <<<EOF
         $htmlErroresGlobales
         <fieldset>
             <legend>Actualizar contraseña</legend>
@@ -35,7 +36,6 @@ class FormularioActualizarPasswordUsuario extends Formulario {
             </div>
         </fieldset>
         EOF;
-        return $html;
     }
 
     private function validatePreviousPassword($previousPassword) {
@@ -45,7 +45,8 @@ class FormularioActualizarPasswordUsuario extends Formulario {
 
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
-        
+        $rs = null;
+
         $password = trim($datos['password'] ?? '');
         $password = filter_var($password, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -57,18 +58,18 @@ class FormularioActualizarPasswordUsuario extends Formulario {
 
         if (!$previousPassword || empty($previousPassword))
             $this->errores['previousPassword'] = 'La contraseña anterior no puede estar vacía!.';
-        
+
         if (count($this->errores) === 0) {
             if (!$this->validatePreviousPassword($previousPassword))
                 $this->errores['previousPassword'] = 'La contraseña anterior no coincide!';
             else
                 $rs = $this->userService->updateUserPassword($password);
-        
+
             if (!$rs)
                 $this->errores[] = "Can't upload user password!";
             else
                 header("Location: {$this->urlRedireccion}");
         }
     }
-    
+
 }

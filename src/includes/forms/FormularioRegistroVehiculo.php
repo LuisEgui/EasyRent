@@ -1,7 +1,8 @@
 <?php
 
-require_once __DIR__.'/Formulario.php';
-require_once __DIR__.'/VehicleService.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\VehicleService;
 
 class FormularioRegistroVehiculo extends Formulario {
 
@@ -12,7 +13,7 @@ class FormularioRegistroVehiculo extends Formulario {
 
     const DIESEL = 'diesel', ELECTRIC_HYBRID = 'electric-hybrid', ELECTRIC = 'electric', PETROL = 'petrol', PLUG_IN_HYBRID = 'plug-in-hybrid';
     const FUELTYPES = [ self::DIESEL => 'Diesel', self::ELECTRIC_HYBRID => 'Hibrido', self::ELECTRIC => 'Electrico', self::PETROL => 'Gasolina', self::PLUG_IN_HYBRID => 'Hibrido enchufable'];
-    
+
     public function __construct() {
         parent::__construct('formRegisterVehicle', ['urlRedireccion' => 'admin.php']);
         $this->vehicleService = new VehicleService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
@@ -35,7 +36,7 @@ class FormularioRegistroVehiculo extends Formulario {
     }
 
     private static function generateModelSelector($name, $tipoSeleccionado=null)
-    {   
+    {
         //$models[] = $this->vehicleService->getModelsFromDB();
         $models[] = array();
         $html = '';
@@ -51,7 +52,7 @@ class FormularioRegistroVehiculo extends Formulario {
 
         return $html;
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
         // Se reutiliza el email introducido previamente o se deja en blanco
         $vin = $datos['vin'] ?? '';
@@ -106,7 +107,7 @@ class FormularioRegistroVehiculo extends Formulario {
 
         if ( ! $vin || empty($vin))
             $this->errores['vin'] = 'El VIN del vehiculo no puede estar vacío';
-        
+
         if( !self::validateVIN($vin))
             $this->errores['vin'] = 'Formato de VIN inválido! Debe contener 6 caracteres numericos';
 
@@ -124,7 +125,7 @@ class FormularioRegistroVehiculo extends Formulario {
 
         if ( ! $model || empty($model))
             $this->errores['model'] = 'El modelo del vehiculo no puede estar vacío';
-        
+
         if( !is_numeric($model))
             $this->errores['model'] = 'Formato del modelo inválido! Debe ser un numero';
 
@@ -133,7 +134,7 @@ class FormularioRegistroVehiculo extends Formulario {
 
         if (!$fuelType || empty($fuelType))
             $this->errores['fuelType'] = 'El tipo de combustible no puede estar vacío.';
-        
+
         if (!self::validFuelType($fuelType))
             $this->errores['fuelType'] = "El tipo de combustible no es válido. Introduce uno de los siguientes: 'diesel', 'electric-hybrid', 'electric', 'petrol', 'plug-in-hybrid'.";
 
@@ -142,16 +143,16 @@ class FormularioRegistroVehiculo extends Formulario {
 
         if ( ! $seatCount || empty($seatCount))
             $this->errores['seatCount'] = 'El numero de asientos del vehiculo no puede estar vacío';
-        
+
         if ( !is_numeric($seatCount))
             $this->errores['seatCount'] = 'Formato del numero de asientos inválido! Debe ser un numero.';
 
         if ($seatCount < 2 || $seatCount > 9)
             $this->errores['seatCount'] = 'Formato del numero de asientos inválido! Debe ser un numero entre el 2 y el 9';
-        
+
         if (count($this->errores) === 0) {
             $vehicle = $this->vehicleService->createVehicle($vin, $licensePlate, $model, $fuelType, $seatCount, self::AVAILABLE);
-        
+
             if (!$vehicle)
                 $this->errores[] = "Vehicle already exists!";
             else
@@ -173,5 +174,5 @@ class FormularioRegistroVehiculo extends Formulario {
         $defaultRoles = array('diesel', 'electric-hybrid', 'electric', 'petrol', 'plug-in-hybrid');
         return in_array($fuelType, $defaultRoles);
     }
-    
+
 }

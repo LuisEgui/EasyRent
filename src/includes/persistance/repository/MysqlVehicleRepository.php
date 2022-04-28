@@ -1,15 +1,15 @@
 <?php
 
-require_once RAIZ_APP.'/MysqlConnector.php';
-require_once RAIZ_APP.'/Vehicle.php';
-require_once RAIZ_APP.'/AbstractMysqlRepository.php';
+namespace easyrent\includes\persistance\repository;
+
+use easyrent\includes\persistance\entity\Vehicle;
 
 class MysqlVehicleRepository extends AbstractMysqlRepository {
 
     public function __construct(MysqlConnector $connector) {
         parent::__construct($connector);
     }
-    
+
     public function count() {
         $sql = 'select count(vin) as num_vehicles from Vehicle';
         $stmt = $this->db->prepare($sql);
@@ -64,10 +64,10 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
             $stmt->close();
-            
+
             if (!$result)
                 error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-            
+
             return $result;
         }
 
@@ -115,9 +115,9 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
 
                 if ($result)
                     return $vehicle;
-                else 
+                else
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-                
+
             // If the vehicle is not in the database, we insert it.
             } else {
                 if ($vehicle->getImage() !== null) {
@@ -150,5 +150,5 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         }
         return null;
     }
-    
+
 }

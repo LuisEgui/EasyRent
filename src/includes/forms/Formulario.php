@@ -1,5 +1,7 @@
 <?php
 
+namespace easyrent\includes\forms;
+
 /**
  * Clase base para la gestión de formularios.
  */
@@ -17,7 +19,7 @@ abstract class Formulario
     protected $method;
 
     /**
-     * @var string URL asociada al atributo "action" de la etiqueta &lt;form&gt; del fomrulario y que procesará el 
+     * @var string URL asociada al atributo "action" de la etiqueta &lt;form&gt; del fomrulario y que procesará el
      * envío del formulario.
      */
     protected $action;
@@ -74,7 +76,7 @@ abstract class Formulario
     /**
      * Crea una etiqueta para mostrar un mensaje de error. Sólo creará el mensaje de error
      * si existe una clave <code>$idError</code> dentro del array <code>$errores</code>.
-     * 
+     *
      * @param string[] $errores     (opcional) Array con los mensajes de error de validación y/o procesamiento del formulario.
      * @param string   $idError     (opcional) Clave dentro de <code>$errores</code> del error a mostrar.
      * @param string   $htmlElement (opcional) Etiqueta HTML a crear para mostrar el error.
@@ -90,9 +92,7 @@ abstract class Formulario
         foreach ($atts as $key => $value) {
             $att .= "$key=\"$value\" ";
         }
-        $html = "<$htmlElement $att>{$errores[$idError]}</$htmlElement>";
-
-        return $html;
+        return "<$htmlElement $att>{$errores[$idError]}</$htmlElement>";
     }
 
     protected static function generaErroresCampos($campos, $errores, $htmlElement = 'span', $atts = []) {
@@ -118,35 +118,35 @@ abstract class Formulario
      *   <tbody>
      *     <tr>
      *       <td>action</td>
-     *       <td><code>$_SERVER['REQUEST_URI']</code></td>       
+     *       <td><code>$_SERVER['REQUEST_URI']</code></td>
      *       <td>URL asociada al atributo "action" de la etiqueta &lt;form&gt; del formulario y que procesará el envío del formulario.</td>
      *     </tr>
      *     <tr>
      *       <td>class</td>
-     *       <td><code>null</code></td>       
+     *       <td><code>null</code></td>
      *       <td>Valor del atributo "class" de la etiqueta &lt;form&gt; asociada al formulario. Si este parámetro incluye la cadena
      *        "nocsrf" no se generá el token CSRF para este formulario.</td>
      *     </tr>
      *     <tr>
      *       <td>enctype</td>
-     *       <td><code>null</code></td>       
+     *       <td><code>null</code></td>
      *       <td>Valor del parámetro enctype del formulario.</td>
      *     </tr>
      *     <tr>
      *       <td>method</td>
-     *       <td>POST</td>       
+     *       <td>POST</td>
      *       <td>Método HTTP para enviar el formulario (e.g. 'POST', 'GET').</td>
      *     </tr>
      *     <tr>
      *       <td>urlRedireccion</td>
-     *       <td><code>null/code></td>       
+     *       <td><code>null/code></td>
      *       <td>Url a la que redirigir en caso de que el formulario se procese exitosamente.</td>
      *     </tr>
      *   </tbody>
      * </table>
      *
      * @param string $formId Identificador único del formulario.
-     * 
+     *
      * @param array $opciones Array de opciones para el formulario (ver más arriba).
      */
     public function __construct($formId, $opciones = array())
@@ -169,7 +169,7 @@ abstract class Formulario
 
     /**
      * Se encarga de orquestar todo el proceso de gestión de un formulario.
-     * 
+     *
      * El proceso es el siguiente:
      * <ul>
      *   <li>O bien se quiere mostrar el formulario </li>
@@ -179,7 +179,7 @@ abstract class Formulario
      *           que será la URL a la que se redirigirá al usuario. Se redirige al usuario y se termina la ejecución del script.</li>
      *       <li>El formulario NO se ha procesado correctamente (errores en los datos, datos incorrectos, etc.) y se devuelve
      *           un <code>array</code> con entradas (campo, mensaje) con errores específicos para un campo o (entero, mensaje) si el mensaje
-     *           es un mensaje que afecta globalmente al formulario. Se vuelve a generar el formulario pasándole el array de errores.</li> 
+     *           es un mensaje que afecta globalmente al formulario. Se vuelve a generar el formulario pasándole el array de errores.</li>
      *     </ul>
      *   </li>
      * </ul>
@@ -207,11 +207,12 @@ abstract class Formulario
             header("Location: {$this->urlRedireccion}");
             exit();
         }
+        return '';
     }
 
     /**
      * Genera el HTML necesario para presentar los campos del formulario.
-     * 
+     *
      * Si el formulario ya ha sido enviado y hay errores en {@see Form::procesaFormulario()} se llama a este método
      * nuevamente con los datos que ha introducido el usuario en <code>$datos</code> y los errores al procesar
      * el formulario en <code>$errores</code>
@@ -240,7 +241,7 @@ abstract class Formulario
 
     /**
      * Función que verifica si el usuario ha enviado el formulario.
-     * 
+     *
      * Comprueba si existe el parámetro <code>$formId</code> en <code>$datos</code>.
      *
      * @param string[] &$datos Array que contiene los datos recibidos en el envío formulario.
@@ -267,12 +268,11 @@ abstract class Formulario
 
         $enctypeAtt = $this->enctype != null ? "enctype=\"{$this->enctype}\"" : '';
 
-        $htmlForm = <<<EOS
+        return <<<EOS
         <form method="{$this->method}" action="{$this->action}" id="{$this->formId}" {$classAtt} {$enctypeAtt}>
             <input type="hidden" name="formId" value="{$this->formId}" />
             $htmlCamposFormularios
         </form>
         EOS;
-        return $htmlForm;
     }
 }

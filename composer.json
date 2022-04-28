@@ -1,15 +1,20 @@
 {
-  "name": "mission/php-test-refactor",
+  "name": "sw-practices/easyrent",
   "require": {
     "phpunit/phpunit": "9.5.19",
     "phpunit/php-code-coverage": "^9.2",
     "ext-mysqli": "*",
-    "squizlabs/php_codesniffer": "3.*"
+    "squizlabs/php_codesniffer": "3.*",
+    "ext-fileinfo": "*",
+    "ext-mbstring": "*"
   },
   "autoload": {
     "psr-4": {
-      "Mission\\php-test-refactor\\": "src/"
+      "easyrent\\": "src/"
     }
+  },
+  "config": {
+    "optimize-autoloader": true
   },
   "authors": [
     {

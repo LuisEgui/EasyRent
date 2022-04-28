@@ -1,5 +1,7 @@
 <?php
 
+namespace easyrent\includes\persistance\entity;
+
 /**
  * Class for user entity.
  */
@@ -32,13 +34,13 @@ class User {
 
     /**
      * Creates an User
-     * 
+     *
      * @param string $id Unique user identifier
      * @param string $email Unique user email
      * @param string $password Encrypted user password.
      * @param string $role User role. Possible values: 'admin', 'particular',
      * 'enterprise'.
-     * @return User
+     * @return void
      */
     public function __construct($id = null, $email, $password, $role, $image) {
         $this->id = $id;
@@ -65,7 +67,7 @@ class User {
     }
 
     /**
-     * Returns user's password 
+     * Returns user's password
      * @return string password
      */
     public function getPassword() {
@@ -135,12 +137,12 @@ class User {
 
     /**
      * Check if an user has a determined role
-     * 
+     *
      * @param string $role Check if the user has this role.
      * @return bool
      */
     public function hasRole($role) {
-        return ($this->role === $role) ? true : false;
+        return $this->role === $role;
     }
 
 }

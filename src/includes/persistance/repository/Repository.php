@@ -1,8 +1,10 @@
 <?php
 
+namespace easyrent\includes\persistance\repository;
+
 /**
  * General repository interface.
- * 
+ *
  * Defines general repository' actions.
  */
 interface Repository {

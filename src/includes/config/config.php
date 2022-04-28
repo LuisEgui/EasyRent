@@ -1,8 +1,11 @@
 <?php
 
+namespace easyrent\includes\config;
+
 /**
  * Config parameters used to generate URLs and routings for files in the app
  */
+
 define('RAIZ_APP', __DIR__);
 define('RUTA_APP', '/sw-practices');
 define('RUTA_USER_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\img', 'usr']));
@@ -19,9 +22,11 @@ date_default_timezone_set('Europe/Madrid');
 /**
  * Initialize the database connection and session_start()
  */
-require_once RAIZ_APP.'/MysqlConnector.php';
-require_once RAIZ_APP.'/UserService.php';
-require_once RAIZ_APP.'/VehicleService.php';
+
+use easyrent\includes\persistance\repository\MysqlConnector;
+use easyrent\includes\persistance\repository\MysqlImageRepository;
+use easyrent\includes\persistance\repository\MysqlUserRepository;
+use easyrent\includes\persistance\repository\MysqlVehicleRepository;
 
 session_start();
 

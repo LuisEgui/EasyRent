@@ -1,7 +1,6 @@
 <?php
 
-require_once RAIZ_APP.'/MysqlConnector.php';
-require_once RAIZ_APP.'/Repository.php';
+namespace easyrent\includes\persistance\repository;
 
 abstract class AbstractMysqlRepository implements Repository {
 

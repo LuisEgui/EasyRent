@@ -1,8 +1,13 @@
 <?php
 
+namespace easyrent\includes\persistance\repository;
+
+use mysqli_result;
+use mysqli_stmt;
+
 /**
  * Database connection interface.
- * 
+ *
  * Defines some basic database actions.
  */
 interface DatabaseConnection {
@@ -22,8 +27,8 @@ interface DatabaseConnection {
     /**
      * Executes a database query.
      * @param string $sql Data inside the query should be properly escaped.
-     * @return mysqli_result|bool For successful SELECT, SHOW, DESCRIBE or EXPLAIN 
-     * queries mysqli_query will return a mysqli_result object. 
+     * @return mysqli_result|bool For successful SELECT, SHOW, DESCRIBE or EXPLAIN
+     * queries mysqli_query will return a mysqli_result object.
      * For other successful queries mysqli_query will return true and false on failure.
      */
     public function query($sql);
@@ -32,7 +37,7 @@ interface DatabaseConnection {
      * Prepares a database query.
      * @param string $sql The query, as a string.
      * @link https://php.net/manual/en/mysqli.prepare.php
-     * @return mysqli_stmt|false mysqli_prepare returns a statement object or 
+     * @return mysqli_stmt|false mysqli_prepare returns a statement object or
      * false if an error occurred.
      */
     public function prepare($sql);
@@ -57,5 +62,5 @@ interface DatabaseConnection {
      * @return true|false on success or failure.
      */
     public function rollback();
-    
+
 }

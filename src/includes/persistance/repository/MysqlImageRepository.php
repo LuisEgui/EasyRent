@@ -1,16 +1,15 @@
 <?php
 
-require_once RAIZ_APP.'/MysqlConnector.php';
-require_once RAIZ_APP.'/Repository.php';
-require_once RAIZ_APP.'/AbstractMysqlRepository.php';
-require_once RAIZ_APP.'/Image.php';
+namespace easyrent\includes\persistance\repository;
+
+use easyrent\includes\persistance\entity\Image;
 
 class MysqlImageRepository extends AbstractMysqlRepository implements Repository {
 
     public function __construct(MysqlConnector $connector) {
         parent::__construct($connector);
     }
-    
+
     public function count() {
         $sql = 'select count(img_id) as num_images from Image';
         $stmt = $this->db->prepare($sql);
@@ -65,10 +64,10 @@ class MysqlImageRepository extends AbstractMysqlRepository implements Repository
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
             $stmt->close();
-            
+
             if (!$result)
                 error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-            
+
             return $result;
         }
 
@@ -99,10 +98,8 @@ class MysqlImageRepository extends AbstractMysqlRepository implements Repository
 
                 if ($result)
                     return $image;
-                else 
+                else
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-                
-                return null;
             // If the image is not in the database, we insert it.
             } else {
                 $sql = sprintf("insert into Image (path, mimeType) values ('%s', '%s')",
@@ -118,10 +115,9 @@ class MysqlImageRepository extends AbstractMysqlRepository implements Repository
                     return $image;
                 } else
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-                
-                return null;
             }
         }
+        return null;
     }
 
 }

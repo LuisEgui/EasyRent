@@ -1,24 +1,25 @@
 <?php
 
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/UserService.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\UserService;
 
 class FormularioBorrarCuenta extends Formulario {
 
     private $userService;
-    
+
     public function __construct() {
         parent::__construct('formDeleteUser', ['urlRedireccion' => 'index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
-        $html = <<<EOF
+        return <<<EOF
         $htmlErroresGlobales
         <fieldset>
             <legend>Borrar cuenta de usuario</legend>
@@ -31,7 +32,6 @@ class FormularioBorrarCuenta extends Formulario {
             </div>
         </fieldset>
         EOF;
-        return $html;
     }
 
     protected function procesaFormulario(&$datos) {
@@ -45,5 +45,5 @@ class FormularioBorrarCuenta extends Formulario {
                 $this->errores[] = "Can't delete user account!";
         }
     }
-    
+
 }

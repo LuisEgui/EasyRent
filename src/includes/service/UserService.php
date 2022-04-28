@@ -1,12 +1,16 @@
 <?php
 
-require RAIZ_APP.'/MysqlUserRepository.php';
-require RAIZ_APP.'/MysqlImageRepository.php';
+namespace easyrent\includes\service;
+
+use easyrent\includes\persistance\entity\Image;
+use easyrent\includes\persistance\entity\User;
+use easyrent\includes\persistance\repository\Repository;
+use easyrent\includes\persistance\repository\UserRepository;
 
 /**
  * User Service class.
- * 
- * It manages the logic of the user's actions. 
+ *
+ * It manages the logic of the user's actions.
  */
 class UserService {
 
@@ -22,7 +26,7 @@ class UserService {
 
     /**
      * Creates an UserService
-     * 
+     *
      * @param UserRepository $userRepository Instance of an UserRepository
      * @return void
      */
@@ -33,7 +37,7 @@ class UserService {
 
     /**
      * Logs in an user into the system.
-     * 
+     *
      * @param string $email User's email.
      * @param string $password User's password, not hashed.
      * @return bool Returns true if the email and password corresponds to a valid user.
@@ -46,13 +50,13 @@ class UserService {
 
     /**
      * Returns the user from the system given an user's email.
-     * 
+     *
      * @param string $email User's email.
-     * @return User|null Returns the user from the database.
+     * @return User|null
      */
-    public function readUserByEmail($email) {
-        $user = $this->userRepository->findByEmail($email);
-        return $user;
+    public function readUserByEmail($email): ?User
+    {
+        return $this->userRepository->findByEmail($email);
     }
 
     /**
@@ -62,7 +66,8 @@ class UserService {
      * @param string $password The user's password.
      * @return string Returns the hashed password.
      */
-    private static function hashPassword($password) {
+    private static function hashPassword($password): string
+    {
         $options = [
             'cost' => 12
         ];
@@ -71,7 +76,7 @@ class UserService {
 
     /**
      * Persists a new user into the system if the user is not register before.
-     * 
+     *
      * @param string $email User's email. Valid user's email.
      * @param string $password User's password. No requirements on this string.
      * @param string $role User's role. Valid roles are: 'particular', 'enterprise' and 'admin'.
@@ -88,7 +93,7 @@ class UserService {
 
     /**
      * Checks if there's a logged user into the system, at the moment of the
-     * call to this function. 
+     * call to this function.
      * @return bool
      */
     private function isLogged() {
@@ -97,7 +102,7 @@ class UserService {
 
     /**
      * Changes the user's email given a new email.
-     * 
+     *
      * @param string $newEmail User's new email.
      * @return bool True if the user is already logged in and the $newEmail
      * is not registered before. False otherwise.
@@ -121,10 +126,10 @@ class UserService {
         }
         return false;
     }
-    
+
     /**
      * Updates the user's password.
-     * 
+     *
      * @param string $newPassword User's new password.
      * @return bool True if the user is already logged in. False otherwise.
      */
@@ -140,7 +145,7 @@ class UserService {
 
     /**
      * Checks if the given role is valid to change.
-     * 
+     *
      * @param string $role Desired role.
      * @return bool True if the $role is in the array: ('particular', enterprise').
      * False otherwise.
@@ -152,7 +157,7 @@ class UserService {
 
     /**
      * Updates the user's role.
-     * 
+     *
      * @param string $role User's new role.
      * @return bool True if the user is already logged in and the $role is valid.
      * Returns false otherwise.
@@ -172,7 +177,7 @@ class UserService {
 
     /**
      * Uploads the user's profile image.
-     * 
+     *
      * @param string $path Image's path.
      * @param string $mimeType Image's MIME Type.
      * @return bool
@@ -204,14 +209,13 @@ class UserService {
     }
 
     /**
-     * Gets the user's profile image 
+     * Gets the user's profile image
      * @return Image|null
      */
     public function getUserImage() {
         if (self::isLogged()) {
             $user = $this->readUserByEmail($_SESSION['email']);
-            $image = $this->imageRepository->findById($user->getImage());
-            return $image;
+            return $this->imageRepository->findById($user->getImage());
         }
         return null;
     }

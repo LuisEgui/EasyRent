@@ -1,25 +1,26 @@
 <?php
 
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/UserService.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\UserService;
 
 class FormularioRegistroUsuario extends Formulario {
 
     private $userService;
     const PARTICULAR = 'particular', ENTERPRISE = 'enterprise';
     const ROLES = [self::PARTICULAR => 'Particular', self::ENTERPRISE => 'Enterprise'];
-    
+
     public function __construct() {
         parent::__construct('formRegisterUser', ['urlRedireccion' => 'index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
 
-    private static function generateRoleSelector($name, $tipoSeleccionado=null)
+    private static function generateRoleSelector($tipoSeleccionado=null)
     {
         $html = '';
         foreach(self::ROLES as $clave => $valor) {
             $html .= "<label>";
-            $html .= "<input type='radio' name=\"{$name}\" ";
+            $html .= "<input type='radio' name=\"role\" ";
             $selected='';
             if ($tipoSeleccionado && $clave == $tipoSeleccionado)
                 $selected='checked';
@@ -29,7 +30,7 @@ class FormularioRegistroUsuario extends Formulario {
 
         return $html;
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
         // Se reutiliza el email introducido previamente o se deja en blanco
         $email = $datos['email'] ?? '';
@@ -38,10 +39,10 @@ class FormularioRegistroUsuario extends Formulario {
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['email', 'password', 'role'], $this->errores, 'span', array('class' => 'error'));
-        $roleSelector = self::generateRoleSelector('role', $role);
+        $roleSelector = self::generateRoleSelector($role);
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
-        $html = <<<EOF
+        return <<<EOF
         $htmlErroresGlobales
         <fieldset>
             <legend>Email, contraseña y role</legend>
@@ -62,7 +63,6 @@ class FormularioRegistroUsuario extends Formulario {
             </div>
         </fieldset>
         EOF;
-        return $html;
     }
 
     protected function procesaFormulario(&$datos) {
@@ -72,10 +72,10 @@ class FormularioRegistroUsuario extends Formulario {
 
         if ( ! $email || empty($email))
             $this->errores['email'] = 'El email del usuario no puede estar vacío';
-        
+
         if( !self::validateEmail($email))
             $this->errores['email'] = 'Formato de email inválido!';
-        
+
         $password = trim($datos['password'] ?? '');
         $password = filter_var($password, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -88,13 +88,13 @@ class FormularioRegistroUsuario extends Formulario {
 
         if (!$role || empty($role))
             $this->errores['role'] = 'El role no puede estar vacío.';
-        
+
         if (!self::validRole($role))
             $this->errores['role'] = "El role no es válido. Introduce uno de los siguientes: admin, particular, enterprise.";
-        
+
         if (count($this->errores) === 0) {
             $usuario = $this->userService->createUser($email, $password, $role);
-        
+
             if (!$usuario)
                 $this->errores[] = "User already exists!";
             else
@@ -103,7 +103,7 @@ class FormularioRegistroUsuario extends Formulario {
     }
 
     protected function validateEmail($email) {
-        $pattern = '/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix';
+        $pattern = '/^([a-z0-9_\-]+)(\.[a-z0-9-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix';
         return preg_match($pattern, $email);
     }
 
@@ -111,5 +111,5 @@ class FormularioRegistroUsuario extends Formulario {
         $defaultRoles = array('admin', 'particular', 'enterprise');
         return in_array($role, $defaultRoles);
     }
-    
+
 }

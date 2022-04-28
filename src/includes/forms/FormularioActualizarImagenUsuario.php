@@ -1,8 +1,9 @@
 <?php
 
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/config.php';
-require_once RAIZ_APP.'/UserService.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\UserService;
+use finfo;
 
 class FormularioActualizarImagenUsuario extends Formulario {
 
@@ -18,7 +19,7 @@ class FormularioActualizarImagenUsuario extends Formulario {
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['archivo', 'tipo'], $this->errores, 'span', array('class' => 'error'));
-        $html = <<<EOS
+        return <<<EOS
         $htmlErroresGlobales
         <fieldset>
             <legend>Actualizar imagen de usuario</legend>
@@ -26,8 +27,6 @@ class FormularioActualizarImagenUsuario extends Formulario {
             <button type="submit">Subir</button>
         </fieldset>
         EOS;
-
-        return $html;
     }
 
     protected function procesaFormulario(&$datos)
@@ -39,7 +38,7 @@ class FormularioActualizarImagenUsuario extends Formulario {
         if (! $ok ) {
             $this->errores['archivo'] = 'Error al subir el archivo';
             return;
-        }  
+        }
 
         $nombre = $_FILES['archivo']['name'];
 
@@ -91,7 +90,7 @@ class FormularioActualizarImagenUsuario extends Formulario {
      * @See http://php.net/manual/es/function.move-uploaded-file.php#111412
      */
     private static function check_file_uploaded_name($filename) {
-        return (bool) ((mb_ereg_match('/^[0-9A-Z-_\.]+$/i', $filename) === 1) ? true : false);
+        return mb_ereg_match('/^[0-9A-Z-_\.]+$/i', $filename) == 1;
     }
 
     /**
@@ -100,7 +99,7 @@ class FormularioActualizarImagenUsuario extends Formulario {
      *
      * If you don't need to handle multi-byte characters you can use preg_replace
      * rather than mb_ereg_replace.
-     * 
+     *
      * @param (string) $filename - Uploaded file name.
      * @author Sean Vieira
      * @see http://stackoverflow.com/a/2021729
@@ -115,9 +114,7 @@ class FormularioActualizarImagenUsuario extends Formulario {
      */
         $newName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $filename);
         // Remove any runs of periods (thanks falstro!)
-        $newName = mb_ereg_replace("([\.]{2,})", '', $newName);
-
-        return $newName;
+        return mb_ereg_replace("([\.]{2,})", '', $newName);
     }
 
     /**
@@ -128,6 +125,6 @@ class FormularioActualizarImagenUsuario extends Formulario {
      * @See http://php.net/manual/es/function.move-uploaded-file.php#111412
      */
     private function check_file_uploaded_length($filename) {
-        return (bool) ((mb_strlen($filename, 'UTF-8') < 250) ? true : false);
+        return mb_strlen($filename, 'UTF-8') < 250;
     }
 }

@@ -1,18 +1,19 @@
 <?php
 
-require_once RAIZ_APP.'/config.php';
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/UserService.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\config;
+use easyrent\includes\service\UserService;
 
 class FormularioLogin extends Formulario {
 
     private $userService;
-    
+
     public function __construct() {
         parent::__construct('formLogin', ['urlRedireccion' => 'index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
         // Se reutiliza el email introducido previamente o se deja en blanco
         $email = $datos['email'] ?? '';
@@ -53,17 +54,17 @@ class FormularioLogin extends Formulario {
         if ( ! $email || empty($email) ) {
             $this->errores['email'] = 'El email del usuario no puede estar vacío';
         }
-        
+
         $password = trim($datos['password'] ?? '');
         $password = filter_var($password, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         if ( ! $password || empty($password) ) {
             $this->errores['password'] = 'El password no puede estar vacío.';
         }
-        
+
         if (count($this->errores) === 0) {
             $logged = $this->userService->login($email, $password);
-        
+
             if (!$logged) {
                 $this->errores[] = "El email del usuario o el password no coinciden";
             } else {
@@ -74,5 +75,5 @@ class FormularioLogin extends Formulario {
             }
         }
     }
-    
+
 }

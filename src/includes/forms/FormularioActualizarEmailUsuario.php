@@ -1,17 +1,18 @@
 <?php
 
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/User.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\UserService;
 
 class FormularioActualizarEmailUsuario extends Formulario {
 
     private $userService;
-    
+
     public function __construct() {
         parent::__construct('formUpdateEmail', ['urlRedireccion' => 'index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
         // Se reutiliza el email introducido previamente o se deja en blanco
         $email = $datos['email'] ?? '';
@@ -21,7 +22,7 @@ class FormularioActualizarEmailUsuario extends Formulario {
         $erroresCampos = self::generaErroresCampos(['email'], $this->errores, 'span', array('class' => 'error'));
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
-        $html = <<<EOF
+        return <<<EOF
         $htmlErroresGlobales
         <fieldset>
             <legend>Actualizar email de usuario</legend>
@@ -35,11 +36,10 @@ class FormularioActualizarEmailUsuario extends Formulario {
             </div>
         </fieldset>
         EOF;
-        return $html;
     }
 
     protected function validateEmail($email) {
-        $pattern = '/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix';
+        $pattern = '/^([a-z0-9_\-]+)(\.[a-z0-9-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix';
         return preg_match($pattern, $email);
     }
 
@@ -50,14 +50,14 @@ class FormularioActualizarEmailUsuario extends Formulario {
 
         if (!$email || empty($email))
             $this->errores['email'] = 'El email del usuario no puede estar vacío';
-        
+
         if (!self::validateEmail($email))
             $this->errores['email'] = 'Formato de email inválido!';
 
         if (count($this->errores) === 0) {
             $usuario = $this->userService->readUserByEmail($_SESSION['email']);
             $rs = $this->userService->updateUserEmail($email);
-        
+
             if (!$rs)
                 $this->errores[] = "Can't upload user email!";
             else

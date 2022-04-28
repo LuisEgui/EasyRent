@@ -1,23 +1,24 @@
 <?php
 
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/User.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\UserService;
 
 class FormularioActualizarRoleUsuario extends Formulario {
 
     private $userService;
     const PARTICULAR = 'particular', ENTERPRISE = 'enterprise';
     const ROLES = [self::PARTICULAR => 'Particular', self::ENTERPRISE => 'Enterprise'];
-    
+
     public function __construct() {
         parent::__construct('formUpdateRole', ['urlRedireccion' => 'index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
 
-    private static function generateRoleSelector($name, $tipoSeleccionado=null, $id=null)
+    private static function generateRoleSelector($tipoSeleccionado=null, $id=null)
     {
         $id= $id !== null ? "id=\"{$id}\"" : '';
-        $html = "<select {$id} name=\"{$name}\">";
+        $html = "<select {$id} name=\"role\">";
         foreach(self::ROLES as $clave => $valor) {
             $selected='';
             if ($tipoSeleccionado && $clave == $tipoSeleccionado) {
@@ -29,7 +30,7 @@ class FormularioActualizarRoleUsuario extends Formulario {
 
         return $html;
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
         // Se reutiliza el role introducido previamente o se deja en PARTICULAR por defecto
         $role = $datos['role'] ?? self::PARTICULAR;
@@ -37,10 +38,10 @@ class FormularioActualizarRoleUsuario extends Formulario {
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['role'], $this->errores, 'span', array('class' => 'error'));
-        $roleSelector = self::generateRoleSelector('role', $role, 'role');
+        $roleSelector = self::generateRoleSelector($role, 'role');
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
-        $html = <<<EOF
+        return <<<EOF
         $htmlErroresGlobales
         <fieldset>
             <legend>Cambiar role de usuario</legend>
@@ -52,7 +53,6 @@ class FormularioActualizarRoleUsuario extends Formulario {
             </div>
         </fieldset>
         EOF;
-        return $html;
     }
 
     protected function procesaFormulario(&$datos) {
@@ -67,7 +67,7 @@ class FormularioActualizarRoleUsuario extends Formulario {
 
         if (count($this->errores) === 0) {
             $rs = $this->userService->updateUserRole($role);
-        
+
             if (!$rs)
                 $this->errores[] = "Can't upload user role!";
             else

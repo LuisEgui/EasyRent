@@ -1,16 +1,20 @@
 <?php
 
+namespace easyrent\includes\persistance\repository;
+
+use Closure;
+use mysqli;
+
 # Database parameters
-define('BD_HOST', 'localhost'); // Cambiar localhost por vm03.db.swarm.test al subir a vps
+# Change 'localhost' to 'vm03.db.swarm.test' when uploading this projecto to the VPS
+define('BD_HOST', 'localhost');
 define('BD_NAME', 'easyrent_db');
 define('BD_USER', 'user');
 define('BD_PASS', '1234');
-define('BD_PORT', '3306');
-
-require_once RAIZ_APP.'/DatabaseConnection.php';
+define('BD_PORT', '3305');
 
 class MysqlConnector implements DatabaseConnection {
-    
+
     private static $instance;
     private $mysqli;
 
@@ -30,10 +34,10 @@ class MysqlConnector implements DatabaseConnection {
 
             if ($mysqli->connect_errno)
                 error_log("Error when connecting to the database: ({$mysqli->errno}) {$mysqli->error}");
-            
+
             if (!$mysqli->set_charset("utf8mb4"))
                 error_log("Error when connecting to the database: ({$mysqli->errno}) {$mysqli->error}");
-            
+
             $this->mysqli = $mysqli;
 
             // It'll call closeConnection() before finishing the script execution:

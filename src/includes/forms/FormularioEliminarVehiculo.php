@@ -1,7 +1,8 @@
 <?php
 
-require_once __DIR__.'/Formulario.php';
-require_once __DIR__.'/VehicleService.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\VehicleService;
 
 class FormularioEliminarVehiculo extends Formulario {
 
@@ -11,7 +12,7 @@ class FormularioEliminarVehiculo extends Formulario {
         parent::__construct('formDeleteVehicle', ['urlRedireccion' => 'admin.php']);
         $this->vehicleService = new VehicleService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores); // Se muestra como una lista
@@ -55,7 +56,7 @@ class FormularioEliminarVehiculo extends Formulario {
                 <button type="submit" name="delete"> Eliminar </button>
             </div>
         EOS;
-            
+
         return $html;
     }
 
