@@ -15,4 +15,4 @@ repos:
     hooks:
       - id: php-cs
         files: \.(php)$
-        args: [--standard=PSR1 -p]
+        args: [--standard=PSR2 -p]
