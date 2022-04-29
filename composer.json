@@ -6,7 +6,8 @@
     "ext-mysqli": "*",
     "squizlabs/php_codesniffer": "3.*",
     "ext-fileinfo": "*",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "phpdocumentor/phpdocumentor": "v3.3.1"
   },
   "autoload": {
     "psr-4": {
@@ -14,7 +15,10 @@
     }
   },
   "config": {
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "symfony/flex": true
+    }
   },
   "authors": [
     {
