@@ -5,25 +5,34 @@ namespace easyrent\includes\forms;
 use easyrent\includes\service\UserService;
 use finfo;
 
-class FormularioActualizarImagenUsuario extends Formulario {
+class FormularioActualizarImagenUsuario extends Formulario
+{
 
     private const ALLOWED_EXTENSIONS = array('jpg','png');
     private $userService;
 
-    public function __construct() {
-        parent::__construct('formUpdateUserImage', ['enctype' => 'multipart/form-data', 'urlRedireccion' => 'index.php']);
+    public function __construct()
+    {
+        parent::__construct('formUpdateUserImage', ['enctype' => 'multipart/form-data',
+                            'urlRedireccion' => 'index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
 
-    protected function generaCamposFormulario(&$datos) {
+    protected function generaCamposFormulario(&$datos)
+    {
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['archivo', 'tipo'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos =
+            self::generaErroresCampos(['archivo', 'tipo'], $this->errores, 'span', ['class' => 'error']);
         return <<<EOS
         $htmlErroresGlobales
         <fieldset>
             <legend>Actualizar imagen de usuario</legend>
-            <div><label for="archivo">Archivo (Máx. 8MB): <input type="file" name="archivo" id="archivo" /></label>{$erroresCampos['archivo']}</div>
+            <div>
+            <label for="archivo">Archivo (Máx. 8MB):
+                <input type="file" name="archivo" id="archivo" />
+            </label>{$erroresCampos['archivo']}
+            </div>
             <button type="submit">Subir</button>
         </fieldset>
         EOS;
@@ -35,7 +44,7 @@ class FormularioActualizarImagenUsuario extends Formulario {
 
         // Verificamos que la subida ha sido correcta
         $ok = $_FILES['archivo']['error'] == UPLOAD_ERR_OK && count($_FILES) == 1;
-        if (! $ok ) {
+        if (! $ok) {
             $this->errores['archivo'] = 'Error al subir el archivo';
             return;
         }
@@ -43,7 +52,7 @@ class FormularioActualizarImagenUsuario extends Formulario {
         $nombre = $_FILES['archivo']['name'];
 
         /* 1.a) Valida el nombre del archivo */
-        $ok = self::check_file_uploaded_name($nombre) && $this->check_file_uploaded_length($nombre);
+        $ok = self::checkFileUploadedName($nombre) && $this->checkFileUploadedLength($nombre);
 
         /* 1.b) Sanitiza el nombre del archivo (elimina los caracteres que molestan)
         $ok = self::sanitize_file_uploaded_name($nombre);
@@ -61,35 +70,40 @@ class FormularioActualizarImagenUsuario extends Formulario {
         $mimeType = $finfo->file($_FILES['archivo']['tmp_name']);
         $ok = preg_match('/image\/*./', $mimeType);
 
-        if (!$ok)
+        if (!$ok) {
             $this->errores['archivo'] = 'El archivo tiene un nombre o tipo no soportado';
+        }
 
-        if (count($this->errores) > 0)
+        if (count($this->errores) > 0) {
             return;
+        }
 
         $tmp_name = $_FILES['archivo']['tmp_name'];
 
         $ok = $this->userService->uploadUserImage($nombre, $mimeType);
 
-        if (!$ok)
+        if (!$ok) {
             $this->errores['archivo'] = 'Error al actualizar la imagen';
+        }
 
         $imagen = $this->userService->getUserImage();
         $fichero = "{$imagen->getId()}-{$imagen->getPath()}";
-        $ruta = implode(DIRECTORY_SEPARATOR, [RUTA_USER_IMAGES, $fichero]);
+        $ruta = implode(DIRECTORY_SEPARATOR, [dirname(dirname(__FILE__)).'\img\usr', $fichero]);
 
-        if (!move_uploaded_file($tmp_name, $ruta))
+        if (!move_uploaded_file($tmp_name, $ruta)) {
             $this->errores['archivo'] = 'Error al mover el archivo';
+        }
     }
 
     /**
      * Check $_FILES[][name]
      *
-     * @param (string) $filename - Uploaded file name.
+     * @param  (string) $filename - Uploaded file name.
      * @author Yousef Ismaeil Cliprz
-     * @See http://php.net/manual/es/function.move-uploaded-file.php#111412
+     * @See    http://php.net/manual/es/function.move-uploaded-file.php#111412
      */
-    private static function check_file_uploaded_name($filename) {
+    private static function checkFileUploadedName($filename)
+    {
         return mb_ereg_match('/^[0-9A-Z-_\.]+$/i', $filename) == 1;
     }
 
@@ -100,18 +114,19 @@ class FormularioActualizarImagenUsuario extends Formulario {
      * If you don't need to handle multi-byte characters you can use preg_replace
      * rather than mb_ereg_replace.
      *
-     * @param (string) $filename - Uploaded file name.
+     * @param  (string) $filename - Uploaded file name.
      * @author Sean Vieira
-     * @see http://stackoverflow.com/a/2021729
+     * @see    http://stackoverflow.com/a/2021729
      */
-    private static function sanitize_file_uploaded_name($filename) {
-    /**
-     * Remove anything which isn't a word, whitespace, number
-     * or any of the following caracters -_~,;[]().
-     * If you don't need to handle multi-byte characters
-     * you can use preg_replace rather than mb_ereg_replace
-     * Thanks @Łukasz Rysiak!
-     */
+    private static function sanitizeFileUploadedName($filename)
+    {
+        /**
+         * Remove anything which isn't a word, whitespace, number
+         * or any of the following caracters -_~,;[]().
+         * If you don't need to handle multi-byte characters
+         * you can use preg_replace rather than mb_ereg_replace
+         * Thanks @Łukasz Rysiak!
+         */
         $newName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $filename);
         // Remove any runs of periods (thanks falstro!)
         return mb_ereg_replace("([\.]{2,})", '', $newName);
@@ -120,11 +135,12 @@ class FormularioActualizarImagenUsuario extends Formulario {
     /**
      * Check $_FILES[][name] length.
      *
-     * @param (string) $filename - Uploaded file name.
+     * @param  (string) $filename - Uploaded file name.
      * @author Yousef Ismaeil Cliprz.
-     * @See http://php.net/manual/es/function.move-uploaded-file.php#111412
+     * @See    http://php.net/manual/es/function.move-uploaded-file.php#111412
      */
-    private function check_file_uploaded_length($filename) {
+    private function checkFileUploadedLength($filename)
+    {
         return mb_strlen($filename, 'UTF-8') < 250;
     }
 }

@@ -25,11 +25,11 @@ class FormularioActualizarPasswordUsuario extends Formulario {
             <legend>Actualizar contraseña</legend>
             <div>
                 <label for="previousPassword">Contraseña anterior:</label>
-                <input id="previousPassword" type="password" name="previousPassword" autocomplete="on"/>{$erroresCampos['previousPassword']}
+                <input id="previousPassword" type="password" name="previousPassword" autocomplete="on" placeholder="********"/>{$erroresCampos['previousPassword']}
             </div>
             <div>
                 <label for="password">Nueva contraseña:</label>
-                <input id="password" type="password" name="password" autocomplete="on"/>{$erroresCampos['password']}
+                <input id="password" type="password" name="password" autocomplete="on" placeholder="********"/>{$erroresCampos['password']}
             </div>
             <div>
                 <button type="submit" name="update">Modificar</button>

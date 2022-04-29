@@ -1,14 +1,12 @@
 <?php
 
-namespace easyrent\includes\config;
-
 /**
  * Config parameters used to generate URLs and routings for files in the app
  */
 
 define('RAIZ_APP', __DIR__);
 define('RUTA_APP', '/sw-practices');
-define('RUTA_USER_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\img', 'usr']));
+define('RUTA_USER_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\\src\\includes\\img', 'usr']));
 define('RUTA_VEHICLE_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\img', 'vehicle']));
 define('RUTA_IMGS', RUTA_APP.'/doc/web/images');
 

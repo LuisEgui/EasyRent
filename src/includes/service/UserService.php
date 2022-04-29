@@ -12,7 +12,8 @@ use easyrent\includes\persistance\repository\UserRepository;
  *
  * It manages the logic of the user's actions.
  */
-class UserService {
+class UserService
+{
 
     /**
      * @var UserRepository User repository
@@ -30,7 +31,8 @@ class UserService {
      * @param UserRepository $userRepository Instance of an UserRepository
      * @return void
      */
-    public function __construct(UserRepository $userRepository, Repository $imageRepository) {
+    public function __construct(UserRepository $userRepository, Repository $imageRepository)
+    {
         $this->userRepository = $userRepository;
         $this->imageRepository = $imageRepository;
     }
@@ -43,7 +45,8 @@ class UserService {
      * @return bool Returns true if the email and password corresponds to a valid user.
      * Returns false otherwise.
      */
-    public function login($email, $password) {
+    public function login($email, $password)
+    {
         $user = $this->userRepository->findByEmail($email);
         return ($user && password_verify($password, $user->getPassword()));
     }
@@ -82,7 +85,8 @@ class UserService {
      * @param string $role User's role. Valid roles are: 'particular', 'enterprise' and 'admin'.
      * @return User|null Returns null when there is an already existing user with the same $email
      */
-    public function createUser($email, $password, $role) {
+    public function createUser($email, $password, $role)
+    {
         $referenceUser = $this->userRepository->findByEmail($email);
         if ($referenceUser === null) {
             $user = new User(null, $email, self::hashPassword($password), $role, null);
@@ -96,7 +100,8 @@ class UserService {
      * call to this function.
      * @return bool
      */
-    private function isLogged() {
+    private function isLogged()
+    {
         return isset($_SESSION['email']) && isset($_SESSION['login']);
     }
 
@@ -107,7 +112,8 @@ class UserService {
      * @return bool True if the user is already logged in and the $newEmail
      * is not registered before. False otherwise.
      */
-    public function updateUserEmail($newEmail) {
+    public function updateUserEmail($newEmail)
+    {
         // If its logged in and the new email is not used by any other user
         if ($this->isLogged()) {
             $presentUser = $this->readUserByEmail($_SESSION['email']);
@@ -133,7 +139,8 @@ class UserService {
      * @param string $newPassword User's new password.
      * @return bool True if the user is already logged in. False otherwise.
      */
-    public function updateUserPassword($newPassword) {
+    public function updateUserPassword($newPassword)
+    {
         if (self::isLogged()) {
             $user = $this->readUserByEmail($_SESSION['email']);
             $user->setPassword(self::hashPassword($newPassword));
@@ -150,7 +157,8 @@ class UserService {
      * @return bool True if the $role is in the array: ('particular', enterprise').
      * False otherwise.
      */
-    private function validRole($role) {
+    private function validRole($role)
+    {
         $validRoles = array('particular', 'enterprise');
         return in_array($role, $validRoles);
     }
@@ -162,7 +170,8 @@ class UserService {
      * @return bool True if the user is already logged in and the $role is valid.
      * Returns false otherwise.
      */
-    public function updateUserRole($role) {
+    public function updateUserRole($role)
+    {
         if (self::isLogged()) {
             $user = $this->readUserByEmail($_SESSION['email']);
             if (self::validRole($role) && $user->getRole() !== $role) {
@@ -182,22 +191,28 @@ class UserService {
      * @param string $mimeType Image's MIME Type.
      * @return bool
      */
-    public function uploadUserImage($path, $mimeType) {
+    public function uploadUserImage($path, $mimeType)
+    {
         if (self::isLogged()) {
             $user = $this->readUserByEmail($_SESSION['email']);
             $image = new Image(null, $path, $mimeType);
             /**
              * 1. Store temp the old user image key
-             * 2. Remove it from the user table
+             * 2. Remove it from the user table and directory of user images
              * 3. Remove it from the image table
              * 4. Insert the new image in the user
              * 5. Save the user
              */
             if ($user->getImage() !== null) {
-                $oldUserImage = $user->getImage();
+                $oldUserImageId = $user->getImage();
+                $oldUserImage = $this->imageRepository->findById($oldUserImageId);
+                $oldUserImageFile = "{$oldUserImage->getId()}-{$oldUserImage->getPath()}";
+                $oldUserImagePath =
+                    implode(DIRECTORY_SEPARATOR, [dirname(dirname(__FILE__)).'\img\usr', $oldUserImageFile]);
+                unlink($oldUserImagePath);
                 $user->setImage(null);
                 $this->userRepository->save($user);
-                $this->imageRepository->deleteById($oldUserImage);
+                $this->imageRepository->deleteById($oldUserImageId);
             }
 
             $image = $this->imageRepository->save($image);
@@ -212,7 +227,8 @@ class UserService {
      * Gets the user's profile image
      * @return Image|null
      */
-    public function getUserImage() {
+    public function getUserImage()
+    {
         if (self::isLogged()) {
             $user = $this->readUserByEmail($_SESSION['email']);
             return $this->imageRepository->findById($user->getImage());
@@ -224,7 +240,8 @@ class UserService {
      * Deletes the user's account
      * @return bool
      */
-    public function deleteUserAccount() {
+    public function deleteUserAccount()
+    {
         if (self::isLogged()) {
             $user = $this->readUserByEmail($_SESSION['email']);
             $this->imageRepository->deleteById($user->getImage());
@@ -236,5 +253,4 @@ class UserService {
         }
         return false;
     }
-
 }
