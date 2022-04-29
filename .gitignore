@@ -332,3 +332,7 @@ $RECYCLE.BIN/
 /composer.lock
 /.phpunit.result.cache
 /.idea/
+/.phpdoc/
+.phpdoc/*
+/.phpdoc/cache/
+/.phpdoc/build/
