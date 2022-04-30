@@ -26,9 +26,8 @@ class MessageService {
      * @param Repository $imageRepository Instance of an MysqlImageRepository
      * @return void
      */
-    public function __construct(MysqlMessageRepository $MessageRepository, Repository $imageRepository) {
+    public function __construct(MysqlMessageRepository $MessageRepository) {
         $this->MessageRepository = $MessageRepository;
-        $this->imageRepository = $imageRepository;
     }
 
     /**
@@ -37,15 +36,14 @@ class MessageService {
      * @param string $id Unique message identifier. Valid message's ID
      * @param string $author message's unique author. Valid author's name
      * @param string $message message's text.
-     * @param string $image user's image.
-     * @param string $date date and time. Valid date and time.
+     * @param string $sendTime date and time. Valid date and time.
      * @param string $idParentMessage previous message's ID.
      * @return Message|null Returns null when there is an already existing Message with the same $m_id
      */
-    public function createMessage($m_id, $author, $message, $date, $image, $idParentMessage) {
-        $referenceMessage = $this->MessageRepository->findById($m_id);
+    public function createMessage($id, $author, $message, $sendTime, $idParentMessage) {
+        $referenceMessage = $this->MessageRepository->findById($id);
         if ($referenceMessage === null) {
-            $message = new Message($m_id, $author, $message, $date, $image, $idParentMessage);
+            $message = new Message($id, $author, $sendTime, $image, $idParentMessage);
             return $this->MessageRepository->save($message);
         }
         return null;
@@ -57,8 +55,8 @@ class MessageService {
      * @param string $m_id Message's identification number.
      * @return bool
      */
-    public function deleteMessage($m_id) {
-        return $this->MessageRepository->deleteById($m_id);
+    public function deleteMessage($id) {
+        return $this->MessageRepository->deleteById($id);
     }
 
     /**

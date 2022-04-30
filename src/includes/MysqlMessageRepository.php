@@ -12,7 +12,7 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
     }
     
     public function count() {
-        $sql = 'select count(m_id) as num_messages from Message';
+        $sql = 'select count(id) as num_messages from Message';
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         $stmt->bind_result($num_messages);
@@ -27,12 +27,12 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
         if(!isset($id))
             return null;
 
-        $sql = sprintf("select m_id, author, message, date, image, idParentMessage from Message where m_id = %d", $id);
+        $sql = sprintf("select id, author, message, sendTime, idParentMessage from Message where id = %d", $id);
         $result = $this->db->query($sql);
 
         if ($result !== false && $result->num_rows > 0) {
             $obj = $result->fetch_object();
-            $message = new Message($obj->m_id, $obj->author, $obj->message, $obj->date, $obj->image, $obj->idParentMessage);
+            $message = new Message($obj->id, $obj->author, $obj->message, $obj->sendTime, $obj->idParentMessage);
         }
 
         $result->close();
@@ -43,7 +43,7 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
     public function findAll() {
         $messages[] = array();
 
-        $sql = sprintf("select m_id, author, message, date, image, idParentMessage from Message");
+        $sql = sprintf("select id, author, message, sendTime, idParentMessage from Message");
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -61,7 +61,7 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
     public function findByAuthor($author) {
         $messages[] = array();
 
-        $sql = sprintf("select m_id, author, message, date, image, idParentMessage from Message where author = '%d'",
+        $sql = sprintf("select id, author, message, sendTime, idParentMessage from Message where author = '%d'",
                         $author->getId());
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
@@ -112,12 +112,10 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
             $importedMessage = $this->findById($message->getId());
             if ($importedMessage !== null) {
                 $message->setId($importedMessage->getId());
-                $sql = sprintf("update Message set author = '%d', message = '%s', image = '%s', " . 
-                        "date = '%s', idParentMessage = '%s'",
+                $sql = sprintf("update Message set author = '%d', message = '%s', sendTime = '%s', idParentMessage = '%s'",
                         $this->db->getConnection()->real_escape_string($message->getAuthor()),
                         $this->db->getConnection()->real_escape_string($message->getMessage()),
-                        $this->db->getConnection()->real_escape_string($message->getImage()),
-                        $this->db->getConnection()->real_escape_string($message->getDate()),
+                        $this->db->getConnection()->real_escape_string($message->getSendTime()),
                         $this->db->getConnection()->real_escape_string($message->getIdParentMessage()),
                         $message->getId());
                 
@@ -131,11 +129,10 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
                 // If the reserve is not in the database, we insert it.
             } else {
-                $sql = sprintf("insert into Message (author, message, date, image, idParentMessage) values ('%s', '%s', '%s', '%s', '%s')",
+                $sql = sprintf("insert into Message (author, message, sendTime, idParentMessage) values ('%s', '%s', '%s', '%s')",
                         $this->db->getConnection()->real_escape_string($message->getAuthor()),
                         $this->db->getConnection()->real_escape_string($message->getMessage()),
-                        $this->db->getConnection()->real_escape_string($message->getImage()),
-                        $this->db->getConnection()->real_escape_string($message->getDate()),
+                        $this->db->getConnection()->real_escape_string($message->getSendTime()),
                         $this->db->getConnection()->real_escape_string($message->getIdParentMessage()));
                 
                 $stmt = $this->db->prepare($sql);

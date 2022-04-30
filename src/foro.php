@@ -7,7 +7,7 @@ require_once __DIR__.'/includes/MessageService.php';
 $tituloPagina = 'Foro';
 
 $contenidoPrincipal = '<h1>Mensajes del foro</h1>';
-$MessageForm = new MessageService();
+$MessageForm = new MessageService($GLOBALS['db_message_repository']);
 $contenidoPrincipal .= $MessageForm->readAllMessages();
 if (isLogged()) {
 	$contenidoPrincipal .= <<<EOS

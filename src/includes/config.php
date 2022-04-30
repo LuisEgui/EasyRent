@@ -22,6 +22,7 @@ date_default_timezone_set('Europe/Madrid');
 require_once RAIZ_APP.'/MysqlConnector.php';
 require_once RAIZ_APP.'/UserService.php';
 require_once RAIZ_APP.'/VehicleService.php';
+require_once RAIZ_APP.'/MessageService.php';
 
 session_start();
 
@@ -33,3 +34,5 @@ $GLOBALS['db_user_repository'] = $userRepository;
 $GLOBALS['db_image_repository'] = $imageRepository;
 $vehicleRepository = new MysqlVehicleRepository($db);
 $GLOBALS['db_vehicle_repository'] = $vehicleRepository;
+$messageRepository = new MysqlMessageRepository($db);
+$GLOBALS['db_message_repository'] = $messageRepository;
