@@ -9,7 +9,8 @@ $tituloPagina = 'Foro';
 $contenidoPrincipal = '<h1>Mensajes del foro</h1>';
 $MessageForm = new MessageService($GLOBALS['db_message_repository']);
 $contenidoPrincipal .= $MessageForm->readAllMessages();
-if (isLogged()) {
+$usuario = new UserService($GLOBALS['db_user_repository']);
+if ($usuario->isLogged()) {
 	$contenidoPrincipal .= <<<EOS
 		<h1>Nuevo Mensaje</h1>
 	EOS;
