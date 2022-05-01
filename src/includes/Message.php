@@ -16,19 +16,14 @@ class Message {
     private $author;
 
     /**
-     * @var string Message's text
+     * @var string Message's txt
      */
-    private $message;
+    private $txt;
 
     /**
-     * @var string Profile user image.
+     * @var string Message's send time.
      */
-    private $image;
-
-    /**
-     * @var string date and time
-     */
-    private $date;
+    private $sendTime;
 
     /**
      * @var string Previous message's ID
@@ -40,18 +35,16 @@ class Message {
      * 
      * @param string $id Unique message identifier
      * @param string $author message's unique author
-     * @param string $message message's text
-     * @param string $image user's image
-     * @param string $date date and time
+     * @param string $txt message's txt
+     * @param string $sendTime message's send time
      * @param string $idParentMessage previous message's ID
      * @return Message
      */
-    public function __construct($id = null, $author, $message, $date, $image, $idParentMessage) {
+    public function __construct($id = null, $author, $txt, $sendTime, $idParentMessage) {
         $this->id = $id;
-        $this->author = $autor;
-        $this->message = $message;
-        $this->date = $date;
-        $this->image = $image;
+        $this->author = $author;
+        $this->txt = $txt;
+        $this->sendTime = $sendTime;
         $this->idParentMessage = $idParentMessage;
     }
 
@@ -75,24 +68,16 @@ class Message {
      * Returns message's message 
      * @return string message
      */
-    public function getMessage() {
-        return $this->message;
+    public function getTxt() {
+        return $this->txt;
     }
 
     /**
      * Returns message's date
      * @return string date
      */
-    public function getDate() {
-        return $this->date;
-    }
-
-    /**
-     * Returns user's image id
-     * @return string image
-     */
-    public function getImage() {
-        return $this->image;
+    public function getSendTime() {
+        return $this->sendTime;
     }
 
     /**
@@ -126,8 +111,8 @@ class Message {
      * @param string message
      * @return void
      */
-    public function setMessage($message) {
-        $this->mensaje = $message;
+    public function setTxt($txt) {
+        $this->txt = $txt;
     }
 
     /**
@@ -135,17 +120,8 @@ class Message {
      * @param string date
      * @return void
      */
-    public function setDate($date) {
-        $this->date = $date;
-    }
-
-    /**
-     * Sets user's image id
-     * @param string image
-     * @return void
-     */
-    public function setImage($image) {
-        $this->image = $image;
+    public function setSendTime($sendTime) {
+        $this->sendTime = $sendTime;
     }
 
     /**

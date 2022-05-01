@@ -125,14 +125,12 @@ create table
 create table 
   Message (
     id serial primary key,
-    autor varchar(30) not null,
-    mensaje varchar(140) not null,
-    fecha datetime not null,
-    idMensajePadre serial default null,
-    image bigint unsigned,
-    foreign key (idMensajePadre) references Message(id),
-    foreign key (image) references User(userImg),
-    foreign key (autor) references User(u_id)
+    author varchar(30) not null,
+    txt varchar(140) not null,
+    sendTime datetime not null,
+    idParentMessage serial default null,
+    foreign key (idParentMessage) references Message(id),
+    foreign key (author) references User(u_id)
 );
 
 -- Aux: check Message fields:

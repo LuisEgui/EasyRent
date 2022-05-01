@@ -56,7 +56,7 @@ from Reserve;
 
 -- Insert example Message row:
 set @INIT := NOW();
-insert into Message(id, autor, mensaje, fecha, idMensajePadre) values
+insert into Message(id, author, txt, sendTime, idParentMessage) values
 (1, 1, 'Bienvenido al foro', @INIT, NULL),
 (2, 1, 'Muchas gracias', ADDTIME(@INIT, '0:15:0'), 1),
 (3, 1, 'Otro mensaje', ADDTIME(@INIT, '25:15:0'), NULL); 
