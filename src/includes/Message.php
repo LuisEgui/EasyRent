@@ -16,9 +16,9 @@ class Message {
     private $author;
 
     /**
-     * @var string Message's txt
+     * @var string Message's text
      */
-    private $txt;
+    private $message;
 
     /**
      * @var string Message's send time.
@@ -35,15 +35,15 @@ class Message {
      * 
      * @param string $id Unique message identifier
      * @param string $author message's unique author
-     * @param string $txt message's txt
+     * @param string $message message's text
      * @param string $sendTime message's send time
      * @param string $idParentMessage previous message's ID
      * @return Message
      */
-    public function __construct($id = null, $author, $txt, $sendTime, $idParentMessage) {
+    public function __construct($id = null, $author, $message, $sendTime, $idParentMessage) {
         $this->id = $id;
         $this->author = $author;
-        $this->txt = $txt;
+        $this->message = $message;
         $this->sendTime = $sendTime;
         $this->idParentMessage = $idParentMessage;
     }
@@ -68,8 +68,8 @@ class Message {
      * Returns message's message 
      * @return string message
      */
-    public function getTxt() {
-        return $this->txt;
+    public function getMessage() {
+        return $this->message;
     }
 
     /**
@@ -111,8 +111,8 @@ class Message {
      * @param string message
      * @return void
      */
-    public function setTxt($txt) {
-        $this->txt = $txt;
+    public function setMessage($message) {
+        $this->message = $message;
     }
 
     /**

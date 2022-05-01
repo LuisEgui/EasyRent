@@ -35,15 +35,15 @@ class MessageService {
      * 
      * @param string $id Unique message identifier. Valid message's ID
      * @param string $author message's unique author. Valid author's name
-     * @param string $txt message's txt.
+     * @param string $message message's text.
      * @param string $sendTime date and time. Valid date and time.
      * @param string $idParentMessage previous message's ID.
      * @return Message|null Returns null when there is an already existing Message with the same $m_id
      */
-    public function createMessage($id, $author, $txt, $sendTime, $idParentMessage) {
+    public function createMessage($id, $author, string $message, $sendTime, $idParentMessage) {
         $referenceMessage = $this->messageRepository->findById($id);
         if ($referenceMessage === null) {
-            $message = new Message($id, $author, $txt, $sendTime, $idParentMessage);
+            $message = new Message($id, $author, $message, $sendTime, $idParentMessage);
             return $this->messageRepository->save($message);
         }
         return null;
