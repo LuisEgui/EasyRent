@@ -33,7 +33,7 @@ if ($userService->isLogged()) {
 			<p>
 			Texto: 
 		EOS;
-		$contenidoPrincipal .= $messages[$i]->getMessage();
+		$contenidoPrincipal .= $messages[$i]->getTxt();
 		$contenidoPrincipal .= <<<EOS
 			</p>
 			<p>
