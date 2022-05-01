@@ -7,7 +7,7 @@ require_once __DIR__.'/includes/MessageService.php';
 
 $tituloPagina = 'Foro';
 
-$contenidoPrincipal .= '<h1>Mensajes del foro</h1>';
+$contenidoPrincipal = '<h1>Mensajes del foro</h1>';
 $MessageService = new MessageService($GLOBALS['db_message_repository']);
 $messages = $MessageService->readAllMessages();
 $usuario = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
