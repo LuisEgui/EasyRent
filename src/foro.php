@@ -8,12 +8,12 @@ require_once __DIR__.'/includes/MessageService.php';
 $tituloPagina = 'Foro';
 
 $contenidoPrincipal = '<h1>Mensajes del foro</h1>';
-$MessageService = new MessageService($GLOBALS['db_message_repository']);
-$messages = $MessageService->readAllMessages();
-$usuario = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
-if ($usuario->isLogged()) {
+$messageService = new MessageService($GLOBALS['db_message_repository']);
+$messages[] = $messageService->readAllMessages();
+$userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
+if ($userService->isLogged()) {
 	$contenidoPrincipal .= <<<EOS
-		<h1>Nuevo Mensaje</h1>
+		<h1>Lista de mensajes</h1>
 	EOS;
 	for ($i = 0; $i < count($messages); $i++) {
 		$contenidoPrincipal .= <<<EOS
@@ -30,7 +30,7 @@ if ($usuario->isLogged()) {
 		$contenidoPrincipal .= <<<EOS
 			</p>
 			<p>
-			Mensaje: 
+			Texto: 
 		EOS;
 		$contenidoPrincipal .= $messages[$i]->getTxt();
 		$contenidoPrincipal .= <<<EOS

@@ -12,7 +12,7 @@ class MessageService {
     /**
      * @var MysqlMessageRepository Message repository
      */
-    private $MessageRepository;
+    private $messageRepository;
 
     /**
      * @var Repository Author's Image repository
@@ -26,8 +26,8 @@ class MessageService {
      * @param Repository $imageRepository Instance of an MysqlImageRepository
      * @return void
      */
-    public function __construct(MysqlMessageRepository $MessageRepository) {
-        $this->MessageRepository = $MessageRepository;
+    public function __construct(MysqlMessageRepository $messageRepository) {
+        $this->messageRepository = $messageRepository;
     }
 
     /**
@@ -41,10 +41,10 @@ class MessageService {
      * @return Message|null Returns null when there is an already existing Message with the same $m_id
      */
     public function createMessage($id, $author, $txt, $sendTime, $idParentMessage) {
-        $referenceMessage = $this->MessageRepository->findById($id);
+        $referenceMessage = $this->messageRepository->findById($id);
         if ($referenceMessage === null) {
             $message = new Message($id, $author, $txt, $sendTime, $idParentMessage);
-            return $this->MessageRepository->save($message);
+            return $this->messageRepository->save($message);
         }
         return null;
     }
@@ -56,7 +56,7 @@ class MessageService {
      * @return bool
      */
     public function deleteMessage($id) {
-        return $this->MessageRepository->deleteById($id);
+        return $this->messageRepository->deleteById($id);
     }
 
     /**
@@ -65,6 +65,6 @@ class MessageService {
      * @return Message[] Returns the Messages from the database.
      */
     public function readAllMessages(){
-        return $this->MessageRepository->findAll();
+        return $this->messageRepository->findAll();
     }
 }
