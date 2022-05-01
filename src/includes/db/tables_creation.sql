@@ -125,10 +125,10 @@ create table
 create table 
   Message (
     id serial primary key,
-    author varchar(30) not null,
-    txt varchar(140) not null,
+    author bigint unsigned not null,
+    message varchar(140) not null,
     sendTime datetime not null,
-    idParentMessage serial default null,
+    idParentMessage bigint unsigned default null,
     foreign key (idParentMessage) references Message(id),
     foreign key (author) references User(u_id)
 );
