@@ -84,7 +84,7 @@ class Message {
      * Returns message's idParentMessage
      * @return string idParentMessage
      */
-    public function getidParentMessage() {
+    public function getIdParentMessage() {
         return $this->idParentMessage;
     }
 

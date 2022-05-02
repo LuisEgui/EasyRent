@@ -1,6 +1,7 @@
 <?php
 //La fecha la pasamos por parámetro o la metemos aqui??
 require RAIZ_APP.'/MysqlMessageRepository.php';
+require_once RAIZ_APP.'/Message.php';
 
 /**
  * Message Service class.
@@ -40,12 +41,9 @@ class MessageService {
      * @param string $idParentMessage previous message's ID.
      * @return Message|null Returns null when there is an already existing Message with the same $m_id
      */
-    public function createMessage($txt, $idParentMessage) {
-        $userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
-        $user = $userService->readUserByEmail($_SESSION['email']);
-        $message = new Message(null, $user->getId(), $txt, date('Y-m-d H:i:s'), $idParentMessage);
+    public function createMessage($txt, $author, $idParentMessage) {
+        $message = new Message(null, $author, $txt, date('Y-m-d H:i:s'), $idParentMessage);
         return $this->messageRepository->save($message);
-
     }
 
     /**

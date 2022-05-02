@@ -62,7 +62,7 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
         $messages[] = array();
 
         $sql = sprintf("select id, author, txt, sendTime, idParentMessage from Message where author = '%d'",
-                        $author->getId());
+                        $author);
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -129,11 +129,11 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
                 // If the reserve is not in the database, we insert it.
             } else {
-                $sql = sprintf("insert into Message (author, txt, sendTime, idParentMessage) values ('%s', '%s', '%s', '%s')",
-                        $this->db->getConnection()->real_escape_string($message->getAuthor()),
+                $sql = sprintf("insert into Message (author, txt, sendTime, idParentMessage) values ('%d', '%s', '%s', '%d')",
+                        $message->getAuthor(),
                         $this->db->getConnection()->real_escape_string($message->getTxt()),
                         $this->db->getConnection()->real_escape_string($message->getSendTime()),
-                        $this->db->getConnection()->real_escape_string($message->getIdParentMessage()));
+                        $message->getIdParentMessage());
                 
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
