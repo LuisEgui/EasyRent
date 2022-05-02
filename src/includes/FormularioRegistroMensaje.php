@@ -9,7 +9,7 @@ class FormularioRegistroMensaje extends Formulario {
     
     public function __construct() {
         parent::__construct('formRegisterMessage', ['urlRedireccion' => 'foro.php']);
-        $this->$messageService = new MessageService($GLOBALS['db_message_repository']);
+        $this->messageService = new MessageService($GLOBALS['db_message_repository']);
     }
     
     protected function generaCamposFormulario(&$datos) {
@@ -37,13 +37,13 @@ class FormularioRegistroMensaje extends Formulario {
 
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
-        $message = trim($datos['message'] ?? '');
+        $txt = trim($datos['txt'] ?? '');
 
-        if ( ! $message || empty($message))
-            $this->errores['message'] = 'El mensaje no puede estar vacío';
+        if ( ! $txt || empty($txt))
+            $this->errores['txt'] = 'El mensaje no puede estar vacío';
         
         if (count($this->errores) === 0) {
-            $newMessage = $this->messageService->createMessage($message);
+            $newMessage = $this->messageService->createMessage($txt);
         
  
             header("Location: {$this->urlRedireccion}");
