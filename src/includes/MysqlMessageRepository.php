@@ -80,10 +80,19 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
     public function deleteById($id) {
         // Check if the message already exists
         if ($this->findById($id) !== null) {
+            $sql = sprintf("SET FOREIGN_KEY_CHECKS=0");
+            $stmt = $this->db->prepare($sql);
+            $result = $stmt->execute();
+            $stmt->close();
             $sql = sprintf("delete from Message where id = %d", $id);
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
             $stmt->close();
+            $sql = sprintf("SET FOREIGN_KEY_CHECKS=1");
+            $stmt = $this->db->prepare($sql);
+            $result = $stmt->execute();
+            $stmt->close();
+            
             
             if (!$result)
                 error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
