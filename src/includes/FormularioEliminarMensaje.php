@@ -15,11 +15,11 @@ class FormularioEliminarMensaje extends Formulario {
     }
     
     protected function generaCamposFormulario(&$datos) {
-        $html .= <<<EOS
+        $html = <<<EOF
             <div>
                 <button type="submit" name="delete"> Eliminar </button>
             </div>
-        EOS;
+        EOF;
             
         return $html;
     }
