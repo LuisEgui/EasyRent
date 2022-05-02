@@ -5,6 +5,7 @@ require_once __DIR__.'/includes/Message.php';
 require_once __DIR__.'/includes/UserService.php';
 require_once __DIR__.'/includes/MessageService.php';
 require_once __DIR__.'/includes/FormularioRegistroMensaje.php';
+require_once __DIR__.'/includes/FormularioResponderMensaje.php';
 
 $tituloPagina = 'Foro';
 
@@ -43,6 +44,15 @@ $contenidoPrincipal .= $messages[$i]->getSendTime();
 $contenidoPrincipal .= <<<EOS
 	</p> 
 EOS;
+//añadir respuesta
+if ($userService->isLogged()) {
+	$formres = new FormularioResponderMensaje($messages[$i]->getId());
+	$htmlFormResMessage = $formres->gestiona();
+	$contenidoPrincipal .= <<<EOS
+	$htmlFormResMessage
+	EOS;
+
+}
 }
 
 if ($userService->isLogged()) {
@@ -53,7 +63,7 @@ if ($userService->isLogged()) {
 	$tituloPagina = 'Publicación de mensaje al foro';
 
 	$contenidoPrincipal .= <<<EOS
-	<h1>Mensaje</h1>
+	<h1>Nuevo mensaje</h1>
 	$htmlFormRegMessage
 	EOS;
 
