@@ -30,7 +30,9 @@ $contenidoPrincipal .= <<<EOS
 	<p>
 	Autor: 
 EOS;
-$contenidoPrincipal .= $messages[$i]->getAuthor();
+$idAuthor = $messages[$i]->getAuthor();
+$userAuthor = $userService->readUserById($idAuthor);
+$contenidoPrincipal .= $userAuthor->getEmail();
 $contenidoPrincipal .= <<<EOS
 	</p>
 	<p>
@@ -56,7 +58,7 @@ if ($userService->isLogged()) {
 	if($userService->readUserByEmail($_SESSION['email'])->getId() == $messages[$i]->getAuthor()){
 		$formdel = new FormularioEliminarMensaje($messages[$i]->getId());
 		$htmlFormDelMessage = $formdel->gestiona();
-		
+
 		//PARA EDITAR MENSAJE
 		$formact = new FormularioActualizarMensaje($messages[$i]->getId());
 		$htmlFormActMessage = $formact->gestiona();
