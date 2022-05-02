@@ -7,6 +7,7 @@ require_once __DIR__.'/includes/MessageService.php';
 require_once __DIR__.'/includes/FormularioRegistroMensaje.php';
 require_once __DIR__.'/includes/FormularioResponderMensaje.php';
 require_once __DIR__.'/includes/FormularioEliminarMensaje.php';
+require_once __DIR__.'/includes/FormularioActualizarMensaje.php';
 
 $tituloPagina = 'Foro';
 
@@ -55,11 +56,13 @@ if ($userService->isLogged()) {
 	if($userService->readUserByEmail($_SESSION['email'])->getId() == $messages[$i]->getAuthor()){
 		$formdel = new FormularioEliminarMensaje($messages[$i]->getId());
 		$htmlFormDelMessage = $formdel->gestiona();
+		
 		//PARA EDITAR MENSAJE
-	//	$formact = new FormularioActualizarMensaje($messages[$i]->getId());
-	//	$htmlFormActMessage = $formact->gestiona();
+		$formact = new FormularioActualizarMensaje($messages[$i]->getId());
+		$htmlFormActMessage = $formact->gestiona();
 		$contenidoPrincipal .= <<<EOS
 		$htmlFormDelMessage
+		$htmlFormActMessage
 		EOS;
 		
 	} 

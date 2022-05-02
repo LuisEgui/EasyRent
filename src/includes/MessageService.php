@@ -64,4 +64,34 @@ class MessageService {
     public function readAllMessages(){
         return $this->messageRepository->findAll();
     }
+
+    /**
+     * Returns the Message with the specified id in the system.
+     * 
+     * @return Message Returns the Message from the database.
+     */
+    public function readMessageById($id){
+        return $this->messageRepository->findById($id);
+    }
+
+    /**
+     * Updates the Message with the specified id from the system.
+     * 
+     * @return Bool false if the message was modified correctly in the database.
+     */
+    public function updateMessage($newText){
+        $presentMessage = $this->readMessageById($_SESSION['id']);
+        $referenceMessage = $this->readMessageById($newText);
+        if ($referenceMessage === null) {
+            // We remove the old user email by deleting the user object
+            $this->messageRepository->delete($presentMessage);
+            // And save the new one
+            $presentMessage->setTxt($newText);
+            $this->messageRepository->save($presentMessage);
+            // Set the session email to the new email
+            $_SESSION['id'] = $presentMessage->getTxt();
+            return true;
+        }
+        return false;
+    }
 }

@@ -7,9 +7,10 @@ class FormularioActualizarMensaje extends Formulario {
 
     private $MessageService;
     
-    public function __construct() {
+    public function __construct($id) {
         parent::__construct('formUpdateMessage', ['urlRedireccion' => 'foro.php']);
         $this->MessageService = new MessageService($GLOBALS['db_message_repository'], $GLOBALS['db_image_repository']);
+        $this->idMessage = $id;
     }
     
     protected function generaCamposFormulario(&$datos) {
@@ -48,7 +49,6 @@ class FormularioActualizarMensaje extends Formulario {
             $this->errores['mensaje'] = 'El mensaje no puede estar vacío';
 
         if (count($this->errores) === 0) {
-            $foro = $this->MessageService->readMessageById($_SESSION['id']);
             $rs = $this->MessageService->updateMessage($mensaje);
         
             if (!$rs)
