@@ -40,10 +40,10 @@ class MessageService {
      * @param string $idParentMessage previous message's ID.
      * @return Message|null Returns null when there is an already existing Message with the same $m_id
      */
-    public function createMessage($txt) {
+    public function createMessage($txt, $idParentMessage) {
         $userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
         $user = $userService->readUserByEmail($_SESSION['email']);
-        $message = new Message(null, $user->getId(), $txt, date('Y-m-d H:i:s'), null);
+        $message = new Message(null, $user->getId(), $txt, date('Y-m-d H:i:s'), $idParentMessage);
         return $this->messageRepository->save($message);
 
     }

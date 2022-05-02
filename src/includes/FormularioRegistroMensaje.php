@@ -43,7 +43,7 @@ class FormularioRegistroMensaje extends Formulario {
             $this->errores['txt'] = 'El mensaje no puede estar vacío';
         
         if (count($this->errores) === 0) {
-            $newMessage = $this->messageService->createMessage($txt);
+            $newMessage = $this->messageService->createMessage($txt, null);
         
  
             header("Location: {$this->urlRedireccion}");
