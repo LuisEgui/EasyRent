@@ -45,47 +45,6 @@ create table
 -- Aux: check Vehicle fields
 -- describe Vehicle;
 
--- Damage table creation
-create table
-  Damage (
-    d_id serial primary key,
-    vehicle bigint not null,
-    area enum (
-      'brakes',
-      'controls',
-      'engine',
-      'front',
-      'general',
-      'interior',
-      'left',
-      'right',
-      'rear',
-      'roof',
-      'trunk',
-      'underbody',
-      'wheels'
-    ) not null,
-    type enum ('minor', 'moderate', 'severe'),
-    isRepaired boolean default false,
-    foreign key (vehicle) references Vehicle(vin)
-  );
-
--- Aux: check Damage fields:
--- describe Damage;
-
--- EvidenceDamage table creation
-create table
-  EvidenceDamage (
-    damage bigint not null, 
-    image bigint not null, 
-    primary key (damage, image),
-    foreign key (damage) references Damage(d_id),
-    foreign key (image) references Image(img_id)
-  );
-
--- Aux: check EvidenceDamage fields:
--- describe EvidenceDamage;
-
 -- User table creation
 create table
   User (
@@ -135,3 +94,37 @@ create table
 
 -- Aux: check Message fields:
 -- describe Message;
+
+-- Damage table creation
+create table
+  Damage (
+    d_id serial primary key,
+    vehicle bigint not null,
+    user bigint unsigned not null,
+    title varchar(30) not null,
+    description varchar(70) not null,
+    evidenceDamage bigint unsigned,
+    area enum (
+      'brakes',
+      'controls',
+      'engine',
+      'front',
+      'general',
+      'interior',
+      'left',
+      'right',
+      'rear',
+      'roof',
+      'trunk',
+      'underbody',
+      'wheels'
+    ) not null,
+    type enum ('minor', 'moderate', 'severe'),
+    isRepaired boolean default false,
+    foreign key (vehicle) references Vehicle(vin),
+    foreign key (evidenceDamage) references Image(img_id),
+    foreign key (user) references User(u_id)
+  );
+
+-- Aux: check Damage fields:
+-- describe Damage;

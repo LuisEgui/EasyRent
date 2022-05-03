@@ -10,27 +10,19 @@ from Model;
 
 -- Insert example Vehicle row:
 insert into Vehicle(vin, licensePlate, model, fuelType, seatCount)
-values (123456, 'X-XX-1234', 1, 'petrol', '5');
+values (123456, '12345-A', 1, 'petrol', '5');
 
 -- View inserted data:
 select *
 from Vehicle;
 
 -- Insert example Damage row:
-insert into Damage(vehicle, area, type, isRepaired)
-values (123456, 'general', 'minor', true);
+insert into Damage(vehicle, user, title, description, evidenceDamage, area, type, isRepaired)
+values (123456, 1, 'Audi S8 rozado', 'Hay una raya en la parte lateral', null, 'general', 'minor', false);
 
 -- View inserted data:
 select *
 from Damage;
-
--- Insert example EvidenceDamage row:
-insert into EvidenceDamage(damage, image)
-values (1, 1);
-
--- View inserted data:
-select *
-from EvidenceDamage;
 
 -- Insert example User row:
 -- Password encrypted with BCrypt.
