@@ -44,8 +44,36 @@ for ($i = 0; $i < count($messages); $i++) {
 		$contenidoPrincipal .= <<<EOS
 		</p> 
 		EOS;
-	
-	}
+		for ($j = 0; $j < count($messages); $j++) {
+			if($messages[$j]->getIdParentMessage() == $messages[$i]->getId()){
+				$contenidoPrincipal .= <<<EOS
+				<div class="v">
+					<h2>Respuesta a: 
+				EOS;
+				$contenidoPrincipal .= $messages[$i]->getTxt();
+				$contenidoPrincipal .= <<<EOS
+				</h2>
+					<p>Autor: 
+				EOS;
+				$idAuthor = $messages[$j]->getAuthor();
+				$userAuthor = $userService->readUserById($idAuthor);
+				$contenidoPrincipal .= $userAuthor->getEmail();
+				$contenidoPrincipal .= <<<EOS
+				</p>
+				<p>Texto: 
+				EOS;
+				$contenidoPrincipal .= $messages[$j]->getTxt();
+				$contenidoPrincipal .= <<<EOS
+				</p>
+				<p>Fecha: 
+				EOS;
+				$contenidoPrincipal .= $messages[$j]->getSendTime();
+				$contenidoPrincipal .= <<<EOS
+				</p> 
+				EOS;
+			}
+		}
+	} 
 
 	
 }

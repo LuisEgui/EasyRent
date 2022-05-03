@@ -44,6 +44,7 @@ class FormularioResponderMensaje extends Formulario {
 
             $idAuthor = $message->getAuthor();
             $userAuthor = $this->userService->readUserById($idAuthor);
+            if($message->getIdParentMessage() == null){
             $html .= <<<EOS
                 <tr>
                     <td><input type="radio" name="seleccionMensaje" value="{$message->getId()} required"></td>
@@ -52,6 +53,7 @@ class FormularioResponderMensaje extends Formulario {
                     <td>{$message->getTxt()}</td>
                 </tr>
             EOS;
+        }
         }
         $html .= <<<EOS
         <fieldset>
