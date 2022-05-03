@@ -77,7 +77,7 @@ class FormularioActualizarMensaje extends Formulario {
 
         if (empty($txt))
             $this->errores['txt'] = 'El mensaje no puede estar vacío';
-        if (empty($idParentMessage))
+        if (empty($idMessage))
         $this->errores['seleccionMensaje'] = 'Debe seleccionar una opción';
         
         if (count($this->errores) === 0) {

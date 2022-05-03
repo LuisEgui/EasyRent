@@ -83,10 +83,9 @@ class MessageService {
         $presentMessage = $this->readMessageById($idMessage);
         $referenceMessage = $this->readMessageById($newText);
         if ($referenceMessage === null) {
-            // We remove the old user email by deleting the user object
-            $this->messageRepository->delete($presentMessage);
             // And save the new one
             $presentMessage->setTxt($newText);
+            $this->messageRepository->modify($presentMessage, $newText);
             $this->messageRepository->save($presentMessage);
             return true;
         }

@@ -77,7 +77,7 @@ class FormularioEliminarMensaje extends Formulario {
         $this->errores = [];
         $idDeleteMessage = $datos['borrarMensaje'];
 
-        if (empty($idParentMessage))
+        if (empty($idDeleteMessage))
         $this->errores['seleccionMensaje'] = 'Debe seleccionar una opción';
         
         if (count($this->errores) === 0) {

@@ -78,7 +78,15 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
     }
 
     public function deleteById($id) {
-        // Check if the message already exists
+
+        $messages = $this->findAll();
+        for($i = 0; $i < $this->count(); $i++){
+            $idParent = $messages[$i]->getIdParentMessage();
+            if($idParent == $id){
+                $this->deleteById($messages[$i]->getId());
+            }
+        }
+
         if ($this->findById($id) !== null) {
             $sql = sprintf("SET FOREIGN_KEY_CHECKS=0");
             $stmt = $this->db->prepare($sql);
@@ -111,6 +119,37 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
         return false;
     }
 
+    public function modify($message, $newText) {
+        // Check entity type and we check first if the message already exists
+        $importedMessage = $this->findById($message->getId());
+        if ($message instanceof Message && ($importedMessage !== null)){
+
+            $message->setId($importedMessage->getId());
+            $sql = sprintf("SET FOREIGN_KEY_CHECKS=0");
+            $stmt = $this->db->prepare($sql);
+            $result = $stmt->execute();
+            $stmt->close();
+
+            $sql = sprintf("update Message set author = '%d', txt = '%s', sendTime = '%s', idParentMessage = '%s' where id = %d",
+                $this->db->getConnection()->real_escape_string($message->getAuthor()),
+                $this->db->getConnection()->real_escape_string($newText),
+                $this->db->getConnection()->real_escape_string($message->getSendTime()),
+                $this->db->getConnection()->real_escape_string($message->getIdParentMessage()),
+                $message->getId());
+
+            $stmt = $this->db->prepare($sql);
+            $result = $stmt->execute();
+            $stmt->close();
+
+            $sql = sprintf("SET FOREIGN_KEY_CHECKS=1");
+            $stmt = $this->db->prepare($sql);
+            $result = $stmt->execute();
+            $stmt->close();
+        }
+
+        return false;
+    }
+
     public function save($message) {
         // Check entity type
         if ($message instanceof Message) {
@@ -121,7 +160,7 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
             $importedMessage = $this->findById($message->getId());
             if ($importedMessage !== null) {
                 $message->setId($importedMessage->getId());
-                $sql = sprintf("update Message set author = '%d', txt = '%s', sendTime = '%s', idParentMessage = '%s'",
+                $sql = sprintf("update Message set author = '%d', txt = '%s', sendTime = '%s', idParentMessage = '%s' where id = %d",
                         $this->db->getConnection()->real_escape_string($message->getAuthor()),
                         $this->db->getConnection()->real_escape_string($message->getTxt()),
                         $this->db->getConnection()->real_escape_string($message->getSendTime()),
