@@ -96,6 +96,10 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
             $stmt->close();
+            $sql = sprintf("delete from Message where idParentMessage = %d", $id);
+            $stmt = $this->db->prepare($sql);
+            $result = $stmt->execute();
+            $stmt->close();
             $sql = sprintf("SET FOREIGN_KEY_CHECKS=1");
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
