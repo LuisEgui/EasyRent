@@ -1,60 +1,95 @@
 <?php
 
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/Message.php';
+require_once __DIR__.'/Formulario.php';
+require_once __DIR__.'/MessageService.php';
+require_once __DIR__.'/UserService.php';
 
 class FormularioActualizarMensaje extends Formulario {
 
-    private $MessageService;
+    private $messageService;
+    private $userService;
     
-    public function __construct($id) {
-        parent::__construct('formUpdateMessage', ['urlRedireccion' => 'foro.php']);
-        $this->MessageService = new MessageService($GLOBALS['db_message_repository'], $GLOBALS['db_image_repository']);
-        $this->idMessage = $id;
+    public function __construct() {
+        parent::__construct('formEditMessage', ['urlRedireccion' => 'foro.php']);
+        $this->messageService = new MessageService($GLOBALS['db_message_repository']);
+        $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
     
     protected function generaCamposFormulario(&$datos) {
-        // Se reutiliza el mensaje introducido previamente o se deja en blanco
-        $mensaje = $datos['mensaje'] ?? '';
+        $mensajes = $this->messageService->readAllMessages();
+
+        // Se reutiliza el email introducido previamente o se deja en blanco
+        $mensaje = $datos['txt'] ?? '';
 
         // Se generan los mensajes de error si existen.
-        $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['mensaje'], $this->errores, 'span', array('class' => 'error'));
-
-        // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
-        $html = <<<EOF
+        $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores); // Se muestra como una lista
+        // Agrupa los errores por campos para luego mostrar cada tipo de error donde corresponda haciendo uso d la
+        // posicion del array erroresCampos correcta
+        $erroresCampos = self::generaErroresCampos(['txt', 'seleccionMensaje'], $this->errores, 'span', array('class' => 'error'));
+        $html = <<<EOS
         $htmlErroresGlobales
-        <fieldset>
-            <legend>Actualizar mensaje:</legend>
             <div>
-                <label for="mensaje">Nuevo mensaje:</label>
-                <input id="mensaje" type="text" name="mensaje" value="$mensaje" />
-                {$erroresCampos['mensaje']}
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Autor  </th>
+                    <th>Fecha  </th>
+                    <th>Texto  </th>
+                </tr>
+            </table>
+            </div>
+        EOS;
+
+        foreach($mensajes as $message) {
+
+            $idAuthor = $message->getAuthor();
+            $userAuthor = $this->userService->readUserById($idAuthor);
+            if($userAuthor->getEmail() == $_SESSION['email']){
+            $html .= <<<EOS
+                <tr>
+                    <td><input type="radio" name="seleccionMensaje" value="{$message->getId()} required"></td>
+                    <td>{$userAuthor->getEmail()}</td>
+                    <td>{$message->getSendTime()}</td>
+                    <td>{$message->getTxt()}</td>
+                </tr>
+            EOS;
+            }
+        }
+        $html .= <<<EOS
+        <fieldset>
+            <div>
+                <label for="txt">Mensaje:</label>
+                <input id="txt" type="text" name="txt" value="$mensaje" />{$erroresCampos['txt']}
             </div>
             <div>
-                <button type="submit" name="update">Actualizar</button>
+                <button type="submit" name="answer"> Actualizar </button>
             </div>
         </fieldset>
-        EOF;
+        EOS;
         return $html;
     }
 
-
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
-        $mensaje = trim($datos['mensaje'] ?? '');
-        $mensaje = filter_var($mensaje, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $txt = trim($datos['txt'] ?? '');
+        $idMessage = $datos['seleccionMensaje'];
+        $author = $this->userService->readUserByEmail($_SESSION['email']);
 
-        if (!$mensaje || empty($mensaje))
-            $this->errores['mensaje'] = 'El mensaje no puede estar vacío';
-
-        if (count($this->errores) === 0) {
-            $rs = $this->MessageService->updateMessage($mensaje);
+        if (empty($txt))
+            $this->errores['txt'] = 'El mensaje no puede estar vacío';
+        if (empty($idParentMessage))
+        $this->errores['seleccionMensaje'] = 'Debe seleccionar una opción';
         
-            if (!$rs)
-                $this->errores[] = "Can't upload message!";
-            else
-                header("Location: {$this->urlRedireccion}");
+        if (count($this->errores) === 0) {
+            $edMessage = $this->messageService->updateMessage($txt, $idMessage);
+
+        if ($edMessage === null)
+            $this->errores['txt'] = 'No se ha podido agregar el mensaje!';
+
+        header("Location: {$this->urlRedireccion}");
         }
     }
+
+
+    
 }

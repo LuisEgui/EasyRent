@@ -79,8 +79,8 @@ class MessageService {
      * 
      * @return Bool false if the message was modified correctly in the database.
      */
-    public function updateMessage($newText){
-        $presentMessage = $this->readMessageById($_SESSION['id']);
+    public function updateMessage($newText, $idMessage){
+        $presentMessage = $this->readMessageById($idMessage);
         $referenceMessage = $this->readMessageById($newText);
         if ($referenceMessage === null) {
             // We remove the old user email by deleting the user object
@@ -88,8 +88,6 @@ class MessageService {
             // And save the new one
             $presentMessage->setTxt($newText);
             $this->messageRepository->save($presentMessage);
-            // Set the session email to the new email
-            $_SESSION['id'] = $presentMessage->getTxt();
             return true;
         }
         return false;
