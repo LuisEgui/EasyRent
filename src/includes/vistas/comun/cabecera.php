@@ -15,13 +15,13 @@ function mostrarMenu() {
 	if (isset($_SESSION["login"]) && ($_SESSION["login"]===true) && ($_SESSION['esAdmin']==true)) {
 		return "<a href='{$rutaApp}/src/index.php'>Inicio</a>
 				<a href='{$rutaApp}/src/admin.php'>Administrar</a>
+				<a href='{$rutaApp}/src/incidente.php'>Incidentes</a>
 				<a href='{$rutaApp}/src/perfil.php'>Tu perfil</a>
 				<a href='{$rutaApp}/src/foro.php'>Foro</a>
 				<a href='{$rutaApp}/src/logout.php'>Cerrar sesion</a>";
 	}
 	else if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
 		return "<a href='{$rutaApp}/src/index.php'>Inicio</a>
-				<a href='{$rutaApp}/src/incidente.php'>Generar Incidente</a>
 				<a href='{$rutaApp}/src/promociones.php'>Tus promociones</a>
 				<a href='{$rutaApp}/src/perfil.php'>Tu perfil</a>
 				<a href='{$rutaApp}/src/foro.php'>Foro</a>

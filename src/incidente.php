@@ -19,7 +19,7 @@ $contenidoPrincipal = <<< EOS
         <input type="text" id="nres" name="numeroReserva" />
     </div>
     <div>
-        <label for="asunto">Asusnto: </label>
+        <label for="asunto">Asunto: </label>
         <input type="text" id="asunto" name="asunto"/>
     </div>
     <div>
