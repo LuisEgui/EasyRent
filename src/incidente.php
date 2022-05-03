@@ -1,36 +1,26 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
+require_once __DIR__.'/includes/Formulario.php';
 
-$tituloPagina = 'Generar Incidente';
-$contenidoPrincipal = <<< EOS
-<form action="perfil.php" method="POST">
-    <div>
-        <label for="motivo">Motivo incidente: </label>
-        <select id="motivo" name="motivoIncidente">
-            <option value="accidente">Accidente</option>
-            <option value="rueda">Rueda pinchada</option>
-            <option value="funcionamiento">No arranca</option>
-            <option value="desperfecto">Desperfecto generado</option>
-        </select>
+$tituloPagina = 'Incidentes';
+
+$contenidoPrincipal = <<<EOS
+    <div class="incidentes">
+    <h2>Gestionar Incidentes</h2>
+    <div id="info">
+    <a href="mostrarIncidentes.php">Lista de incidentes</a> 
     </div>
-    <div>
-        <label for="nres">Número de reserva: </label>
-        <input type="text" id="nres" name="numeroReserva" />
+    <div id="info">
+    <a href="borrarIncidente.php">Borrar incidente</a> 
     </div>
-    <div>
-        <label for="asunto">Asunto: </label>
-        <input type="text" id="asunto" name="asunto"/>
+    <div id="info">
+    <a href="anadirIncidente.php">Añadir incidente</a>
     </div>
-    <div>
-    <div>
-        <label for="mensaje">Mensaje: </label>
-        <input type="text" id="mensaje" name="mensaje" />
+    <div id="info">
+    <a href="actualizarIncidente.php">Actualizar incidente</a>
     </div>
-    <div>
-        <input type="submit" name="enviar" value="Enviar"/>
-    </div>
-</form>
+	</div>
 EOS;
 
-include 'includes/vistas/plantillas/plantilla.php';
+require __DIR__.'/includes/vistas/plantillas/plantilla.php';
