@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
 $rutaApp = RUTA_IMGS;
 
@@ -48,7 +49,7 @@ $contenidoPrincipal = <<<EOS
         <p><strong>Correo electrónico: </strong></p>
         <p>almu@ucm.es</p>
         <p><strong>Foto: </strong></p>
-        <img src="{$rutaApp}/1.jpg" />
+        <img src="{$rutaApp}/1.jpg" alt="Profile Img"/>
         <p><strong>Descripción: </strong></p>
         <p>
           Aficionada a los juegos de ingenio. Es la más rápida en resolverlos.
@@ -60,7 +61,7 @@ $contenidoPrincipal = <<<EOS
         <p><strong>Correo electrónico: </strong></p>
         <p>notkero@ucm.es</p>
         <p><strong>Foto: </strong></p>
-        <img src="{$rutaApp}/2.jfif" />
+        <img src="{$rutaApp}/2.jfif" alt="Profile Img"/>
         <p><strong>Descripción: </strong></p>
         <p>
           Aficionado del deporte en general, del trabajo en grupo y las
@@ -73,7 +74,7 @@ $contenidoPrincipal = <<<EOS
         <p><strong>Correo electrónico: </strong></p>
         <p>ivan@ucm.es</p>
         <p><strong>Foto: </strong></p>
-        <img src="{$rutaApp}/3.jfif" />
+        <img src="{$rutaApp}/3.jfif" alt="Profile Img"/>
         <p><strong>Descripción: </strong></p>
         <p>
           Aficionado a cantar en clase. El reggaeton antiguo es lo más para él.
@@ -85,7 +86,7 @@ $contenidoPrincipal = <<<EOS
         <p><strong>Correo electrónico: </strong></p>
         <p>luis@ucm.es</p>
         <p><strong>Foto: </strong></p>
-        <img src="{$rutaApp}/5.jpeg" />
+        <img src="{$rutaApp}/5.jpeg" alt="Profile Img"/>
         <p><strong>Descripción: </strong></p>
         <p>Aficionado a jugar a baloncesto. El mejor metiendo triples.</p>
       </div>
@@ -95,7 +96,7 @@ $contenidoPrincipal = <<<EOS
         <p><strong>Correo electrónico: </strong></p>
         <p>otero@ucm.es</p>
         <p><strong>Foto: </strong></p>
-        <img src="{$rutaApp}/6.jpg" />
+        <img src="{$rutaApp}/6.jpg" alt="Profile Img"/>
         <p><strong>Descripción: </strong></p>
         <p>
           Aficionado a las relaciones sociales. Se conoce hasta a la última
@@ -108,7 +109,7 @@ $contenidoPrincipal = <<<EOS
         <p><strong>Correo electrónico: </strong></p>
         <p>patri@ucm.es</p>
         <p><strong>Foto: </strong></p>
-        <img src="{$rutaApp}/4.jfif" />
+        <img src="{$rutaApp}/4.jfif" alt="Profile Img"/>
         <p><strong>Descripción: </strong></p>
         <p>
           Aficionada a ver series en Netflix. La mejor haciendo recomendaciones.

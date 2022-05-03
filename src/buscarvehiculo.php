@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Formulario.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
 $tituloPagina = 'Buscar Vehiculo';
 
@@ -43,12 +43,12 @@ $contenidoPrincipal = <<<EOS
             </p>
                 <h4>TARIFA</h4>
                 <h4>20€</h4>
-                <a href="selecVehiculo.php">Seleccionar</a> 
+                <a href="selectVehiculo.php">Seleccionar</a>
         </div>
-        
+
     </div>
-  
-  
+
+
 EOS;
 
 

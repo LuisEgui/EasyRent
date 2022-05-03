@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Formulario.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
 $tituloPagina = 'FAQ';
 
@@ -22,12 +22,10 @@ $contenidoPrincipal = <<<EOS
     </div>
 
     <div id="promo">
-    <a href="faqantes.php">Antes de alquilar</a> 
+    <a href="faqantes.php">Antes de alquilar</a>
     </div>
 
 	</div>
-
 EOS;
-
 
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';

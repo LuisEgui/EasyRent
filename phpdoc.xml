@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor
+        configVersion="3"
+        xmlns="https://www.phpdoc.org"
+>
+    <title>EasyRent</title>
+    <paths>
+        <output>doc/phpdoc</output>
+    </paths>
+    <version number="3.0.0">
+        <api>
+            <source dsn=".">
+                <path>src/includes</path>
+            </source>
+        </api>
+    </version>
+
+</phpdocumentor>

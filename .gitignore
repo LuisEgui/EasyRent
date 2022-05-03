@@ -15,6 +15,9 @@ local.properties
 .loadpath
 .recommenders
 
+# Vendor from Composer
+vendor/
+
 # External tool builders
 .externalToolBuilders/
 
@@ -326,3 +329,10 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,visualstudiocode,osx,windows,webstorm,phpstorm
+/composer.lock
+/.phpunit.result.cache
+/.idea/
+/.phpdoc/
+.phpdoc/*
+/.phpdoc/cache/
+/.phpdoc/build/
