@@ -64,8 +64,6 @@ class FormularioEliminarMensaje extends Formulario {
                 EOS;
         }
         $html .= <<<EOS
-            </table>
-            </div>
             <div>
                 <button type="submit" name="delete"> Eliminar </button>
             </div>
