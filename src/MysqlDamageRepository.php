@@ -19,27 +19,27 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
     }
     
     public function count() {
-        $sql = 'select count(id) as num_messages from Message';
+        $sql = 'select count(d_id) as num_damages from Damage';
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
-        $stmt->bind_result($num_messages);
+        $stmt->bind_result($num_damages);
         $stmt->fetch();
         $stmt->close();
-        return $num_messages;
+        return $num_damages;
     }
 
     public function findById($id) {
-        $message = null;
+        $damage = null;
 
         if(!isset($id))
             return null;
 
-        $sql = sprintf("select id, author, txt, sendTime, idParentMessage from Message where id = %d", $id);
+        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage from Damage where id = %d", $id);
         $result = $this->db->query($sql);
 
         if ($result !== false && $result->num_rows > 0) {
             $obj = $result->fetch_object();
-            $message = new Message($obj->id, $obj->author, $obj->txt, $obj->sendTime, $obj->idParentMessage);
+            $damage = new Damage($obj->id, $obj->author, $obj->txt, $obj->sendTime, $obj->idParentMessage);
         }
 
         $result->close();
