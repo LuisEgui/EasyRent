@@ -31,6 +31,11 @@ class Damage {
     private $description;
 
     /**
+     * @var string Damage's area.
+     */
+    private $area;
+
+    /**
      * Creates an Damage
      * 
      * @param string $Unique id damage identifier
@@ -38,21 +43,27 @@ class Damage {
      * @param string $user's unique identifier.
      * @param string $Damage's title.
      * @param string $Damage's description.
+     * @param string $Damage's area.
+     * 
      * @return Damage
      */
-    public function __construct($id = null, $vehicle, $user, $title, $description, $evidenceDamage) {
+    public function __construct($id = null, $vehicle, $user, $title, $description, $evidenceDamage, $area) {
         $this->d_id = $id;
         $this->vehicle = $vehicle;
         $this->user = $user;
         $this->title = $title;
         $this->description = $description;
         $this->evidenceDamage =$evidenceDamage;
+        $this->area =$area;
     }
+
+   
 
     /**
      * Returns damages's id
      * @return string d_id
      */
+
     public function getId() {
         return $this->d_id;
     }
@@ -97,6 +108,13 @@ class Damage {
         return $this->evidenceDamage;
     }
     
+       /**
+     * Returns damages's area
+     * @return string area
+     */
+    public function getArea() {
+        return $this->area;
+    }
 
     /**
      * Sets damage's id
@@ -150,6 +168,15 @@ class Damage {
      */
     public function setEvidenceDamage($evidenceDamage) {
         $this->id = $evidenceDamage;
+    }
+
+    /**
+     * Sets damage's area
+     * @param string area
+     * @return void
+     */
+    public function setaArea($area) {
+        $this->area = $area;
     }
 
 }

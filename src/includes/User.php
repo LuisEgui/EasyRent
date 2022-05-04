@@ -38,6 +38,7 @@ class User {
      * @param string $password Encrypted user password.
      * @param string $role User role. Possible values: 'admin', 'particular',
      * 'enterprise'.
+     * @param string Profile user image.
      * @return User
      */
     public function __construct($id = null, $email, $password, $role, $image) {
