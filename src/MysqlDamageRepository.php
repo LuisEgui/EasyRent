@@ -39,18 +39,18 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
 
         if ($result !== false && $result->num_rows > 0) {
             $obj = $result->fetch_object();
-            $damage = new Damage($obj->id, $obj->author, $obj->txt, $obj->sendTime, $obj->idParentMessage);
+            $damage = new Damage($obj->d_id, $obj->vehicle, $obj->user, $obj->title, $obj->description, $obj->evidenceDamage);
         }
 
         $result->close();
 
-        return $message;
+        return $damage;
     }
 
     public function findAll() {
-        $messages = [];
+        $damages = [];
 
-        $sql = sprintf("select id, author, txt, sendTime, idParentMessage from Message");
+        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage from Damage");
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -58,18 +58,18 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         $stmt->close();
 
         while ($row = $result->fetch_assoc()) {
-            $message = new Message($row['id'], $row['author'], $row['txt'], $row['sendTime'], $row['idParentMessage']);
-            $messages[] = $message;
+            $damage = new Damage($row['d_id'], $row['vehicle'], $row['user'], $row['title'], $row['description'], $row['evidenceDamage']);
+            $damages[] = $damages;
         }
 
-        return $messages;
+        return $damages;
     }
 
-    public function findByAuthor($author) {
-        $messages[] = array();
+    public function findByvehicle($vehicle) {
+        $damages[] = array();
 
-        $sql = sprintf("select id, author, txt, sendTime, idParentMessage from Message where author = '%d'",
-                        $author);
+        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage from Damage where vehicle = '%d",
+                        $vehicle->getVin());
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -77,21 +77,21 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         $stmt->close();
 
         while ($row = $result->fetch_array(MYSQLI_NUM)) {
-            foreach ($row as $message)
-                $messages[] = $message;
+            foreach ($row as $damage)
+                $damages[] = $damage;
         }
 
-        return $messages;
+        return $damages;
     }
 
-    public function deleteById($id) {
+    public function deleteById($d_id) {
         // Check if the message already exists
-        if ($this->findById($id) !== null) {
+        if ($this->findById($d_id) !== null) {
             $sql = sprintf("SET FOREIGN_KEY_CHECKS=0");
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
             $stmt->close();
-            $sql = sprintf("delete from Message where id = %d", $id);
+            $sql = sprintf("delete from Damage where d_id = %d", $d_id);
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
             $stmt->close();
@@ -110,30 +110,31 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         return false;
     }
 
-    public function delete($message) {
+    public function delete($damage) {
         // Check entity type and we check first if the user already exists
-        $importedMessage = $this->findById($message->getId());
-        if ($message instanceof Message && ($importedMessage !== null))
-            return $this->deleteById($importedMessage->getId());
+        $importedDamage = $this->findById($damage->getId());
+        if ($damage instanceof Damage && ($importedDamage !== null))
+            return $this->deleteById($importedDamage->getId());
         return false;
     }
 
-    public function save($message) {
+    public function save($damage) {
         // Check entity type
-        if ($message instanceof Message) {
+        if ($damage instanceof Damage) {
             /**
-             * If the message already exists, we do an update.
-             * We retrieve the message's id from the database.
+             * If the damage already exists, we do an update.
+             * We retrieve the damage's id from the database.
              */
-            $importedMessage = $this->findById($message->getId());
-            if ($importedMessage !== null) {
-                $message->setId($importedMessage->getId());
-                $sql = sprintf("update Message set author = '%d', txt = '%s', sendTime = '%s', idParentMessage = '%s'",
-                        $this->db->getConnection()->real_escape_string($message->getAuthor()),
-                        $this->db->getConnection()->real_escape_string($message->getTxt()),
-                        $this->db->getConnection()->real_escape_string($message->getSendTime()),
-                        $this->db->getConnection()->real_escape_string($message->getIdParentMessage()),
-                        $message->getId());
+            $importedDamage = $this->findById($damage->getId());
+            if ($importedDamage !== null) {
+                $damage->setId($importedDamage->getId());
+                $sql = sprintf("update Damage set vehicle = '%d', user = '%d', title = '%d', description  = '%d', evidenceDamage ='%d",
+                        $this->db->getConnection()->real_escape_string($damage->getVehicle()),
+                        $this->db->getConnection()->real_escape_string($damage->getUser()),
+                        $this->db->getConnection()->real_escape_string($damage->getTitle()),
+                        $this->db->getConnection()->real_escape_string($damage->getdescription()),
+                        $this->db->getConnection()->real_escape_string($damage->getEvidenceDamage()),
+                        $damage->getId());
                 
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
