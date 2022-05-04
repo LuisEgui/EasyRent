@@ -1,12 +1,5 @@
 <?php
 
-
-//ESTA CLASE TIENE LAS IMPLEMENTACIONES DE "MENSAJES" HAY QUE ADAPTARLO A DAMAGE
-
-
-
-
-
 require_once RAIZ_APP.'/MysqlConnector.php';
 require_once RAIZ_APP.'/DamageRepository.php';
 require_once RAIZ_APP.'/Damage.php';
@@ -85,7 +78,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
     }
 
     public function deleteById($d_id) {
-        // Check if the message already exists
+        // Check if the damage already exists
         if ($this->findById($d_id) !== null) {
             $sql = sprintf("SET FOREIGN_KEY_CHECKS=0");
             $stmt = $this->db->prepare($sql);
@@ -138,26 +131,23 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
                 
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
-                $stmt->close();
+                $stmt->close(); 
 
                 if ($result)
-                    return $message;
+                    return $damage;
                 else 
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
                 // If the reserve is not in the database, we insert it.
             } else {
-                if ($message->getIdParentMessage() !== null) {
-                    $sql = sprintf("insert into Message (author, txt, sendTime, idParentMessage) values ('%d', '%s', '%s', '%d')",
-                        $message->getAuthor(),
-                        $this->db->getConnection()->real_escape_string($message->getTxt()),
-                        $this->db->getConnection()->real_escape_string($message->getSendTime()),
-                        $message->getIdParentMessage());
-                } else {
-                    $sql = sprintf("insert into Message (author, txt, sendTime) values ('%d', '%s', '%s')",
-                        $message->getAuthor(),
-                        $this->db->getConnection()->real_escape_string($message->getTxt()),
-                        $this->db->getConnection()->real_escape_string($message->getSendTime()));
-                }
+                
+                    $sql = sprintf("insert into Damage (d_id, vehicle, title, user, description, evidenceDamage) values ('%d', '%d', '%s', '%s', '%d')",
+                        $damage->getId(),
+                        $damage->getVehicle(),
+                        $this->db->getConnection()->real_escape_string($damage->getTitle()),
+                        $this->db->getConnection()->real_escape_string($damage->getUser()),
+                        $this->db->getConnection()->real_escape_string($damage->getdescription()),
+                        $damage->getEvidenceDamage());
+                        
 
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
@@ -165,8 +155,8 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
 
                 if ($result) {
                     // We get the asssociated id to this new reserve
-                    $message->setId($this->db->getConnection()->insert_id);
-                    return $message;
+                    $damage->setId($this->db->getConnection()->insert_id);
+                    return $damage;
                 } else
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
             }
