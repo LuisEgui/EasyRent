@@ -7,7 +7,7 @@ require_once RAIZ_APP.'/Repository.php';
  */
 interface DamageRepository extends Repository {
     //Aqui se declaran las funciones RELACIONADAS CON LA BASE DE DATOS que se implementarán en "MysqlDamageRepository"
-    
+    public function findByVehicle($vehicle);
     
 
 }
