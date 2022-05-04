@@ -336,3 +336,4 @@ $RECYCLE.BIN/
 .phpdoc/*
 /.phpdoc/cache/
 /.phpdoc/build/
+/.idea/
