@@ -43,6 +43,7 @@ for ($i = 0; $i < count($messages); $i++) {
 		$contenidoPrincipal .= $messages[$i]->getSendTime();
 		$contenidoPrincipal .= <<<EOS
 		</p> 
+		
 		EOS;
 		for ($j = 0; $j < count($messages); $j++) {
 			if($messages[$j]->getIdParentMessage() == $messages[$i]->getId()){
@@ -50,14 +51,14 @@ for ($i = 0; $i < count($messages); $i++) {
 				<div class="v">
 					<h2>Respuesta a: 
 				EOS;
-				$contenidoPrincipal .= $messages[$i]->getTxt();
+				$contenidoPrincipal .= $userAuthor->getEmail();
 				$contenidoPrincipal .= <<<EOS
 				</h2>
 					<p>Autor: 
 				EOS;
-				$idAuthor = $messages[$j]->getAuthor();
-				$userAuthor = $userService->readUserById($idAuthor);
-				$contenidoPrincipal .= $userAuthor->getEmail();
+				$idAuthor1 = $messages[$j]->getAuthor();
+				$userAuthor1 = $userService->readUserById($idAuthor1);
+				$contenidoPrincipal .= $userAuthor1->getEmail();
 				$contenidoPrincipal .= <<<EOS
 				</p>
 				<p>Texto: 
@@ -70,9 +71,13 @@ for ($i = 0; $i < count($messages); $i++) {
 				$contenidoPrincipal .= $messages[$j]->getSendTime();
 				$contenidoPrincipal .= <<<EOS
 				</p> 
+				</div>
 				EOS;
 			}
 		}
+		$contenidoPrincipal .= <<<EOS
+				</div>
+		EOS;
 	} 
 
 	
