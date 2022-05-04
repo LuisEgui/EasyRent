@@ -42,7 +42,8 @@ class User {
      * 'enterprise'.
      * @return void
      */
-    public function __construct($id = null, $email, $password, $role, $image) {
+    public function __construct($id = null, $email, $password, $role, $image)
+    {
         $this->id = $id;
         $this->email = $email;
         $this->password = $password;
