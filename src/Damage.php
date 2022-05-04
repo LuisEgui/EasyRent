@@ -40,12 +40,13 @@ class Damage {
      * @param string $Damage's description.
      * @return Damage
      */
-    public function __construct($id = null, $vehicle, $user, $title, $description) {
+    public function __construct($id = null, $vehicle, $user, $title, $description, $evidenceDamage) {
         $this->d_id = $id;
         $this->vehicle = $vehicle;
         $this->user = $user;
         $this->title = $title;
         $this->description = $description;
+        $this->evidenceDamage =$evidenceDamage;
     }
 
     /**
@@ -89,7 +90,16 @@ class Damage {
     }
 
     /**
-     * Sets message's id
+     * Returns damages's evidence
+     * @return string evidence
+     */
+    public function getEvidenceDamage() {
+        return $this->evidenceDamage;
+    }
+    
+
+    /**
+     * Sets damage's id
      * @param string id
      * @return void
      */
@@ -131,6 +141,15 @@ class Damage {
      */
     public function setDescription($description) {
         $this->descrioption = $description;
+    }
+
+     /**
+     * Sets damage's evidence
+     * @param string evidence
+     * @return void
+     */
+    public function setEvidenceDamage($evidenceDamage) {
+        $this->id = $evidenceDamage;
     }
 
 }
