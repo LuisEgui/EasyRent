@@ -28,7 +28,7 @@ class FormularioReserva extends Formulario {
         $htmlErroresGlobales
         <fieldset>
             <legend>Datos reserva</legend>
-            <input "id="vehicle" type="hidden" name="vehicle" value="
+            <input id="vehicle" type="hidden" name="vehicle" value="
         EOF;
         $html .= $_GET["id"];
         $html .= <<<EOF
