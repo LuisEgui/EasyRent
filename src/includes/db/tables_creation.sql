@@ -76,8 +76,8 @@ create table
 -- EvidenceDamage table creation
 create table
   EvidenceDamage (
-    damage bigint not null,
-    image bigint not null,
+    damage bigint unsigned not null,
+    image bigint unsigned not null,
     primary key (damage, image),
     foreign key (damage) references Damage(d_id),
     foreign key (image) references Image(img_id)
@@ -150,6 +150,6 @@ create table
       a_id serial primary key,
       banner bigint unsigned,
       releaseDate datetime not null,
-      endTime datetime not null,
+      endDate datetime not null,
       priority bigint unsigned not null
 );

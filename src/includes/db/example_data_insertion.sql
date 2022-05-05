@@ -59,4 +59,19 @@ set @INIT := NOW();
 insert into Message(id, author, message, sendTime, idParentMessage) values
 (1, 1, 'Bienvenido al foro', @INIT, NULL),
 (2, 2, 'Muchas gracias', ADDTIME(@INIT, '0:15:0'), 1),
-(3, 2, 'Otro mensaje', ADDTIME(@INIT, '25:15:0'), NULL); 
+(3, 2, 'Otro mensaje', ADDTIME(@INIT, '25:15:0'), NULL);
+
+-- Insert example Priority row:
+insert into Priority(level, price)
+values
+    (1, 150.00),
+    (2, 250.00);
+
+-- View inserted data;
+select *
+from Priority;
+
+-- Insert example Advertisement row:
+insert into Advertisement (banner, releaseDate, endDate, priority)
+values
+    (NULL, '2022-04-12 10:00:00', '2022-04-20 23:55:00', 1);

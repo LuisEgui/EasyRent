@@ -6,7 +6,8 @@ use easyrent\includes\persistance\entity\Priority;
 
 class MysqlPriorityRepository extends AbstractMysqlRepository implements Repository {
 
-    public function __construct(MysqlConnector $connector) {
+    public function __construct(MysqlConnector $connector)
+    {
         parent::__construct($connector);
     }
 
