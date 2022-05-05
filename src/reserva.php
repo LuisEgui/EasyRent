@@ -1,7 +1,8 @@
 <?php
 
-require_once __DIR__.'\includes\config.php';
-require_once __DIR__.'\includes\FormularioReserva.php';
+require_once __DIR__.'/includes/config.php';
+require_once __DIR__.'/includes/FormularioReserva.php';
+
 $form = new FormularioReserva();
 $htmlFormReserve = $form->gestiona();
 
@@ -12,4 +13,4 @@ $contenidoPrincipal = <<<EOS
 $htmlFormReserve
 EOS;
 
-require __DIR__.'\includes\vistas\plantillas\plantilla.php';
+require __DIR__.'/includes/vistas/plantillas/plantilla.php';

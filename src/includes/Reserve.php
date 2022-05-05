@@ -67,15 +67,15 @@ class Reserve {
      * @return void
      */
     public function __construct($id = null, $vehicle, $user, $state, $pickupLocation, $returnLocation, $pickupTime, $returnTime, $price) {
-        $this->id = $id;
+        $this->id = intval($id);
         $this->vehicle = intval($vehicle);
-        $this->user = $user;
-        $this->state = intval($state);
+        $this->user = intval($user);
+        $this->state = $state;
         $this->pickupLocation = $pickupLocation;
-        $this->returnLocation = intval($returnLocation);
+        $this->returnLocation = $returnLocation;
         $this->pickupTime = $pickupTime;
         $this->returnTime = $returnTime;
-        $this->price = $price;
+        $this->price = floatval($price);
     }
 
     public static function getStringEnumState($enum) {

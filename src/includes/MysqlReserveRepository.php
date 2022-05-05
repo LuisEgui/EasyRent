@@ -35,7 +35,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
 
         if ($result !== false && $result->num_rows > 0) {
             $obj = $result->fetch_object();
-            $reserve = new Reserve($obj->id, $obj->vehicle, $obj->user, $obj->role, 
+            $reserve = new Reserve($obj->id, $obj->vehicle, $obj->user, 
                             $obj->state, $obj->pickupLocation, $obj->returnLocation, 
                             $obj->pickupTime , $obj->returnTime, $obj->price);
         }
@@ -48,7 +48,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
     public function findByVehicleAndUserAndPickUptime($vehicle, $user, $pickUpTime) {
         $reservas = [];
 
-        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where user = %d", $user->getId());
+        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where user = %d", $user);
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -63,41 +63,73 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         return $reservas;
     }
 
-    public function findAllByUser($user) {
-        $reservas[] = array();
+    public function findAllByVin($vin) {
+        $reservas = [];
 
-        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where user = '%d'",
-                        $user->getId());
+        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where vehicle = '%d'",
+                        $vin);
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
         $result = $stmt->get_result();
         $stmt->close();
 
-        while ($row = $result->fetch_array(MYSQLI_NUM)) {
-            foreach ($row as $reserve)
-                $reservas[] = $reserve;
+        while ($row = $result->fetch_assoc()) {
+            $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'], 
+                $row['pickupTime'], $row['returnTime'], $row['price']);
+            $reservas[] = $reserve;
+        }
+    
+        return $reservas;
+    }
+
+    public function findAllByUser($user) {
+        $reservas = [];
+
+        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where user = '%d'",
+                        $user);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_assoc()) {
+            $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'], 
+                $row['pickupTime'], $row['returnTime'], $row['price']);
+            $reservas[] = $reserve;
         }
 
         return $reservas;
     }
 
     public function findAll() {
-        $reservas[] = array();
-
-        $sql = sprintf("id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve");
+        $reservas = [];
+        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve");
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
         $result = $stmt->get_result();
         $stmt->close();
 
-        while ($row = $result->fetch_array(MYSQLI_NUM)) {
-            foreach ($row as $reserve)
-                $reservas[] = $reserve;
+        while ($row = $result->fetch_assoc()) {
+            $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'], 
+                $row['pickupTime'], $row['returnTime'], $row['price']);
+            $reservas[] = $reserve;
         }
 
         return $reservas;
+    }
+
+    public function validateReserve($vin, $pickUpTime, $returnTime, $id) {
+        $reservas = $this->findAllByVin($vin);
+        for($i = 0; $i < count($reservas); $i++) {
+            if(($id !== null) && ($id === $reservas[$i]->getId())) $i++;
+            
+            if(($reservas[$i]->getPickUpTime() < $pickUpTime) && ($reservas[$i]->getReturnTime() > $pickUpTime)) return false;
+            if(($reservas[$i]->getPickUpTime() < $returnTime) && ($reservas[$i]->getReturnTime() > $returnTime)) return false;
+        }
+        return true;
     }
 
     public function deleteById($id) {
@@ -135,8 +167,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
             $importedReserve = $this->findById($reserve->getId());
             if ($importedReserve !== null) {
                 $reserve->setId($importedReserve->getId());
-                $sql = sprintf("update Reserve set vehicle = '%d', state = '%s', pickupLocation = '%s', " . 
-                        "returnLocation = '%s', pickupTime = '%s', returnTime = '%s', price = '%f' where id = %d",
+                $sql = sprintf("update Reserve set vehicle = '%s', state = '%s', pickupLocation = '%s', returnLocation = '%s', pickupTime = '%s', returnTime = '%s', price = '%s' where id = %s",
                         $this->db->getConnection()->real_escape_string($reserve->getVehicle()),
                         $this->db->getConnection()->real_escape_string($reserve->getState()),
                         $this->db->getConnection()->real_escape_string($reserve->getPickUpLocation()),
@@ -155,9 +186,9 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
                 // If the reserve is not in the database, we insert it.
             } else {
-                $sql = sprintf("insert into Reserve (vehicle, user, pickupLocation, pickupTime, returnTime, price) values ('%s', '%s', '%s', '%s', '%f'",
+                $sql = sprintf("insert into Reserve(vehicle, user, pickupLocation, returnLocation, pickupTime, returnTime, price) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                         $this->db->getConnection()->real_escape_string($reserve->getVehicle()),
-                        $this->db->getConnection()->real_escape_string($reserve->getState()),
+                        $this->db->getConnection()->real_escape_string($reserve->getUser()),
                         $this->db->getConnection()->real_escape_string($reserve->getPickUpLocation()),
                         $this->db->getConnection()->real_escape_string($reserve->getReturnLocation()),
                         $this->db->getConnection()->real_escape_string($reserve->getPickUpTime()),

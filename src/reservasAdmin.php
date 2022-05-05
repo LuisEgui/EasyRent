@@ -8,7 +8,7 @@ require_once __DIR__.'/includes/ReserveService.php';
 $reserveService = new ReserveService($GLOBALS['db_reserve_repository'], $GLOBALS['db_vehicle_repository'], $GLOBALS['db_user_repository']);
 $tituloPagina = 'Lista reservas';
 
-$reservas = $reserveService->getAllPersonalReserves();
+$reservas = $reserveService->getAllReserves();
 $contenidoPrincipal = <<<EOS
 <h1>Lista reservas</h1>
 EOS;
@@ -62,7 +62,7 @@ for ($i = 0; $i < count($reservas); $i++) {
     $contenidoPrincipal .= $reservas[$i]->getPrice();
     $contenidoPrincipal .= <<<EOS
         <p>
-        <a href="modificarReserva.php?id=
+        <a href="modificarReservaAdmin.php?id=
     EOS;
         $contenidoPrincipal .= $reservas[$i]->getId();
         $contenidoPrincipal .= <<<EOS

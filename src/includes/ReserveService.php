@@ -31,7 +31,7 @@ class ReserveService {
      * @return void
      */
     public function __construct(ReserveRepository $reserveRepository, Repository $vehicleRepository, Repository $userRepository) {
-        $this->reserve = $reserveRepository;
+        $this->reserveRepository = $reserveRepository;
         $this->vehicleRepository = $vehicleRepository;
         $this->userRepository = $userRepository;
     }
@@ -40,6 +40,7 @@ class ReserveService {
      * Persists a new reserve into the system
      * 
      * @param string $vin Unique vehicle identifier (vin = vehicle identification number) 
+     * @param string $usuario User id
      * @param string $state Reserve state. Possible values: 'reserved', 'pending', 'cancelled'.
      * @param string $pickupLocation Reserve pickup location
      * @param string $returnLocation Reserve return location
@@ -48,20 +49,14 @@ class ReserveService {
      * @param float $price Reserve's price
      * @return Reserve|null Returns null when there is an already existing reserve with the same $vehicle, logged user and $pickupTime
      */
-    public function createReserve($vin, $state, $pickupLocation, $returnLocation, $pickupTime, $returnTime, $price) {
-
-        if (!isset($pickupTime))
-            return null;
-        
-        $user = $this->userRepository->findByEmail($_SESSION['email']);
+    public function createReserve($vin, $idusuario, $state, $pickupLocation, $returnLocation, $pickupTime, $returnTime, $price) {
         $vehicle = $this->vehicleRepository->findById($vin);
-        $referenceReserve = $this->reserveRepository->findByVehicleAndUserAndPickUptime($vin, $user, $pickupTime);
-
-        if ($referenceReserve === null) {
-            $reserve = new Reserve(null, $vehicle->getId(), $user->getId(),
+        $validReserve = $this->reserveRepository->validateReserve($vin, $pickupTime, $returnTime, null);
+        if ($validReserve) {
+            $reserve = new Reserve(null, $vin, $idusuario,
                             $state, $pickupLocation, $returnLocation, 
                             $pickupTime, $returnTime, $price);
-            return $this->userRepository->save($reserve);
+            return $this->reserveRepository->save($reserve);
         }
         return null;
     }
@@ -75,4 +70,55 @@ class ReserveService {
         return $this->reserveRepository->findAll();
     }
 
+    public function getAllByVin($vin) {
+        return $this->reserveRepository->findAllByVin($vin);
+    }
+
+    public function updateReserveReturnLocation($id, $newReturnLocation) {
+        $reserve = $this->reserveRepository->findById($id);
+        $reserve->setReturnLocation($newReturnLocation);
+        $this->reserveRepository->save($reserve);
+        return true;
+    }
+
+    public function updateReservePickupTime($id, $newPickupTime) {
+        $reserve = $this->reserveRepository->findById($id);
+        $validReserve = $this->reserveRepository->validateReserve($reserve->getVehicle(), $newPickupTime, $reserve->getReturnTime(), $id);
+        if(!$validReserve) return false;
+        if($newPickupTime > $reserve->getReturnTime()) return false;
+        $reserve->setPickUpTime($newPickupTime);
+        $this->reserveRepository->save($reserve);
+        return true;
+    }
+
+    public function updateReserveReturnTime($id, $newReturnTime) {
+        $reserve = $this->reserveRepository->findById($id);
+        $validReserve = $this->reserveRepository->validateReserve($reserve->getVehicle(), $reserve->getPickUpTime(), $newReturnTime, $id);
+        if(!$validReserve) return false;
+        if($newReturnTime < $reserve->getPickUpTime()) return false;
+        $reserve->setReturnTime($newReturnTime);
+        $this->reserveRepository->save($reserve);
+        return true;
+    }
+
+    public function updateReserveVehicle($id, $newVehicle) {
+        $reserve = $this->reserveRepository->findById($id);
+        $validReserve = $this->reserveRepository->validateReserve($newVehicle, $reserve->getPickUpTime(), $reserve->getReturnTime(), $id);
+        if(!$validReserve) return false;
+        $reserve->setVehicle($newVehicle);
+        $this->reserveRepository->save($reserve);
+        return true;
+    }
+    
+    public function updateReservePrice($id, $newPrice) {
+        $reserve = $this->reserveRepository->findById($id);
+        $reserve->setPrice($newPrice);
+        $this->reserveRepository->save($reserve);
+        return true;
+    }
+    
+    public function deleteReserve($id) {
+        $this->reserveRepository->deleteById($id);
+        return true;
+    }
 }

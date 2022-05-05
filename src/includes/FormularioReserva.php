@@ -1,9 +1,8 @@
 <?php
 
-require_once __DIR__.'\Formulario.php';
-require_once __DIR__.'\Reserva.php';
-require_once __DIR__.'\User.php';
-require_once __DIR__.'\BD.php';
+require_once __DIR__.'/Formulario.php';
+require_once __DIR__.'/Reserve.php';
+require_once __DIR__.'/User.php';
 
 class FormularioReserva extends Formulario {
 
@@ -29,14 +28,14 @@ class FormularioReserva extends Formulario {
         $htmlErroresGlobales
         <fieldset>
             <legend>Datos reserva</legend>
-            <input type="hidden" name="id" value="
+            <input "id="vehicle" type="hidden" name="vehicle" value="
         EOF;
         $html .= $_GET["id"];
         $html .= <<<EOF
-            " id="vehicle" />
+            "/>
             <input id="usuario" type="hidden" name="usuario" value="
         EOF;
-        $html .= $user->getId();
+        $html .= $id;
         $html .= <<<EOF
                 "/>
             <div>
@@ -60,13 +59,13 @@ class FormularioReserva extends Formulario {
             <div>
                 <label for="pickupTime">Hora recogida:</label>
                 <input type="datetime-local" id="pickupTime"
-                name="pickupTime" min="2022-06-19T09:00" max="2022-12-31T14:00">
+                name="pickupTime" >
                 {$erroresCampos['fecha']}
             </div>
             <div>
                 <label for="returnTime">Hora devolucion:</label>
                 <input type="datetime-local" id="returnTime"
-                name="returnTime" min="2022-06-19T09:00" max="2022-12-31T21:00">
+                name="returnTime">
                 {$erroresCampos['fecha']}
             </div>
             <div>
@@ -87,20 +86,21 @@ class FormularioReserva extends Formulario {
 
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
-        $vehicle = $_GET["id"];
-        $usuario = $datos['usuario'];
+        $vehicle = $datos['vehicle'];
+        $idusuario = $datos['usuario'];
         $state = 0;
         $pickupLocation = $datos['pickupLocation'];
         $returnLocation = $datos['returnLocation']; 
         $pickupTime = $datos['pickupTime'];
-        $returnTime = $datos['returnTime'];
+        $returnTime = $datos['returnTime']; 
         $price = $datos['price'];
 
         if (count($this->errores) === 0) {
-            $reserva = $this->reserveService->createReserve($vehicle, $usuario, $state, $pickupLocation, $returnLocation, $pickupTime, $returnTime, $price);
+            $reserva = $this->reserveService->createReserve($vehicle, $idusuario, $state, $pickupLocation, $returnLocation, 
+            $pickupTime, $returnTime, $price);
         
             if (!$reserva)
-                $this->errores[] = "";
+                $this->errores[] = "no se ha creado la reserva";
             else
                 header("Location: {$this->urlRedireccion}");
         }
