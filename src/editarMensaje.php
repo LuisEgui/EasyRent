@@ -1,16 +1,11 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioActualizarMensaje.php';
+require_once __DIR__.'/includes/FormularioRegistroMensaje.php';
 
-$form = new FormularioActualizarMensaje();
-$htmlFormEdMessage = $form->gestiona();
-
-$tituloPagina = 'Editar mensaje';
-
-$contenidoPrincipal = <<<EOS
-<h1>Editar mensaje</h1>
-$htmlFormEdMessage
+$idMensaje = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$form = new FormularioResponderMensaje($idMensaje);
+$htmlFormRegMessage = $form->gestiona();
+$contenidoPrincipal .= <<<EOS
+$htmlFormRegMessage
 EOS;
-
-require __DIR__.'/includes/vistas/plantillas/plantilla.php';
