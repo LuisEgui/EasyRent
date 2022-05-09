@@ -27,12 +27,12 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         if(!isset($id))
             return null;
 
-        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage from Damage where id = %d", $id);
+        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired from Damage where id = %d", $id);
         $result = $this->db->query($sql);
 
         if ($result !== false && $result->num_rows > 0) {
             $obj = $result->fetch_object();
-            $damage = new Damage($obj->d_id, $obj->vehicle, $obj->user, $obj->title, $obj->description, $obj->evidenceDamage, $obj->area);
+            $damage = new Damage($obj->d_id, $obj->vehicle, $obj->user, $obj->title, $obj->description, $obj->evidenceDamage, $obj->area, $obj->type, $obj->isRepaired);
         }
 
         $result->close();
@@ -43,7 +43,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
     public function findAll() {
         $damages = [];
 
-        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage from Damage");
+        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired from Damage");
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -51,7 +51,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         $stmt->close();
 
         while ($row = $result->fetch_assoc()) {
-            $damage = new Damage($row['d_id'], $row['vehicle'], $row['user'], $row['title'], $row['description'], $row['evidenceDamage'], $row['area']);
+            $damage = new Damage($row['d_id'], $row['vehicle'], $row['user'], $row['title'], $row['description'], $row['evidenceDamage'], $row['area'], $row['type'], $row['isRepaired']);
             $damages[] = $damages;
         }
 
@@ -61,7 +61,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
     public function findByVehicle($vehicle) {
         $damages[] = array();
 
-        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage from Damage where vehicle = '%d",
+        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired from Damage where vehicle = '%d'",
                         $vehicle->getVin());
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
@@ -121,15 +121,30 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
             $importedDamage = $this->findById($damage->getId());
             if ($importedDamage !== null) {
                 $damage->setId($importedDamage->getId());
-                $sql = sprintf("update Damage set vehicle = '%d', user = '%d', title = '%d', description  = '%d', evidenceDamage ='%d, area ='%d'",
-                        $this->db->getConnection()->real_escape_string($damage->getVehicle()),
-                        $this->db->getConnection()->real_escape_string($damage->getUser()),
+                if ($damage->getEvidenceDamage() !== null) {
+                $sql = sprintf("update Damage set vehicle = '%d', user = '%d', title = '%d', description  = '%d', evidenceDamage ='%d', area ='%d', type ='%d', isRepaired ='%d'",
+                        $damage->getVehicle(),
+                        $damage->getUser(),
                         $this->db->getConnection()->real_escape_string($damage->getTitle()),
-                        $this->db->getConnection()->real_escape_string($damage->getdescription()),
-                        $this->db->getConnection()->real_escape_string($damage->getEvidenceDamage()),
-                        $damage->getId(),
-                        $this->db->getConnection()->real_escape_string($damage->getArea()));
-                        
+                        $this->db->getConnection()->real_escape_string($damage->getDescription()),
+                        $damage->getEvidenceDamage(),
+                        $this->db->getConnection()->real_escape_string($damage->getArea()),
+                        $this->db->getConnection()->real_escape_string($damage->getType()),
+                        $damage->getIsRepaired(),
+                        $damage->getId()
+                       );
+                } else {
+                    $sql = sprintf("update Damage set vehicle = '%d', user = '%d', title = '%d', description  = '%d', evidenceDamage = NULL, area ='%d', type ='%d', isRepaired ='%d'",
+                    $damage->getVehicle(),
+                    $damage->getUser(),
+                    $this->db->getConnection()->real_escape_string($damage->getTitle()),
+                    $this->db->getConnection()->real_escape_string($damage->getDescription()),
+                    $this->db->getConnection()->real_escape_string($damage->getArea()),
+                    $this->db->getConnection()->real_escape_string($damage->getType()),
+                    $damage->getIsRepaired(),
+                    $damage->getId()
+                   );
+                }        
                 
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
@@ -141,16 +156,30 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
                 // If the reserve is not in the database, we insert it.
             } else {
-                
-                    $sql = sprintf("insert into Damage (d_id, vehicle, title, user, description, evidenceDamage) values ('%d', '%d', '%s', '%s', '%d', '%d')",
+                if ($damage->getEvidenceDamage() !== null) {
+                    $sql = sprintf("insert into Damage (d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired) values ('%d', '%d', '%s', '%s', '%d', '%d', '%s', '%s', '%s')",
                         $damage->getId(),
                         $damage->getVehicle(),
-                        $this->db->getConnection()->real_escape_string($damage->getTitle()),
                         $this->db->getConnection()->real_escape_string($damage->getUser()),
-                        $this->db->getConnection()->real_escape_string($damage->getdescription()),
+                        $this->db->getConnection()->real_escape_string($damage->getTitle()),
+                        $this->db->getConnection()->real_escape_string($damage->getDescription()),
                         $damage->getEvidenceDamage(),
-                        $this->db->getConnection()->real_escape_string($damage->getArea()));
-                        
+                        $this->db->getConnection()->real_escape_string($damage->getArea()),
+                        $this->db->getConnection()->real_escape_string($damage->getType()),
+                        $this->db->getConnection()->real_escape_string($damage->getIsrepaired())
+                    );
+                } else {
+                    $sql = sprintf("insert into Damage (d_id, vehicle, user, title, description, area, type, isRepaired) values ('%d', '%d', '%s', '%s', '%d', '%s', '%s', '%s')",
+                        $damage->getId(),
+                        $damage->getVehicle(),
+                        $this->db->getConnection()->real_escape_string($damage->getUser()),
+                        $this->db->getConnection()->real_escape_string($damage->getTitle()),
+                        $this->db->getConnection()->real_escape_string($damage->getDescription()),
+                        $this->db->getConnection()->real_escape_string($damage->getArea()),
+                        $this->db->getConnection()->real_escape_string($damage->getType()),
+                        $this->db->getConnection()->real_escape_string($damage->getIsrepaired())
+                    );
+                }       
 
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
