@@ -41,15 +41,14 @@ for ($i = 0; $i < count($damages); $i++) {
 		EOS;
         if($damages[$i]->getEvidenceDamage() != NULL){
 		$contenidoPrincipal .= $damages[$i]->getEvidenceDamage();
-		$contenidoPrincipal .= <<<EOS
-		</p>
-		EOS;
         } else {
         $contenidoPrincipal .= <<<EOS
         <p>No se incluye imagen</p>
-		</p>
 		EOS;
         }
+        $contenidoPrincipal .= <<<EOS
+		</p>
+		EOS;
         $contenidoPrincipal .= <<<EOS
 		<p>Area: 
 		EOS;
@@ -79,7 +78,7 @@ for ($i = 0; $i < count($damages); $i++) {
         EOS;
         $contenidoPrincipal .= $damages[$i]->getId();
         $contenidoPrincipal .= <<<EOS
-            ">Borrar</a> 
+            ">Borrar</a>
         EOS;
         $contenidoPrincipal .= <<<EOS
             <a href="actualizarIncidente.php?id=
