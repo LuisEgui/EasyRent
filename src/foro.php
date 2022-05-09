@@ -44,18 +44,18 @@ for ($i = 0; $i < count($messages); $i++) {
 		EOS;
 		if ($userService->isLogged() && $userAuthor->getEmail() == $_SESSION['email']){
 			$contenidoPrincipal .= <<<EOS
-			<a href="borrarMensaje.php?id=
+				<a href="borrarMensaje.php?id=
 			EOS;
 			$contenidoPrincipal .= $messages[$i]->getId();
 			$contenidoPrincipal .= <<<EOS
-			">Borrar</a> 
+				">Borrar</a> 
 			EOS;
 			$contenidoPrincipal .= <<<EOS
-			<a href="editarMensaje.php?id= 
+				<a href="editarMensaje.php?id=
 			EOS;
 			$contenidoPrincipal .= $messages[$i]->getId();
 			$contenidoPrincipal .= <<<EOS
-			 ">Editar</a> 
+				">Editar</a> 
 			EOS;
 		}
 		for ($j = 0; $j < count($messages); $j++) {
@@ -88,18 +88,18 @@ for ($i = 0; $i < count($messages); $i++) {
 				EOS;
 				if ($userService->isLogged() && $userAuthor1->getEmail() == $_SESSION['email']){
 					$contenidoPrincipal .= <<<EOS
-					<a href="borrarMensaje.php?id=
+						<a href="borrarMensaje.php?id=
 					EOS;
-					$contenidoPrincipal .= $messages[$i]->getId();
+					$contenidoPrincipal .= $messages[$j]->getId();
 					$contenidoPrincipal .= <<<EOS
-					">Borrar</a> 
+						">Borrar</a> 
 					EOS;
 					$contenidoPrincipal .= <<<EOS
-					<a href="editarMensaje.php?id= 
+						<a href="editarMensaje.php?id=
 					EOS;
-					$contenidoPrincipal .= $messages[$i]->getId();
+					$contenidoPrincipal .= $messages[$j]->getId();
 					$contenidoPrincipal .= <<<EOS
-					 ">Editar</a> 
+						">Editar</a> 
 					EOS;
 				}
 			}

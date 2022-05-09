@@ -18,12 +18,11 @@ class FormularioResponderMensaje extends Formulario {
     }
     
     protected function generaCamposFormulario(&$datos) {
-       
         $html = <<<EOS
         <fieldset>
             <div>
                 <label for="txt">Mensaje:</label>
-                <input id="txt" type="text" name="txt"}
+                <input type="text" name="txt">
             </div>
             <div>
                 <button type="submit" name="answer"> Responder </button>
