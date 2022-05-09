@@ -123,6 +123,12 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
         return false;
     }
 
+    /**
+     * Modify a message entity from the repository given a new text.
+     * @param Message $message Message to modify.
+     * @param string $newText new text in message.
+     * @return boolean
+     */
     public function modify($message, $newText) {
         // Check entity type and we check first if the message already exists
         $importedMessage = $this->findById($message->getId());
