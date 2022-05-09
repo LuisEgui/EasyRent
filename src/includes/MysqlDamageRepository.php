@@ -58,7 +58,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         return $damages;
     }
 
-    public function findByvehicle($vehicle) {
+    public function findByVehicle($vehicle) {
         $damages[] = array();
 
         $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage from Damage where vehicle = '%d",

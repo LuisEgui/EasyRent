@@ -35,6 +35,16 @@ class Damage {
      */
     private $area;
 
+     /**
+     * @var string Damage's type.
+     */
+    private $type;
+
+    /**
+     * @var boolean Damage's isRepaired.
+     */
+    private $isRepaired;
+
     /**
      * Creates an Damage
      * 
@@ -44,10 +54,12 @@ class Damage {
      * @param string $Damage's title.
      * @param string $Damage's description.
      * @param string $Damage's area.
+     * @param string $Damage's type.
+     * @param boolean $Damage's isRepaired.
      * 
      * @return Damage
      */
-    public function __construct($id = null, $vehicle, $user, $title, $description, $evidenceDamage, $area) {
+    public function __construct($id = null, $vehicle, $user, $title, $description, $evidenceDamage, $area, $type, $isRepaired) {
         $this->d_id = $id;
         $this->vehicle = $vehicle;
         $this->user = $user;
@@ -55,6 +67,8 @@ class Damage {
         $this->description = $description;
         $this->evidenceDamage =$evidenceDamage;
         $this->area =$area;
+        $this->type = $type;
+        $this->isRepaired = $isRepaired;
     }
 
    
@@ -88,7 +102,7 @@ class Damage {
      * Returns damage´s description
      * @return string description
      */
-    public function getdescription() {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -108,12 +122,28 @@ class Damage {
         return $this->evidenceDamage;
     }
     
-       /**
+    /**
      * Returns damages's area
      * @return string area
      */
     public function getArea() {
         return $this->area;
+    }
+
+    /**
+     * Returns damages's type
+     * @return string type
+     */
+    public function getType() {
+        return $this->type;
+    }
+
+        /**
+     * Returns damages's isRepaired
+     * @return boolean isRepaired
+     */
+    public function getIsRepaired() {
+        return $this->isRepaired;
     }
 
     /**
@@ -175,8 +205,26 @@ class Damage {
      * @param string area
      * @return void
      */
-    public function setaArea($area) {
+    public function setArea($area) {
         $this->area = $area;
+    }
+
+    /**
+     * Sets damage's type
+     * @param string type
+     * @return void
+     */
+    public function setType($type) {
+        $this->type = $type;
+    }
+
+    /**
+     * Sets damage's isRepaired
+     * @param boolean isRepaired
+     * @return void
+     */
+    public function setIsRepaired($isRepaired) {
+        $this->isRepaired = $isRepaired;
     }
 
 }

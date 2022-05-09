@@ -39,6 +39,8 @@ class DamageService {
      * @param string $description damage´s description.
      * @param string $evidenceDamage damage´s image.
      * @param string $area damage´s area
+     * @param string $type damage´s type
+     * @param string $isRepaired damage´s isRepaired
      * @return Damage|null Returns null when there is an already existing Damage with the same $d_id
      */
     public function createDamage($vehicle, $user, $title, $description, $evidenceDamage,$area  ) {
