@@ -46,6 +46,11 @@ class Damage {
     private $isRepaired;
 
     /**
+     * @var string Damage's image.
+     */
+    private $evidenceDamage;
+
+    /**
      * Creates an Damage
      * 
      * @param string $Unique id damage identifier
