@@ -35,7 +35,7 @@ class FormularioActualizarMensaje extends Formulario {
         <fieldset>
             <div>
                 <label for="txt">Mensaje:</label>
-                <input id="txt" type="text" name="txt" value="$mensaje" style="width : 600px; heigth : 600px"/>{$erroresCampos['txt']}
+                <input id="txt" type="text" name="txt" value="$mensaje" style="width : 600px; height : 600px"/>{$erroresCampos['txt']}
             </div>
             <div>
                 <button type="submit" name="answer"> Actualizar </button>
