@@ -29,7 +29,7 @@ class FormularioRegistroMensaje extends Formulario {
         <fieldset>
             <div>
                 <label for="txt">Mensaje:</label>
-                <input id="txt" type="text" name="txt" value="$message" />{$erroresCampos['txt']}
+                <input id="txt" type="text" name="txt" value="$message" style="width : 600px; heigth : 600px"/>{$erroresCampos['txt']}
             </div>
             <div>
                 <button type="submit" name="register"> Registrar </button>

@@ -44,29 +44,20 @@ for ($i = 0; $i < count($messages); $i++) {
 		$contenidoPrincipal .= <<<EOS
 		</p> 
 		EOS;
-		if ($userService->isLogged()) {
-			if($userAuthor->getEmail() == $_SESSION['email']){
-				$contenidoPrincipal .= <<<EOS
-				<a href="borrarMensaje.php?id=
-				EOS;
-				$contenidoPrincipal .= $messages[$i]->getId();
-				$contenidoPrincipal .= <<<EOS
-				">Borrar</a> 
-				EOS;
-				$contenidoPrincipal .= <<<EOS
-				<a href="editarMensaje.php?id= 
-				EOS;
-				$contenidoPrincipal .= $messages[$i]->getId();
-				$contenidoPrincipal .= <<<EOS
-				 ">Editar</a> 
-				EOS;
-			}
+		if ($userService->isLogged() && $userAuthor->getEmail() == $_SESSION['email']){
 			$contenidoPrincipal .= <<<EOS
-			<a href="nuevaRespuesta.php?id=
+			<a href="borrarMensaje.php?id=
 			EOS;
 			$contenidoPrincipal .= $messages[$i]->getId();
 			$contenidoPrincipal .= <<<EOS
-			">Responder</a> 
+			">Borrar</a> 
+			EOS;
+			$contenidoPrincipal .= <<<EOS
+			<a href="editarMensaje.php?id= 
+			EOS;
+			$contenidoPrincipal .= $messages[$i]->getId();
+			$contenidoPrincipal .= <<<EOS
+			 ">Editar</a> 
 			EOS;
 		}
 		for ($j = 0; $j < count($messages); $j++) {
@@ -99,9 +90,19 @@ for ($i = 0; $i < count($messages); $i++) {
 				EOS;
 			}
 		}
-		$contenidoPrincipal .= <<<EOS
-				</div>
-		EOS;
+		if($userAuthor->getEmail() == $_SESSION['email']){
+			$form = new FormularioResponderMensaje($messages[$i]->getId());
+			$htmlFormRegAnswer = $form->gestiona();
+	
+			$contenidoPrincipal .= <<<EOS
+			<h1>Nueva respuesta</h1>
+			$htmlFormRegAnswer
+			EOS;
+	
+			$contenidoPrincipal .= <<<EOS
+					</div>
+			EOS;
+		}
 	} 
 
 	
@@ -118,12 +119,6 @@ if ($userService->isLogged()) {
 	<h1>Nuevo mensaje</h1>
 	$htmlFormRegMessage
 	EOS;
-	$contenidoPrincipal .= <<<EOS
-			<p>Para editar, responder o eliminar un mensaje ir a: 
-			<a href='mensajes.php'>Gestionar mensajes</a>
-			</p>
-			EOS;
-
 
 } else {
 	$contenidoPrincipal .= <<<EOS
