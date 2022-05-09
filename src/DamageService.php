@@ -79,17 +79,15 @@ class DamageService {
      * 
      * @return Bool false if the message was modified correctly in the database.
      */
-    public function updateDamage($vehicle, $user, $title,  $description,$area, $d_id){
+    public function updateDamage($isRepaired, $description, $d_id){
         $presentDamage = $this->readDamageById($d_id);
-        $referenceMessage = $this->readDamageById($newText);
-        if ($referenceMessage === null) {
-            // We remove the old user email by deleting the user object
-            $this->damageRepository->delete($presentMessage);
-            // And save the new one
-            $presentMessage->setTxt($newText);
-            $this->messageRepository->save($presentMessage);
-            return true;
-        }
-        return false;
+
+        // We remove the old user email by deleting the user object
+        $this->damageRepository->delete($presentDamage);
+        // And save the new one
+        $presentDamage->setDescription($description);
+        $presentDamage->setIsRepaired($isRepaired);
+        $this->damageRepository->save($presentDamage);
+        return true;
     }
 }
