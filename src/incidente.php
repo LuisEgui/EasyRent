@@ -3,6 +3,7 @@
 require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/Formulario.php';
 require_once __DIR__.'/includes/DamageService.php';
+require_once __DIR__.'/includes/FormularioRegistroIncidente.php';
 
 $tituloPagina = 'Incidentes';
 $contenidoPrincipal = '<h1>Lista de incidentes</h1>';
@@ -67,17 +68,41 @@ for ($i = 0; $i < count($damages); $i++) {
             <p>SÍ</p>
             </p>
             EOS;
-            } else {
+        } else {
             $contenidoPrincipal .= <<<EOS
             <p>NO</p>
             </p>
             EOS;
-            }
+        }
+        $contenidoPrincipal .= <<<EOS
+        <a href="borrarIncidente.php?id=
+        EOS;
+        $contenidoPrincipal .= $damages[$i]->getId();
+        $contenidoPrincipal .= <<<EOS
+            ">Borrar</a> 
+        EOS;
+        $contenidoPrincipal .= <<<EOS
+            <a href="actualizarIncidente.php?id=
+        EOS;
+        $contenidoPrincipal .= $damages[$i]->getId();
+        $contenidoPrincipal .= <<<EOS
+            ">Editar</a> 
+        EOS;
         $contenidoPrincipal .= <<<EOS
         </div>
         EOS;
         
 
 }
+
+$form = new FormularioRegistroIncidente();
+	$htmlFormRegMessage = $form->gestiona();
+
+	$tituloPagina = 'Agregar incidente';
+
+	$contenidoPrincipal .= <<<EOS
+	<h1>Nuevo incidente</h1>
+	$htmlFormRegMessage
+	EOS;
 
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';
