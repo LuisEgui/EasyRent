@@ -44,20 +44,29 @@ for ($i = 0; $i < count($messages); $i++) {
 		$contenidoPrincipal .= <<<EOS
 		</p> 
 		EOS;
-		if ($userService->isLogged() && $userAuthor->getEmail() == $_SESSION['email']) {
+		if ($userService->isLogged()) {
+			if($userAuthor->getEmail() == $_SESSION['email']){
+				$contenidoPrincipal .= <<<EOS
+				<a href="borrarMensaje.php?id=
+				EOS;
+				$contenidoPrincipal .= $messages[$i]->getId();
+				$contenidoPrincipal .= <<<EOS
+				">Borrar</a> 
+				EOS;
+				$contenidoPrincipal .= <<<EOS
+				<a href="editarMensaje.php?id= 
+				EOS;
+				$contenidoPrincipal .= $messages[$i]->getId();
+				$contenidoPrincipal .= <<<EOS
+				 ">Editar</a> 
+				EOS;
+			}
 			$contenidoPrincipal .= <<<EOS
-			<a href="borrarMensaje.php?id=
+			<a href="nuevaRespuesta.php?id=
 			EOS;
 			$contenidoPrincipal .= $messages[$i]->getId();
 			$contenidoPrincipal .= <<<EOS
-			">Borrar</a> 
-			EOS;
-			$contenidoPrincipal .= <<<EOS
-			<a href="editarMensaje.php?id= 
-			EOS;
-			$contenidoPrincipal .= $messages[$i]->getId();
-			$contenidoPrincipal .= <<<EOS
-			 ">Editar</a> 
+			">Responder</a> 
 			EOS;
 		}
 		for ($j = 0; $j < count($messages); $j++) {

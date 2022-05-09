@@ -69,7 +69,7 @@ class FormularioActualizarMensaje extends Formulario {
         return $html;
     }
 
-    protected function procesaFormulario(&$datos) {
+    protected function procesaFormulario(&$datos) {            
         $this->errores = [];
         $txt = trim($datos['txt'] ?? '');
         $idMessage = $datos['seleccionMensaje'];

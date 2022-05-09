@@ -10,7 +10,7 @@ class FormularioResponderMensaje extends Formulario {
     private $userService;
     
     public function __construct($id) {
-        parent::__construct('formAnswerMessage?id=' + $id, ['urlRedireccion' => 'foro.php']);
+        parent::__construct('formAnswerMessage?id=' . $id, ['urlRedireccion' => 'foro.php']);
         $this->messageService = new MessageService($GLOBALS['db_message_repository']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
