@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioEliminarMensaje.php';
 
 require_once __DIR__.'/includes/MessageService.php';
 require_once __DIR__.'/includes/UserService.php';

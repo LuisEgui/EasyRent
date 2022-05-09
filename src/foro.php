@@ -6,8 +6,6 @@ require_once __DIR__.'/includes/UserService.php';
 require_once __DIR__.'/includes/MessageService.php';
 require_once __DIR__.'/includes/FormularioRegistroMensaje.php';
 require_once __DIR__.'/includes/FormularioResponderMensaje.php';
-require_once __DIR__.'/includes/FormularioEliminarMensaje.php';
-require_once __DIR__.'/includes/FormularioActualizarMensaje.php';
 
 $tituloPagina = 'Foro';
 
@@ -22,11 +20,11 @@ for ($i = 0; $i < count($messages); $i++) {
 	if($messages[$i]->getIdParentMessage() == null){
 		$contenidoPrincipal .= <<<EOS
 		<div class="v">
-			<h2>Mensaje: 
+		<h2>Mensaje: 
 		EOS;
 		$contenidoPrincipal .= <<<EOS
-			</h2>
-			<p>Autor: 
+		</h2>
+		<p>Autor: 
 		EOS;
 		$idAuthor = $messages[$i]->getAuthor();
 		$userAuthor = $userService->readUserById($idAuthor);
@@ -64,12 +62,12 @@ for ($i = 0; $i < count($messages); $i++) {
 			if($messages[$j]->getIdParentMessage() == $messages[$i]->getId()){
 				$contenidoPrincipal .= <<<EOS
 				<div class="v">
-					<h2>Respuesta a: 
+				<h2>Respuesta a: 
 				EOS;
 				$contenidoPrincipal .= $userAuthor->getEmail();
 				$contenidoPrincipal .= <<<EOS
 				</h2>
-					<p>Autor: 
+				<p>Autor: 
 				EOS;
 				$idAuthor1 = $messages[$j]->getAuthor();
 				$userAuthor1 = $userService->readUserById($idAuthor1);
@@ -88,9 +86,25 @@ for ($i = 0; $i < count($messages); $i++) {
 				</p> 
 				</div>
 				EOS;
+				if ($userService->isLogged() && $userAuthor1->getEmail() == $_SESSION['email']){
+					$contenidoPrincipal .= <<<EOS
+					<a href="borrarMensaje.php?id=
+					EOS;
+					$contenidoPrincipal .= $messages[$i]->getId();
+					$contenidoPrincipal .= <<<EOS
+					">Borrar</a> 
+					EOS;
+					$contenidoPrincipal .= <<<EOS
+					<a href="editarMensaje.php?id= 
+					EOS;
+					$contenidoPrincipal .= $messages[$i]->getId();
+					$contenidoPrincipal .= <<<EOS
+					 ">Editar</a> 
+					EOS;
+				}
 			}
 		}
-		if($userAuthor->getEmail() == $_SESSION['email']){
+		if($userService->isLogged()){
 			$form = new FormularioResponderMensaje($messages[$i]->getId());
 			$htmlFormRegAnswer = $form->gestiona();
 	
@@ -99,10 +113,11 @@ for ($i = 0; $i < count($messages); $i++) {
 			$htmlFormRegAnswer
 			EOS;
 	
-			$contenidoPrincipal .= <<<EOS
-					</div>
-			EOS;
+			
 		}
+		$contenidoPrincipal .= <<<EOS
+			</div>
+		EOS;
 	} 
 
 	
