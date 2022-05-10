@@ -132,7 +132,6 @@ class FormularioRegistroIncidente extends Formulario {
             <div>
                 <button type="submit" name="register">Registrarse</button>
             </div>
-        </fieldset>
         EOS;
         return $html;
     }

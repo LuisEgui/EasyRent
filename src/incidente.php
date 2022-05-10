@@ -74,7 +74,6 @@ for ($i = 0; $i < count($damages); $i++) {
         } else {
             $contenidoPrincipal .= <<<EOS
             <p>NO</p>
-            </p>
             EOS;
         }
         $contenidoPrincipal .= <<<EOS
