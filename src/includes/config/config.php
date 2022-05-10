@@ -23,6 +23,8 @@ date_default_timezone_set('Europe/Madrid');
 
 use easyrent\includes\persistance\repository\MysqlConnector;
 use easyrent\includes\persistance\repository\MysqlImageRepository;
+use easyrent\includes\persistance\repository\MysqlMessageRepository;
+
 use easyrent\includes\persistance\repository\MysqlUserRepository;
 use easyrent\includes\persistance\repository\MysqlVehicleRepository;
 
@@ -36,3 +38,5 @@ $GLOBALS['db_user_repository'] = $userRepository;
 $GLOBALS['db_image_repository'] = $imageRepository;
 $vehicleRepository = new MysqlVehicleRepository($db);
 $GLOBALS['db_vehicle_repository'] = $vehicleRepository;
+$messageRepository = new MysqlMessageRepository($db);
+$GLOBALS['db_message_repository'] = $messageRepository;

@@ -11,7 +11,8 @@
   },
   "autoload": {
     "psr-4": {
-      "easyrent\\": "src/"
+      "easyrent\\": "src/",
+      "test\\": "test/"
     }
   },
   "config": {
