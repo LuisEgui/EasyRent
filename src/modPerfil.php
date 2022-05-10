@@ -1,11 +1,13 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioActualizarPasswordUsuario.php';
-require_once __DIR__.'/includes/FormularioActualizarEmailUsuario.php';
-require_once __DIR__.'/includes/FormularioActualizarImagenUsuario.php';
-require_once __DIR__.'/includes/FormularioActualizarRoleUsuario.php';
-require_once __DIR__.'/includes/FormularioBorrarCuenta.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
+
+use easyrent\includes\forms\FormularioActualizarEmailUsuario;
+use easyrent\includes\forms\FormularioActualizarImagenUsuario;
+use easyrent\includes\forms\FormularioActualizarPasswordUsuario;
+use easyrent\includes\forms\FormularioActualizarRoleUsuario;
+use easyrent\includes\forms\FormularioBorrarCuenta;
 
 $passwordForm = new FormularioActualizarPasswordUsuario();
 $htmlFormPassword = $passwordForm->gestiona();

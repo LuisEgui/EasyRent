@@ -1,7 +1,9 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioRegistroUsuario.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
+
+use easyrent\includes\forms\FormularioRegistroUsuario;
 
 $form = new FormularioRegistroUsuario();
 $htmlFormLogin = $form->gestiona();

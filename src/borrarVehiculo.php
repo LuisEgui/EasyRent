@@ -1,7 +1,9 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioEliminarVehiculo.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
+
+use easyrent\includes\forms\FormularioEliminarVehiculo;
 
 $form = new FormularioEliminarVehiculo();
 $htmlFormDeleteVehicle = $form->gestiona();

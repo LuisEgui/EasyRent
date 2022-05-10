@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
 $tituloPagina = 'Generar Incidente';
 $contenidoPrincipal = <<< EOS

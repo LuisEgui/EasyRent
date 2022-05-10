@@ -1,11 +1,12 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Message.php';
-require_once __DIR__.'/includes/UserService.php';
-require_once __DIR__.'/includes/MessageService.php';
-require_once __DIR__.'/includes/FormularioRegistroMensaje.php';
-require_once __DIR__.'/includes/FormularioResponderMensaje.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
+
+use easyrent\includes\forms\FormularioRegistroMensaje;
+use easyrent\includes\forms\FormularioResponderMensaje;
+use easyrent\includes\service\MessageService;
+use easyrent\includes\service\UserService;
 
 $tituloPagina = 'Foro';
 
@@ -20,27 +21,27 @@ for ($i = 0; $i < count($messages); $i++) {
 	if($messages[$i]->getIdParentMessage() == null){
 		$contenidoPrincipal .= <<<EOS
 		<div class="v">
-		<h2>Mensaje: 
+		<h2>Mensaje:
 		EOS;
 		$contenidoPrincipal .= <<<EOS
 		</h2>
-		<p>Autor: 
+		<p>Autor:
 		EOS;
 		$idAuthor = $messages[$i]->getAuthor();
 		$userAuthor = $userService->readUserById($idAuthor);
 		$contenidoPrincipal .= $userAuthor->getEmail();
 		$contenidoPrincipal .= <<<EOS
 		</p>
-		<p>Texto: 
+		<p>Texto:
 		EOS;
 		$contenidoPrincipal .= $messages[$i]->getTxt();
 		$contenidoPrincipal .= <<<EOS
 		</p>
-		<p>Fecha: 
+		<p>Fecha:
 		EOS;
 		$contenidoPrincipal .= $messages[$i]->getSendTime();
 		$contenidoPrincipal .= <<<EOS
-		</p> 
+		</p>
 		EOS;
 		if ($userService->isLogged() && $userAuthor->getEmail() == $_SESSION['email']){
 			$contenidoPrincipal .= <<<EOS
@@ -48,42 +49,42 @@ for ($i = 0; $i < count($messages); $i++) {
 			EOS;
 			$contenidoPrincipal .= $messages[$i]->getId();
 			$contenidoPrincipal .= <<<EOS
-				">Borrar</a> 
+				">Borrar</a>
 			EOS;
 			$contenidoPrincipal .= <<<EOS
 				<a href="editarMensaje.php?id=
 			EOS;
 			$contenidoPrincipal .= $messages[$i]->getId();
 			$contenidoPrincipal .= <<<EOS
-				">Editar</a> 
+				">Editar</a>
 			EOS;
 		}
 		for ($j = 0; $j < count($messages); $j++) {
 			if($messages[$j]->getIdParentMessage() == $messages[$i]->getId()){
 				$contenidoPrincipal .= <<<EOS
 				<div class="v">
-				<h2>Respuesta a: 
+				<h2>Respuesta a:
 				EOS;
 				$contenidoPrincipal .= $userAuthor->getEmail();
 				$contenidoPrincipal .= <<<EOS
 				</h2>
-				<p>Autor: 
+				<p>Autor:
 				EOS;
 				$idAuthor1 = $messages[$j]->getAuthor();
 				$userAuthor1 = $userService->readUserById($idAuthor1);
 				$contenidoPrincipal .= $userAuthor1->getEmail();
 				$contenidoPrincipal .= <<<EOS
 				</p>
-				<p>Texto: 
+				<p>Texto:
 				EOS;
 				$contenidoPrincipal .= $messages[$j]->getTxt();
 				$contenidoPrincipal .= <<<EOS
 				</p>
-				<p>Fecha: 
+				<p>Fecha:
 				EOS;
 				$contenidoPrincipal .= $messages[$j]->getSendTime();
 				$contenidoPrincipal .= <<<EOS
-				</p> 
+				</p>
 				</div>
 				EOS;
 				if ($userService->isLogged() && $userAuthor1->getEmail() == $_SESSION['email']){
@@ -92,14 +93,14 @@ for ($i = 0; $i < count($messages); $i++) {
 					EOS;
 					$contenidoPrincipal .= $messages[$j]->getId();
 					$contenidoPrincipal .= <<<EOS
-						">Borrar</a> 
+						">Borrar</a>
 					EOS;
 					$contenidoPrincipal .= <<<EOS
 						<a href="editarMensaje.php?id=
 					EOS;
 					$contenidoPrincipal .= $messages[$j]->getId();
 					$contenidoPrincipal .= <<<EOS
-						">Editar</a> 
+						">Editar</a>
 					EOS;
 				}
 			}
@@ -107,20 +108,20 @@ for ($i = 0; $i < count($messages); $i++) {
 		if($userService->isLogged()){
 			$form = new FormularioResponderMensaje($messages[$i]->getId());
 			$htmlFormRegAnswer = $form->gestiona();
-	
+
 			$contenidoPrincipal .= <<<EOS
 			<h1>Nueva respuesta</h1>
 			$htmlFormRegAnswer
 			EOS;
-	
-			
+
+
 		}
 		$contenidoPrincipal .= <<<EOS
 			</div>
 		EOS;
-	} 
+	}
 
-	
+
 }
 
 if ($userService->isLogged()) {
@@ -140,6 +141,5 @@ if ($userService->isLogged()) {
 			<p>Inicie sesión para participar en el foro.</p>
 			EOS;
 }
-
 
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';

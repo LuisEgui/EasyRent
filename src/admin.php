@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Formulario.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
 $tituloPagina = 'Admin';
 
@@ -12,7 +12,7 @@ $contenidoPrincipal = <<<EOS
     <a href="nuevoVehiculo.php">Añadir vehiculo</a>
     </div>
     <div id="info">
-    <a href="borrarVehiculo.php">Borrar vehiculo</a> 
+    <a href="borrarVehiculo.php">Borrar vehiculo</a>
     </div>
     <div id="info">
     <a href="mostrarVehiculosAdminPanel.php">Mostrar vehiculos</a>
