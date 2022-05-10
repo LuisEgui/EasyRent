@@ -11,8 +11,11 @@ $htmlFormRegVehicle = $form->gestiona();
 $tituloPagina = 'Registro de Vehiculo';
 
 $contenidoPrincipal = <<<EOS
-<h1>Registro de Vehiculo</h1>
+<h1>Registrar Vehiculo</h1>
 $htmlFormRegVehicle
+<div id="anteriorUrl">
+    <a href="vehiclesAdmin.php">Cancelar</a>
+</div>
 EOS;
 
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';
