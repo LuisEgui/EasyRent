@@ -51,6 +51,16 @@ class Damage {
     private $evidenceDamage;
 
     /**
+     * @var string Damage's image
+     */
+    private $image;
+
+    /**
+     * @var string Damage time stamp
+     */
+    private $timeStamp;
+
+    /**
      * Creates an Damage
      * 
      * @param string $Unique id damage identifier
@@ -58,13 +68,14 @@ class Damage {
      * @param string $user's unique identifier.
      * @param string $Damage's title.
      * @param string $Damage's description.
+     * @param string $Damage's evidenceDamage. Image of the damage.
      * @param string $Damage's area.
      * @param string $Damage's type.
      * @param boolean $Damage's isRepaired.
-     * 
+     * @param string $timeStamp Damage's time of insertion or update
      * @return Damage
      */
-    public function __construct($id = null, $vehicle, $user, $title, $description, $evidenceDamage, $area, $type, $isRepaired) {
+    public function __construct($id = null, $vehicle, $user, $title, $description, $evidenceDamage, $area, $type, $isRepaired, $timeStamp = null) {
         $this->d_id = $id;
         $this->vehicle = $vehicle;
         $this->user = $user;
@@ -74,12 +85,11 @@ class Damage {
         $this->area =$area;
         $this->type = $type;
         $this->isRepaired = $isRepaired;
+        $this->timeStamp = $timeStamp;
     }
 
-   
-
     /**
-     * Returns damages's id
+     * Returns damage's id
      * @return string d_id
      */
 
@@ -96,7 +106,7 @@ class Damage {
     }
 
     /**
-     * Returns damages's user 
+     * Returns damage's user 
      * @return string user
      */
     public function getUser() {
@@ -120,7 +130,7 @@ class Damage {
     }
 
     /**
-     * Returns damages's evidence
+     * Returns damage's evidence
      * @return string evidence
      */
     public function getEvidenceDamage() {
@@ -128,7 +138,7 @@ class Damage {
     }
     
     /**
-     * Returns damages's area
+     * Returns damage's area
      * @return string area
      */
     public function getArea() {
@@ -136,19 +146,28 @@ class Damage {
     }
 
     /**
-     * Returns damages's type
+     * Returns damage's type
      * @return string type
      */
     public function getType() {
         return $this->type;
     }
 
-        /**
-     * Returns damages's isRepaired
+    /**
+     * Returns damage's isRepaired
      * @return boolean isRepaired
      */
     public function getIsRepaired() {
         return $this->isRepaired;
+    }
+
+    /**
+     * Returns damage's timeStamp
+     * @return string timeStamp
+     */
+    public function getTimeStamp()
+    {
+        return $this->timeStamp;
     }
 
     /**

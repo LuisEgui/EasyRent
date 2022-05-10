@@ -9,13 +9,13 @@ $contenidoPrincipal = <<<EOS
     <div class="promociones">
     <h2>Administrar</h2>
     <div id="info">
-    <a href="nuevoVehiculo.php">Añadir vehiculo</a>
+    <a href="vehiclesAdmin.php">Administrar vehiculos</a>
     </div>
     <div id="info">
-    <a href="borrarVehiculo.php">Borrar vehiculo</a> 
+    <a href="modelsAdmin.php">Administrar modelo</a>
     </div>
     <div id="info">
-    <a href="mostrarVehiculosAdminPanel.php">Mostrar vehiculos</a>
+    <a href="incidentesAdmin.php">Administrar incidentes</a>
     </div>
 	</div>
 EOS;

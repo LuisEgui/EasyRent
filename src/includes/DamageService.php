@@ -20,14 +20,31 @@ class DamageService {
     private $imageRepository;
 
     /**
+     * @var DamageService Single instance of DamageService class.
+     */
+    private static $instance;
+
+    /**
      * Creates a DamageService
      * 
-     * @param MysqlDamageRepository $DamageRepository Instance of an MysqlDamageRepository
-     * @param Repository $DamageRepository Instance of an MysqDamageRepository
      * @return void
      */
-    public function __construct(MysqlDamageRepository $damageRepository) {
-        $this->damageRepository = $damageRepository;
+    private function __construct() {
+        $this->damageRepository = $GLOBALS['db_damage_repository'];
+        $this->imageRepository = $GLOBALS['db_image_repository'];
+    }
+
+    /**
+     * Controls the Singleton Pattern of DamageService class. If the instance of DamageService class exists, returns it. If not, returns it after creting it.
+     *
+     * @return DamageService $instance Single instance of DamageService
+     */
+    public static function getInstance()
+    {
+        if (!self::$instance instanceof self) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     /**
