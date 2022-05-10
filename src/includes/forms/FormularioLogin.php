@@ -2,6 +2,7 @@
 
 namespace easyrent\includes\forms;
 
+use easyrent\includes\config;
 use easyrent\includes\service\UserService;
 
 class FormularioLogin extends Formulario
