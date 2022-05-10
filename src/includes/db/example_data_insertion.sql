@@ -1,16 +1,16 @@
 -- Author: Luis Egui
 
 -- Insert example model row:
-insert into Model(make, model, submodel, gearbox, category)
-values ('Audi', 'S8', '5.2 V10 FSI', 'automatic', 'sedan');
+insert into Model(brand, model, submodel, gearbox, category, fuelType, seatCount)
+values ('Audi', 'S8', '5.2 V10 FSI', 'automatic', 'sedan', 'petrol', '5');
 
 -- View inserted data:
 select *
 from Model;
 
 -- Insert example Vehicle row:
-insert into Vehicle(vin, licensePlate, model, fuelType, seatCount)
-values (123456, 'X-XX-1234', 1, 'petrol', '5');
+insert into Vehicle(vin, licensePlate, model, location)
+values (123456, 'X-XX-1234', 1, 'Madrid');
 
 -- View inserted data:
 select *

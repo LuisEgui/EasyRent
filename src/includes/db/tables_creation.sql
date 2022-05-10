@@ -4,11 +4,17 @@
 create table
   Model (
     m_id serial primary key,
-    make varchar(40),
+    brand varchar(40),
     model varchar(40),
-    submodel varchar(40),
-    gearbox enum('manual', 'automatic', 'semi-automatic', 'duplex'),
-    category enum('coupe', 'pickup', 'roadster', 'sedan', 'small-car', 'suv', 'van')
+    submodel varchar(40) unique not null,
+    gearbox enum('Manual', 'Automatic', 'Semi-automatic', 'Duplex'),
+    category enum('Coupe', 'Pickup', 'Roadster', 'Sedan', 'Small-car', 'Suv', 'Van'),
+    fuelType enum ('Diesel', 'Electric-hybrid', 'Electric', 'Petrol', 'Plug-in-hybrid') not null,
+    seatCount tinyint not null,
+    vehicleImg bigint unsigned,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
+    foreign key (vehicleImg) references Image(img_id),
+    check (seatCount regexp '^[2-9]{1}$')
   );
 
 -- Aux: check Model fields
@@ -31,14 +37,11 @@ create table
     vin bigint primary key,
     licensePlate varchar(10) not null,
     model bigint unsigned,
-    vehicleImg bigint unsigned,
-    fuelType enum ('diesel', 'electric-hybrid', 'electric', 'petrol', 'plug-in-hybrid') not null,
-    seatCount tinyint not null,
-    state enum ('available', 'unavailable', 'reserved') default 'available',
-    foreign key (model) references Model(m_id),
-    foreign key (vehicleImg) references Image(img_id),
-    check (vin regexp '^[0-9]{6}$'), 
-    check (seatCount regexp '^[2-9]{1}$'),
+    location varchar(40),
+    state enum ('Available', 'Unavailable', 'Reserved') default 'Available',
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
+    foreign key (model) references Model(m_id) ON DELETE RESTRICT,   
+    check (vin regexp '^[0-9]{6}$'),   
     check (licensePlate regexp '^[0-9]{4}-(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{1,3}$')
   );
 
@@ -115,8 +118,8 @@ create table
     pickupTime datetime not null,
     returnTime datetime not null,
     price float,
-    foreign key (vehicle) references Vehicle(vin),
-    foreign key (user) references User(u_id),
+    foreign key (vehicle) references Vehicle(vin) ON DELETE RESTRICT,  
+    foreign key (user) references User(u_id) ON DELETE RESTRICT,
     unique (vehicle, user, pickupTime),
     check (timediff(returnTime, pickupTime) > 0)
   );
