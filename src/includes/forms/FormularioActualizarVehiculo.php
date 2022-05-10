@@ -6,7 +6,7 @@ use easyrent\includes\service\VehicleService;
 use easyrent\includes\service\ModelService;
 use easyrent\includes\persistance\lists\VehicleList;
 
-class FormularioEliminarVehiculo extends Formulario {
+class FormularioActualizarVehiculo extends Formulario {
 
     private $vehicleService;
 
@@ -17,7 +17,7 @@ class FormularioEliminarVehiculo extends Formulario {
     private $orderVehiclesBy;
 
     public function __construct($orderByFunction) {
-        parent::__construct('formDeleteVehicle', ['urlRedireccion' => 'vehiclesAdmin.php']);
+        parent::__construct('formUpdateVehicle', ['urlRedireccion' => 'actualizarDatosVehiculo.php']);
         $this->vehicleService = VehicleService::getInstance();
         $this->modelService = ModelService::getInstance();
         $this->vehiclesList = new VehicleList();
@@ -58,7 +58,7 @@ class FormularioEliminarVehiculo extends Formulario {
             $vehicleModel = $this->modelService->readModelById($vehicle->getModel());
             $html .= <<<EOS
                 <tr>
-                    <td><input type="radio" name="deletedVehicleVIN" value="{$vehicle->getVin()}" required></td>
+                    <td><input type="radio" name="updatedVehicleVIN" value="{$vehicle->getVin()}" required></td>
                     <td>{$vehicle->getVin()}</td>
                     <td>{$vehicle->getLicensePlate()}</td>
                     <td>{$vehicleModel->getBrand()}</td>
@@ -74,7 +74,7 @@ class FormularioEliminarVehiculo extends Formulario {
             </table>
             </div>
             <div>
-                <button type="submit" name="delete"> Eliminar </button>
+                <button type="submit" name="update"> Actualizar </button>
             </div>
         EOS;
 
@@ -83,16 +83,14 @@ class FormularioEliminarVehiculo extends Formulario {
 
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
-
-        if(!isset($datos['deletedVehicleVIN']))
+        //$this->urlDireccion = "{$this->urlRedireccion}?vinVehicleToUpdate={$datos['updatedVehicleVIN']}";
+        //echo "{$this->urlRedireccion}";
+        if(!isset($datos['updatedVehicleVIN']))
             $this->errores[] = 'Debe seleccionar un vehiculo.';
 
-        if (count($this->errores) === 0) {
-            $result = $this->vehicleService->deleteVehicleByVin($datos['deletedVehicleVIN']);
-            if (!$result)
-                $this->errores[] = "Vehicle doesn't exist!";
-            else
-                header("Location: {$this->urlRedireccion}");
+        if (count($this->errores) === 0) { 
+            $this->changeUlrRedireccion("{$this->urlRedireccion}?vinVehicleToUpdate={$datos['updatedVehicleVIN']}");
+            header("Location: {$this->urlRedireccion}");
         }
     }
 }
