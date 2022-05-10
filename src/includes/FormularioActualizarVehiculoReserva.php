@@ -8,11 +8,13 @@ require_once RAIZ_APP.'/VehicleService.php';
 class FormularioActualizarVehiculoReserva extends Formulario {
 
     private $reserveService;
+
+    private $vehicleService;
     
     public function __construct() {
         parent::__construct('formUpdateReserveVehicle', ['urlRedireccion' => 'index.php']);
-        $this->vehicleService = new VehicleService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
-        $this->reserveService = new ReserveService($GLOBALS['db_reserve_repository'], $GLOBALS['db_vehicle_repository'], $GLOBALS['db_user_repository']);
+        $this->vehicleService = VehicleService::getInstance();
+        $this->reserveService = ReserveService::getInstance();
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
     

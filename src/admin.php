@@ -18,7 +18,7 @@ $contenidoPrincipal = <<<EOS
         <a href="mostrarVehiculosAdminPanel.php">Mostrar vehiculos</a>
         </div>
         <div id="info">
-        <a href="reservasAdmin.php">Gestionar reservas</a>
+        <a href="reservasAdmin.php">Administrar reservas</a>
         </div>
 	</div>
 EOS;

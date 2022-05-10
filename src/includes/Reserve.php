@@ -51,7 +51,7 @@ class Reserve {
     const PENDING = 1;
 
     const TYPES_STATE = [self::RESERVED => 'Reservado', self::PENDING => 'Pendiente'];   
-
+    
     /**
      * Creates a Reserve
      * 

@@ -11,7 +11,7 @@ class FormularioReserva extends Formulario {
     
     public function __construct() {
         parent::__construct('formReserve', ['urlRedireccion' => 'reservado.php']);
-        $this->reserveService = new ReserveService($GLOBALS['db_reserve_repository'], $GLOBALS['db_vehicle_repository'], $GLOBALS['db_user_repository']);
+        $this->reserveService = ReserveService::getInstance();
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
     

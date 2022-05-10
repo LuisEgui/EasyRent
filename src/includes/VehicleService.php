@@ -14,21 +14,32 @@ class VehicleService {
      */
     private $vehicleRepository;
 
-    /**
-     * @var Repository Image repository
+/**
+     * @var VehicleService Single instance of VehicleService class.
      */
-    private $imageRepository;
+    private static $instance;
 
     /**
      * Creates a VehicleService
-     * 
+     *
      * @param MysqlVehicleRepository $vehicleRepository Instance of an MysqlVehicleRepository
-     * @param Repository $imageRepository Instance of an MysqlImageRepository
      * @return void
      */
-    public function __construct(MysqlVehicleRepository $vehicleRepository, Repository $imageRepository) {
-        $this->vehicleRepository = $vehicleRepository;
-        $this->imageRepository = $imageRepository;
+    private function __construct() {
+        $this->vehicleRepository = $GLOBALS['db_vehicle_repository'];
+    }
+
+    /**
+     * Controls the Singleton Pattern of VehicleService class. If the instance of VehicleService class exists, returns it. If not, returns it after creting it.
+     *
+     * @return VehicleService $instance Single instance of VehicleService
+     */
+    public static function getInstance()
+    {
+        if (!self::$instance instanceof self) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     /**

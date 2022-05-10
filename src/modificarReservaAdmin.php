@@ -39,6 +39,9 @@ $htmlFormVehicle
 $htmlFormPrice
 <h3>Cacelar reserva</h3>
 $htmlDeleteForm
+<div id="anteriorUrl">
+    <a href="reservasAdmin.php">Cancelar</a>
+</div>
 EOS;
 
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';

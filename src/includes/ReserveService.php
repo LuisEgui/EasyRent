@@ -25,15 +25,33 @@ class ReserveService {
     private $userRepository;
 
     /**
+     * @var ReserveService Single instance of ReserveService class.
+     */
+    private static $instance;
+
+    /**
      * Creates an ReserveService
      * 
      * @param ReserveRepository $reserveRepository Instance of an ReserveRepository
      * @return void
      */
-    public function __construct(ReserveRepository $reserveRepository, Repository $vehicleRepository, Repository $userRepository) {
-        $this->reserveRepository = $reserveRepository;
-        $this->vehicleRepository = $vehicleRepository;
-        $this->userRepository = $userRepository;
+    private function __construct() {
+        $this->reserveRepository = $GLOBALS['db_reserve_repository'];
+        $this->vehicleRepository = $GLOBALS['db_vehicle_repository'];
+        $this->userRepository = $GLOBALS['db_user_repository'];
+    }
+
+    /**
+     * Controls the Singleton Pattern of ReserveService class. If the instance of ReserveService class exists, returns it. If not, returns it after creting it.
+     *
+     * @return ReserveService $instance Single instance of ReserveService
+     */
+    public static function getInstance()
+    {
+        if (!self::$instance instanceof self) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     public function validateReserve($vin, $pickUpTime, $returnTime, $id) {
