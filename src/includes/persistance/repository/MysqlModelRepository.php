@@ -4,7 +4,7 @@ namespace easyrent\includes\persistance\repository;
 
 use easyrent\includes\persistance\entity\Model;
 
-class MysqlModelRepository extends AbstractMysqlRepository implements ModelRepository{
+class MysqlModelRepository extends AbstractMysqlRepository {
 
     public function __construct(MysqlConnector $connector) {
         parent::__construct($connector);
