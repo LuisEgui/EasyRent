@@ -49,9 +49,8 @@ class Reserve {
 
     const RESERVED = 0;
     const PENDING = 1;
-    const CANCELLED = 2;
 
-    const TYPES_STATE = [self::RESERVED => 'Reservado', self::PENDING => 'Pendiente', self::CANCELLED => 'Cancelada'];   
+    const TYPES_STATE = [self::RESERVED => 'Reservado', self::PENDING => 'Pendiente'];   
 
     /**
      * Creates a Reserve

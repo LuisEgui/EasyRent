@@ -48,7 +48,8 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
     public function findByVehicleAndUserAndPickUptime($vehicle, $user, $pickUpTime) {
         $reservas = [];
 
-        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where user = %d", $user);
+        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where vehicle = '%s', user = '%d', pickupTime = '%s'", 
+            $vehicle, $user, $pickUpTime);
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -119,17 +120,6 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         }
 
         return $reservas;
-    }
-
-    public function validateReserve($vin, $pickUpTime, $returnTime, $id) {
-        $reservas = $this->findAllByVin($vin);
-        for($i = 0; $i < count($reservas); $i++) {
-            if(($id !== null) && ($id === $reservas[$i]->getId())) $i++;
-            
-            if(($reservas[$i]->getPickUpTime() < $pickUpTime) && ($reservas[$i]->getReturnTime() > $pickUpTime)) return false;
-            if(($reservas[$i]->getPickUpTime() < $returnTime) && ($reservas[$i]->getReturnTime() > $returnTime)) return false;
-        }
-        return true;
     }
 
     public function deleteById($id) {

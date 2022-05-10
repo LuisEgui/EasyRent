@@ -4,12 +4,12 @@ require_once RAIZ_APP.'/Formulario.php';
 require_once RAIZ_APP.'/ReserveService.php';
 require_once RAIZ_APP.'/UserService.php';
 
-class FormularioActualizarReturnTimeReserva extends Formulario {
+class FormularioConfirmarReserva extends Formulario {
 
     private $reserveService;
     
     public function __construct() {
-        parent::__construct('formUpdateReserveReturnTime', ['urlRedireccion' => 'index.php']);
+        parent::__construct('formCancelReserve', ['urlRedireccion' => 'index.php']);
         $this->reserveService = new ReserveService($GLOBALS['db_reserve_repository'], $GLOBALS['db_vehicle_repository'], $GLOBALS['db_user_repository']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
@@ -23,26 +23,27 @@ class FormularioActualizarReturnTimeReserva extends Formulario {
         $html = <<<EOF
         $htmlErroresGlobales
         <fieldset>
-            <legend>Actualizar hora de devolucion</legend>
+            <legend>BorrarConfirmar reserva</legend>
             <div>
-                <label for="returnTime">Hora devolucion:</label>
-                <input type="datetime-local" id="returnTime"
-                name="returnTime" >
+                <p>¿Estás seguro de que quieres confirmar esta reserva?</p>
             </div>
             <div>
-                <label><input type="submit" name="update" value="Actualizar"></label>
+                <label><input type="submit" name="confirm" value="Si"></label>
+                <label><input type="submit" name="confirm" value="No"></label>
             </div>
         </fieldset>
         EOF;
         return $html;
     }
 
-
     protected function procesaFormulario(&$datos) {
-        $reservePT = $datos['returnTime']; 
-        if ($this->reserveService->updateReserveReturnTime($_GET["id"], $reservePT))
+        $this->errores = [];
+        $result = $datos['confirm'];
+
+        if ($result == 'Si') {
+            $this->reserveService->confirmReserve($_GET["id"]);
             header("Location: {$this->urlRedireccion}");
-        else
-            $this->errores[] = "Can't upload the return time of this reserve! Car is not available that date";
+        }
     }
+    
 }

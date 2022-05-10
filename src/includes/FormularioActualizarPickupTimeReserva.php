@@ -39,10 +39,10 @@ class FormularioActualizarPickupTimeReserva extends Formulario {
 
 
     protected function procesaFormulario(&$datos) {
-        $reserveRT = $datos['pickupTime']; 
-        if ($this->reserveService->updateReserveReturnTime($_GET["id"], $reserveRT))
+        $reservePT = $datos['pickupTime']; 
+        if ($this->reserveService->updateReservePickupTime($_GET["id"], $reservePT))
             header("Location: {$this->urlRedireccion}");
         else
-            $this->errores[] = "Can't upload the pickup time of this reserve! It can't be later than the return time";
+            $this->errores[] = "Can't upload the pickup time of this reserve! Car is not available that date";
     }
 }

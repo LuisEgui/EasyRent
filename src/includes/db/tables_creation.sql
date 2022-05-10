@@ -109,7 +109,7 @@ create table
     id serial primary key,
     vehicle bigint not null,
     user bigint unsigned not null,
-    state enum ('reserved', 'pending', 'cancelled') default 'pending',
+    state enum ('reserved', 'pending') default 'pending',
     pickupLocation varchar(40) not null,
     returnLocation varchar(40),
     pickupTime datetime not null,

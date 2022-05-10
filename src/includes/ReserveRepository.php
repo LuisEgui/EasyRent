@@ -23,4 +23,11 @@ interface ReserveRepository extends Repository {
      */
     public function findAllByUser($user);
 
+    /**
+     * Returns all reserves from the repository given a vin
+     * @param string $vin Vehicles's vin
+     * @return mixed|null
+     */
+    public function findAllByVin($vin);
+
 }

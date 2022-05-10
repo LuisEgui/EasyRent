@@ -21,9 +21,10 @@ for ($i = 0; $i < count($reservas); $i++) {
     $contenidoPrincipal .= <<<EOS
         </h2>
         <p>
-        Vin: 
+        Matricula: 
     EOS;
-    $contenidoPrincipal .= $reservas[$i]->getVehicle();
+    $vin = $reservas[$i]->getVehicle();
+    $contenidoPrincipal .= $reserveService->getLicensePlate($vin);
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
@@ -60,15 +61,30 @@ for ($i = 0; $i < count($reservas); $i++) {
         Precio:
     EOS;
     $contenidoPrincipal .= $reservas[$i]->getPrice();
-    $contenidoPrincipal .= <<<EOS
-        <p>
+    if($reservas[$i]->getState() === 'reserved') {
+        $contenidoPrincipal .= <<<EOS
+        </p>
+        <p> Reserva Confimada </p>
+        </div>
+    EOS;
+    }
+    else {
+        $contenidoPrincipal .= <<<EOS
+        </p>
         <a href="modificarReserva.php?id=
     EOS;
         $contenidoPrincipal .= $reservas[$i]->getId();
         $contenidoPrincipal .= <<<EOS
         ">Modificar</a> 
+        <a href="confirmarReserva.php?id=
+    EOS;
+        $contenidoPrincipal .= $reservas[$i]->getId();
+        $contenidoPrincipal .= <<<EOS
+        ">Confirmar reserva</a> 
         </div>
     EOS;
+    }
+    
 }
 
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';
