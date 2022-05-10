@@ -2,6 +2,8 @@
 
 namespace easyrent\includes\persistance\entity;
 
+use easyrent\includes\service\Model;
+
 /**
  * Class for user entity.
  */
@@ -23,20 +25,10 @@ class Vehicle
      */
     private $model;
 
-    /**
-     * @var string Vehicle image
+        /**
+     * @var string Vehicle location.
      */
-    private $image;
-
-    /**
-     * @var string Vehicle fuel type.
-     */
-    private $fuelType;
-
-    /**
-     * @var string Vehicle seat count.
-     */
-    private $seatCount;
+    private $location;
 
     /**
      * @var string Vehicle state.
@@ -44,26 +36,30 @@ class Vehicle
     private $state;
 
     /**
+     * @var string Vehicle time stamp
+     */
+    private $timeStamp;
+
+    /**
      * Creates a Vehicle
      *
      * @param string $vin Unique vehicle identifier (vin = vehicle identification number)
      * @param string $licensePlate Unique vehicle email
      * @param string $model Vehicle model
-     * @param string $image Vehicle image
-     * @param string $fuelType Vehicle fuel type. Possible values: 'diesel', 'electric-hybrid', 'electric', 'petrol', 'plug-in-hybrid'.
-     * @param string $seatCount Vehicle seat count
+     * @param string $location Vehicle location
      * @param string $state Vehicle state. Possible values: 'available', 'unavailable', 'reserved'.
+     * @param string $timeStamp Vehicle time of insertion or update
      * @return void
      */
-    public function __construct($vin, $licensePlate, $model, $image = null, $fuelType, $seatCount, $state = 'available')
-    {
+    public function __construct($vin, $licensePlate, $model, $location, $state = 'available', $timeStamp = null)
+    {   
+        
         $this->vin = $vin;
         $this->licensePlate = $licensePlate;
         $this->model = $model;
-        $this->image = $image;
-        $this->fuelType = $fuelType;
-        $this->seatCount = $seatCount;
+        $this->location = $location;
         $this->state = $state;
+        $this->timeStamp = $timeStamp;
     }
 
     /**
@@ -94,30 +90,12 @@ class Vehicle
     }
 
     /**
-     * Returns vehicle's image
-     * @return string image
+     * Returns vehicle's location
+     * @return string location
      */
-    public function getImage()
+    public function getLocation()
     {
-        return $this->image;
-    }
-
-    /**
-     * Returns vehicle's fuelType
-     * @return string fuelType
-     */
-    public function getFuelType()
-    {
-        return $this->fuelType;
-    }
-
-    /**
-     * Returns vehicle's seatCount
-     * @return string seatCount
-     */
-    public function getSeatCount()
-    {
-        return $this->seatCount;
+        return $this->location;
     }
 
     /**
@@ -127,6 +105,11 @@ class Vehicle
     public function getState()
     {
         return $this->state;
+    }
+
+    public function getTimeStamp()
+    {
+        return $this->timeStamp;
     }
 
     /**
@@ -151,7 +134,7 @@ class Vehicle
 
     /**
      * Sets vehicle's model
-     * @param string $model
+     * @param string $model Model ID
      * @return void
      */
     public function setModel($model)
@@ -160,33 +143,13 @@ class Vehicle
     }
 
     /**
-     * Sets vehicle's image
-     * @param string $image Image ID
+     * Sets vehicle's location
+     * @param string $location
      * @return void
      */
-    public function setImage($image)
+    public function setLocation($location)
     {
-        $this->image = $image;
-    }
-
-    /**
-     * Sets vehicle's fuel type
-     * @param string $fuelType
-     * @return void
-     */
-    public function setFuelType($fuelType)
-    {
-        $this->fuelType = $fuelType;
-    }
-
-    /**
-     * Sets vehicle's seat count
-     * @param string $seatCount
-     * @return void
-     */
-    public function setSeatCount($seatCount)
-    {
-        $this->seatCount = $seatCount;
+        $this->molocationdel = $location;
     }
 
     /**
