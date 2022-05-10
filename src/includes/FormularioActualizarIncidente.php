@@ -13,26 +13,10 @@ class FormularioActualizarIncidente extends Formulario {
         $this->damageService = new DamageService($GLOBALS['db_damage_repository']);
         $this->damageId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
     }
-
-    private static function generateIsRepairedSelector($name, $tipoSeleccionado=null)
-    {
-            $html .= <<<EOS
-                <tr>
-                    <td><input type="radio" name="{$name}" value="{$isRepairedString} required"></td>
-                    <td>{"SI"}</td>
-                </tr>
-            EOS;
-            $html .= <<<EOS
-                <tr>
-                    <td><input type="radio" name="{$name}" value="{$isRepairedString} required"></td>
-                    <td>{"NO"}</td>
-                </tr>
-            EOS;
-        return $html;
-    }
     
     protected function generaCamposFormulario(&$datos) {
-
+        $isRepairedString = $datos['isRepaired'] ?? '';
+        $isRepaired = false;
         // Se reutiliza el email introducido previamente o se deja en blanco
         $description = $datos['description'] ?? '';
         // Se generan los mensajes de error si existen.
@@ -43,17 +27,17 @@ class FormularioActualizarIncidente extends Formulario {
         $html = <<<EOS
         $htmlErroresGlobales
         EOS;
-        $isRepairedSelector = self::generateIsRepairedSelector('isRepaired', $isRepairedString);
 
         $html .= <<<EOS
         <fieldset>
             <div>
                 <label for="description">Descripción:</label>
-                <input id="description" type="text" name="description" value="$description" style="width : 600px; heigth : 600px"/>{$erroresCampos['description']}
+                <input id="description" type="text" name="description" value="$description" style="width : 600px; height : 600px"/>{$erroresCampos['description']}
             </div>
             <div>
             <label>¿Está reparado?: </label>
-            $isRepairedSelector{$erroresCampos['isRepaired']}
+                  Sí: <input type="radio" name="isRepaired" value="SI" />
+                  No: <input type="radio" name="isRepaired" value="NO" />
             </div>
             <div>
                 <button type="submit" name="edit"> Actualizar </button>
@@ -67,13 +51,12 @@ class FormularioActualizarIncidente extends Formulario {
         $this->errores = [];
 
         $isRepairedString = trim($datos['isRepaired'] ?? '');
-        $isRepairedString = filter_var($isRepairedString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $description = trim($datos['description'] ?? '');
 
-        if (!$isRepairedString || empty($isRepairedString))
+        if (!$isRepairedString || empty($isRepairedString)){
             $this->errores['isRepaired'] = 'Debe conocerse si está reparado o no.';
             $isRepaired = false;
-        else{
+        } else{
             if($isRepairedString == "SI") $isRepaired = true; 
             else $isRepaired = false;
         }

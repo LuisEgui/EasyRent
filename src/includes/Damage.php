@@ -193,7 +193,7 @@ class Damage {
      * @return void
      */
     public function setDescription($description) {
-        $this->descrioption = $description;
+        $this->description = $description;
     }
 
      /**

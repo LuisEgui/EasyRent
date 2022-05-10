@@ -26,7 +26,7 @@ class DamageService {
      * @param Repository $DamageRepository Instance of an MysqDamageRepository
      * @return void
      */
-    public function __construct(MysqlMessageRepository $damageRepository) {
+    public function __construct(MysqlDamageRepository $damageRepository) {
         $this->damageRepository = $damageRepository;
     }
 

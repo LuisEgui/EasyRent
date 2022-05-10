@@ -3,13 +3,16 @@
 require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/Formulario.php';
 require_once __DIR__.'/includes/DamageService.php';
+require_once __DIR__.'/includes/UserService.php';
+require_once __DIR__.'/includes/Damage.php';
 require_once __DIR__.'/includes/FormularioRegistroIncidente.php';
 
 $tituloPagina = 'Incidentes';
 $contenidoPrincipal = '<h1>Lista de incidentes</h1>';
 $damageService = new DamageService($GLOBALS['db_damage_repository']);
+$userService = new UserService($GLOBALS['db_user_repository'],$GLOBALS['db_image_repository'], );
 $damages = $damageService->readAllDamages();
-
+if (count($damages) > 0){
 for ($i = 0; $i < count($damages); $i++) {
 		$contenidoPrincipal .= <<<EOS
 		<div class="v">
@@ -24,7 +27,8 @@ for ($i = 0; $i < count($damages); $i++) {
 		</p>
 		<p>Usuario: 
 		EOS;
-		$contenidoPrincipal .= $damages[$i]->getUser();
+        $usuario = $userService->readUserById($damages[$i]->getUser());
+		$contenidoPrincipal .= $usuario->getEmail();
 		$contenidoPrincipal .= <<<EOS
 		</p>
 		<p>Titulo: 
@@ -40,11 +44,11 @@ for ($i = 0; $i < count($damages); $i++) {
 		<p>Imagen: 
 		EOS;
         if($damages[$i]->getEvidenceDamage() != NULL){
-		$contenidoPrincipal .= $damages[$i]->getEvidenceDamage();
+		    $contenidoPrincipal .= $damages[$i]->getEvidenceDamage();
         } else {
-        $contenidoPrincipal .= <<<EOS
-        <p>No se incluye imagen</p>
-		EOS;
+            $contenidoPrincipal .= <<<EOS
+                 No se incluye imagen
+            EOS;
         }
         $contenidoPrincipal .= <<<EOS
 		</p>
@@ -93,7 +97,7 @@ for ($i = 0; $i < count($damages); $i++) {
         
 
 }
-
+}
 $form = new FormularioRegistroIncidente();
 	$htmlFormRegMessage = $form->gestiona();
 

@@ -27,7 +27,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         if(!isset($id))
             return null;
 
-        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired from Damage where id = %d", $id);
+        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired from Damage where d_id = %d", $id);
         $result = $this->db->query($sql);
 
         if ($result !== false && $result->num_rows > 0) {
@@ -52,7 +52,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
 
         while ($row = $result->fetch_assoc()) {
             $damage = new Damage($row['d_id'], $row['vehicle'], $row['user'], $row['title'], $row['description'], $row['evidenceDamage'], $row['area'], $row['type'], $row['isRepaired']);
-            $damages[] = $damages;
+            $damages[] = $damage;
         }
 
         return $damages;
@@ -166,18 +166,18 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
                         $damage->getEvidenceDamage(),
                         $this->db->getConnection()->real_escape_string($damage->getArea()),
                         $this->db->getConnection()->real_escape_string($damage->getType()),
-                        $this->db->getConnection()->real_escape_string($damage->getIsrepaired())
+                        $this->db->getConnection()->real_escape_string($damage->getIsRepaired())
                     );
                 } else {
-                    $sql = sprintf("insert into Damage (d_id, vehicle, user, title, description, area, type, isRepaired) values ('%d', '%d', '%s', '%s', '%d', '%s', '%s', '%s')",
+                    $sql = sprintf("insert into Damage (d_id, vehicle, user, title, description, area, type, isRepaired) values ('%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s')",
                         $damage->getId(),
                         $damage->getVehicle(),
-                        $this->db->getConnection()->real_escape_string($damage->getUser()),
+                        $damage->getUser(),
                         $this->db->getConnection()->real_escape_string($damage->getTitle()),
                         $this->db->getConnection()->real_escape_string($damage->getDescription()),
                         $this->db->getConnection()->real_escape_string($damage->getArea()),
                         $this->db->getConnection()->real_escape_string($damage->getType()),
-                        $this->db->getConnection()->real_escape_string($damage->getIsrepaired())
+                        $damage->getIsRepaired()
                     );
                 }       
 

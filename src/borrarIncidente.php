@@ -8,4 +8,4 @@ $idDamage = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $damageService = new DamageService($GLOBALS['db_damage_repository']);
 $damageService->deleteDamage($idDamage);
 
-echo '<meta http-equiv="refresh" content="1; url=foro.php">';
+echo '<meta http-equiv="refresh" content="1; url=incidente.php">';

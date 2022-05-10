@@ -3,8 +3,8 @@
 require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/FormularioActualizarIncidente.php';
 
-$idMDamage = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-$form = new FormularioActualizarMensaje($idDamage);
+$idDamage = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$form = new FormularioActualizarIncidente($idDamage);
 $htmlFormRegDamage = $form->gestiona();
 
 $tituloPagina = 'Registro de Modificación';
