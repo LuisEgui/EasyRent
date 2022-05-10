@@ -28,7 +28,7 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         if(!isset($vin))
             return null;
 
-        $sql = sprintf("select vin, licensePlate, model, location, state, fecha from Vehicle where vin = %d", $vin);
+        $sql = sprintf("select * from Vehicle where vin = %d", $vin);
         $result = $this->db->query($sql);
 
         if ($result !== false && $result->num_rows > 0) {
@@ -39,6 +39,28 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         $result->close();
 
         return $vehicle;
+    }
+
+    public function findByModel($model) : array
+    {
+        $vehicles = [];
+
+        if(!isset($model))
+            return $vehicles;
+
+        $sql = sprintf("select * from Vehicle where model = %d", $model);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_assoc()) {
+            $vehicle = new Vehicle($row['vin'], $row['licensePlate'], $row['model'], $row['location'], $row['state'], $row['fecha']);
+            $vehicles[] = $vehicle;
+        }
+
+        return $vehicles;
     }
 
     public function findAll() : array

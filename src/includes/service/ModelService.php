@@ -82,7 +82,7 @@ class ModelService {
      * @return bool
      */
     public function deleteModelById($m_id) {
-        $model = $this->readModelById($m_id);
+        $model = $this->modelRepository->findById($m_id);
         $oldUserImageId = $model->getImage();
         $oldUserImage = $this->imageRepository->findById($oldUserImageId);
         $oldUserImageFile = "{$oldUserImage->getId()}-{$oldUserImage->getPath()}";

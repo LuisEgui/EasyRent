@@ -91,7 +91,7 @@ class FormularioRegistroVehiculo extends Formulario {
             $this->errores['licensePlate'] = 'La matricula no puede estar vacia.';
 
         if( !self::validateLicensePlate($licensePlate))
-            $this->errores['licensePlate'] = 'Formato de la matricula inválido! Debe contener 4 numeros y entre 3 letras';
+            $this->errores['licensePlate'] = 'Formato de la matricula inválido! Debe contener 4 numeros y entre 1 y 3 letras mayusculas no vocales';
 
         $model = trim($datos['model'] ?? '');
         $model = filter_var($model, FILTER_SANITIZE_FULL_SPECIAL_CHARS);

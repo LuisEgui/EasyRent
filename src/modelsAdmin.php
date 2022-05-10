@@ -48,6 +48,7 @@ $contenidoPrincipal = <<<EOS
             <th>Caja de cambios</th>
             <th>Tipo de combustible</th>
             <th>Numero de asientos</th>
+            <th>ID Imagen</th>
             <th>Fecha de modificacion</th>
         </tr>
 EOS; 
@@ -61,6 +62,7 @@ foreach($modelsList->getArray() as $model) {
             <td>{$model->getGearbox()}</td>
             <td>{$model->getFuelType()}</td>
             <td>{$model->getSeatCount()}</td>
+            <td>{$model->getImage()}</td>
             <td>{$model->getTimeStamp()}</td>
         </tr>
     EOS;

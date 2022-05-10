@@ -40,7 +40,7 @@ create table
     location varchar(40),
     state enum ('Available', 'Unavailable', 'Reserved') default 'Available',
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
-    foreign key (model) references Model(m_id) ON DELETE CASCADE,   
+    foreign key (model) references Model(m_id) ON DELETE RESTRICT,   
     check (vin regexp '^[0-9]{6}$'),   
     check (licensePlate regexp '^[0-9]{4}-(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{1,3}$')
     

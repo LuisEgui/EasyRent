@@ -18,11 +18,6 @@ class VehicleService{
     private $vehicleRepository;
 
     /**
-     * @var Repository Image repository
-     */
-    private $imageRepository;
-
-    /**
      * @var VehicleService Single instance of VehicleService class.
      */
     private static $instance;
@@ -82,6 +77,7 @@ class VehicleService{
         return $this->vehicleRepository->deleteById($vin);
     }
 
+
     /**
      * Returns all the vehicles in the system.
      *
@@ -94,10 +90,19 @@ class VehicleService{
     /**
      * Returns the vehicle by its vin
      *
-     * @return Model|null Returns null when there is not an existing vehicle with the same $vin
+     * @return Vehicle|null Returns null when there is not an existing vehicle with the same $vin
      */
     public function readVehicleByVin($vin){
         return $this->vehicleRepository->findById($vin);
+    }
+
+    /**
+     * Returns the vehicle by its model
+     *
+     * @return Vehicle[]|null Returns null when there is not an existing vehicle with the same $model
+     */
+    public function readVehiclesByModel($model){
+        return $this->vehicleRepository->findByModel($model);
     }
 
     /**

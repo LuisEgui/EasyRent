@@ -10,7 +10,7 @@ from Model;
 
 -- Insert example Vehicle row:
 insert into Vehicle(vin, licensePlate, model, location)
-values (123456, 'X-XX-1234', 1, 'Madrid');
+values (123456, '1674-BCD', 1, 'Madrid');
 
 -- View inserted data:
 select *
