@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
+require_once __DIR__.'/includes/config/config.php';
 require_once __DIR__.'/includes/Formulario.php';
 require_once __DIR__.'/includes/DamageService.php';
 require_once __DIR__.'/includes/UserService.php';

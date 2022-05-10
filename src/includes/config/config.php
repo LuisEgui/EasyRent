@@ -5,8 +5,8 @@
  */
 define('RAIZ_APP', __DIR__);
 define('RUTA_APP', '/sw-practices');
-define('RUTA_USER_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\img', 'usr']));
-define('RUTA_VEHICLE_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\img', 'vehicle']));
+define('RUTA_USER_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\\src\\includes\\img', 'usr']));
+define('RUTA_VEHICLE_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\\src\\includes\\img', 'vehicle']));
 define('RUTA_IMGS', RUTA_APP.'/doc/web/images');
 
 /**
@@ -19,11 +19,11 @@ date_default_timezone_set('Europe/Madrid');
 /**
  * Initialize the database connection and session_start()
  */
-require_once RAIZ_APP.'/MysqlConnector.php';
-require_once RAIZ_APP.'/UserService.php';
-require_once RAIZ_APP.'/VehicleService.php';
-require_once RAIZ_APP.'/MessageService.php';
-require_once RAIZ_APP.'/DamageService.php';
+use easyrent\includes\persistance\repository\MysqlConnector;
+use easyrent\includes\persistance\repository\MysqlImageRepository;
+use easyrent\includes\persistance\repository\MysqlUserRepository;
+use easyrent\includes\persistance\repository\MysqlVehicleRepository;
+use easyrent\includes\persistance\repository\MysqlModelRepository;
 
 session_start();
 
