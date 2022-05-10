@@ -13,7 +13,7 @@ class FormularioRegistroIncidente extends Formulario {
     const MINOR = 'minor', MODERATE = 'moderate', SEVERE = 'severe';
     const TYPE = [self::MINOR => 'minor', self::MODERATE => 'moderate', self::SEVERE => 'severe'];
     const BRAKES = 'brakes', CONTROLS = 'controls', ENGINE = 'engine', FRONT = 'front', GENERAL = 'general', INTERIOR = 'interior', LEFT = 'left', RIGHT = 'right', REAR = 'rear', ROOF = 'roof', TRUNK = 'trunk', UNDERBODY = 'underbody', WHEELS = 'wheels';
-    const AREA = [self::BRAKES => 'brakes', self::CONTROLS => 'controls', self::ENGINE => 'engine', self::FRONT => 'front', self::GENERAL => 'general', self::INTERIOR => 'interior', self::LEFT => 'left', self::REAR => 'rear', self::ROOF => 'roof', self::TRUNK => 'trunk', self::UNDERBODY => 'underbody', self::WHEELS => 'wheels'];
+    const AREA = [self::BRAKES => 'brakes', self::CONTROLS => 'controls', self::ENGINE => 'engine', self::FRONT => 'front', self::GENERAL => 'general', self::INTERIOR => 'interior', self::LEFT => 'left', self::RIGHT => 'right', self::REAR => 'rear', self::ROOF => 'roof', self::TRUNK => 'trunk', self::UNDERBODY => 'underbody', self::WHEELS => 'wheels'];
     
     public function __construct() {
         parent::__construct('formRegisterDamage', ['urlRedireccion' => 'incidente.php']);
