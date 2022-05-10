@@ -37,7 +37,7 @@ create table
     state enum ('available', 'unavailable', 'reserved') default 'available',
     foreign key (model) references Model(m_id),
     foreign key (vehicleImg) references Image(img_id),
-    check (vin regexp '^[0-9]{6}$'), 
+    check (vin regexp '^[0-9]{6}$'),   
     check (seatCount regexp '^[2-9]{1}$'),
     check (licensePlate regexp '^[0-9]{4}-(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{1,3}$')
   );
