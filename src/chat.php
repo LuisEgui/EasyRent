@@ -5,11 +5,11 @@ session_start();
 function createForm(){
 ?>
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-        <table align="center">
+        <table>
           <tr><td colspan="2">Ingrese su nombre para iniciar sesión!</td></tr>
           <tr><td>Tu nombre: </td>
           <td><input class="text" type="text" name="name" /></td></tr>
-          <tr><td colspan="2" align="center">
+          <tr><td colspan="2">
              <input class="text" type="submit" name="submitBtn" value="Login" />
           </td></tr>
         </table>
@@ -32,12 +32,12 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
    <title>Chat de incidencias</title>
    <link href="/src/includes/estilo.css" rel="stylesheet" type="text/css" />
    <link href="/style/globe.png" rel="shortcut icon">
-    <script language="javascript" type="text/javascript">
+    <script>
       var httpObject = null;
       var link = "";
       var timerID = 0;
@@ -123,11 +123,8 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
 
     </script>   
 </head>
-
    
-<center><div id="logo">&nbsp;</div></center><br>
-   
-   <body onload="UpdateTimer();">
+<body onload="UpdateTimer();">
     <div id="main">
       <div id="caption"><h1>Chat de incidencias</h1></div>
       <div id="icon">&nbsp;</div>
