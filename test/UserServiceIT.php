@@ -1,5 +1,7 @@
 <?php
 
+namespace test;
+
 use easyrent\includes\persistance\repository\MysqlConnector;
 use easyrent\includes\persistance\repository\MysqlImageRepository;
 use easyrent\includes\persistance\repository\MysqlUserRepository;

@@ -130,7 +130,7 @@ create table
   Message (
     id serial primary key,
     author bigint unsigned not null,
-    message varchar(140) not null,
+    txt varchar(140) not null,
     sendTime datetime not null,
     idParentMessage bigint unsigned default null,
     foreign key (idParentMessage) references Message(id),
