@@ -1,7 +1,5 @@
 <?php
 
-namespace test;
-
 use easyrent\includes\persistance\entity\User;
 use easyrent\includes\persistance\repository\MysqlConnector;
 use easyrent\includes\persistance\repository\MysqlUserRepository;

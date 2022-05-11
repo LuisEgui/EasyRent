@@ -1,7 +1,5 @@
 <?php
 
-// phpcs:ignoreFile
-
 function mostrarSaludo() {
 	if (isset($_SESSION['login']) && ($_SESSION['login']===true)) {
 		return "Bienvenido, {$_SESSION['email']} <a href='logout.php'>(salir)</a>";
@@ -37,7 +35,6 @@ function mostrarMenu() {
 }
 
 ?>
-
 <header>
 
 	<div class="navegador">

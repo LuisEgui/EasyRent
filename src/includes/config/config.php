@@ -7,7 +7,7 @@
 define('RAIZ_APP', __DIR__);
 define('RUTA_APP', '/sw-practices');
 define('RUTA_USER_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\\src\\includes\\img', 'usr']));
-define('RUTA_VEHICLE_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\img', 'vehicle']));
+define('RUTA_VEHICLE_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\\src\\includes\\img', 'vehicle']));
 define('RUTA_IMGS', RUTA_APP.'/doc/web/images');
 
 /**
@@ -27,6 +27,7 @@ use easyrent\includes\persistance\repository\MysqlMessageRepository;
 
 use easyrent\includes\persistance\repository\MysqlUserRepository;
 use easyrent\includes\persistance\repository\MysqlVehicleRepository;
+use easyrent\includes\persistance\repository\MysqlModelRepository;
 
 session_start();
 
@@ -34,9 +35,11 @@ $db = MysqlConnector::getInstance();
 $GLOBALS['db_connector'] = $db;
 $userRepository = new MysqlUserRepository($db);
 $imageRepository = new MysqlImageRepository($db);
+$vehicleRepository = new MysqlVehicleRepository($db);
+$modelRepository = new MysqlModelRepository($db);
+$messageRepository = new MysqlMessageRepository($db);
 $GLOBALS['db_user_repository'] = $userRepository;
 $GLOBALS['db_image_repository'] = $imageRepository;
-$vehicleRepository = new MysqlVehicleRepository($db);
 $GLOBALS['db_vehicle_repository'] = $vehicleRepository;
-$messageRepository = new MysqlMessageRepository($db);
+$GLOBALS['db_model_repository'] = $modelRepository;
 $GLOBALS['db_message_repository'] = $messageRepository;

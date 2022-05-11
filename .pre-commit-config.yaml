@@ -15,8 +15,4 @@ repos:
     hooks:
       - id: php-cs
         files: \.(php)$
-        args:
-          [
-            --standard=PSR1 -p --ignore=src/includes/config/config.php,
-            src/includes/vistas/comun/cabecera.php,
-          ]
+        args: [--standard=PSR1 -p --ignore=src/includes/config/config.php]
