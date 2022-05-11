@@ -1,56 +1,45 @@
 <?php
 
-require_once '../vendor/autoload.php';
-require_once __DIR__.'/includes/config/config.php';
+require_once __DIR__.'/includes/config.php';
+require_once __DIR__.'/includes/FormularioEliminarIncidente.php';
 
-use easyrent\includes\forms\FormularioEliminarModelo;
-
-$defaultFunctions = array('cmpBrand', 'cmpModel', 'cmpFecha');
-$functionNames = ['cmpBrand' => 'Marca', 'cmpModel' => 'Modelo', 'cmpFecha' => 'Fecha de modificacion'];
+$defaultFunctions = array('cmpID', 'cmpUser', 'cmpVehicle', 'cmpType', 'cmpIsRepaired', 'cmpFecha');
+$functionNames = ['cmpID' => 'ID Incidente', 'cmpUser' => 'ID Usuario', 'cmpVehicle' => 'VIN ', 'cmpType' => 'Tipo de incidencia', 'cmpIsRepaired' => 'Estado de reparacion', 'cmpFecha' => 'Fecha de modificacion'];
 
 $orderByFunction = null;
 
-if(isset($_GET['orderModelsBy']) && in_array($_GET['orderModelsBy'], $defaultFunctions)){
-    $orderByFunction = $_GET['orderModelsBy'];
+if(isset($_GET['orderDamagesBy']) && in_array($_GET['orderDamagesBy'], $defaultFunctions)){
+    $orderByFunction = $_GET['orderDamagesBy'];
 }
 
-$form = new FormularioEliminarModelo($orderByFunction);
+$form = new FormularioEliminarIncidente($orderByFunction);
 
-$htmlFormDeleteModel = $form->gestiona();
+$htmlFormDeleteDamage = $form->gestiona();
 
 $rutaApp = RUTA_APP;
 $filterSelector = '';
 if(!empty($defaultFunctions)){
     foreach($defaultFunctions as $function) {
-        $filterSelector .= "<a href=\"{$rutaApp}/src/borrarModelo.php?orderModelsBy={$function}\">{$functionNames[$function]}</a>";
+        $filterSelector .= "<a href=\"{$rutaApp}/src/borrarIncidente.php?orderDamagesBy={$function}\">{$functionNames[$function]}</a>";
     }
 }
 $filterSelector .= '';
 
-$tituloPagina = 'Eliminar Modelo';
+$tituloPagina = 'Eliminar Incidente';
 
 $contenidoPrincipal = <<<EOS
-<h1>Eliminar Modelo</h1>
+<h1>Eliminar Incidente</h1>
 <div class="dropdown">
 <button class="dropbtn" style="float:left">Filtros</button>
 <div class="dropdown-content">
 $filterSelector
 </div>
 </div>
-$htmlFormDeleteModel
+$htmlFormDeleteDamage
 <div id="anteriorUrl">
-    <a href="modelsAdmin.php">Cancelar</a>
+    <a href="incidentesAdmin.php">Cancelar</a>
 </div>
 EOS;
 
+
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';
-
-require_once __DIR__.'/includes/config.php';
-
-require_once __DIR__.'/includes/DamageService.php';
-
-$idDamage = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-$damageService = new DamageService($GLOBALS['db_damage_repository']);
-$damageService->deleteDamage($idDamage);
-
-echo '<meta http-equiv="refresh" content="1; url=incidente.php">';

@@ -147,8 +147,8 @@ class FormularioRegistroIncidente extends Formulario {
                 <input id="tit" type="text" name="title" value="$title" />{$erroresCampos['title']}
             </div>
             <div>
-                <label for="d">Descripcion:</label>
-                <textarea id="d" name="description" placeholder="Describe la incidencia que desea notificar">$description</textarea>{$erroresCampos['description']}
+                <label for="description">Descripción:</label>
+                <input id="description" type="text" name="description" value="$description" style="width : 600px; height : 600px"/>{$erroresCampos['description']}
             </div>
             <div>
                 $areaSelector{$erroresCampos['area']}

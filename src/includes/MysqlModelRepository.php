@@ -85,7 +85,6 @@ class MysqlModelRepository extends AbstractMysqlRepository {
     {
         // Check if the model already exists
         if ($this->findById($m_id) !== null) {
-            echo "$m_id";
             $sql = sprintf("delete from Model where m_id = %d", $m_id);
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();

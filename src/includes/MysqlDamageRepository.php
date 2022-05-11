@@ -29,10 +29,9 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
 
         $sql = sprintf("select * from Damage where d_id = %d", $id);
         $result = $this->db->query($sql);
-
         if ($result !== false && $result->num_rows > 0) {
             $obj = $result->fetch_object();
-            $damage = new Damage($obj->d_id, $obj->vehicle, $obj->user, $obj->title, $obj->description, $obj->evidenceDamage, $obj->area, $obj->type, $obj->isRepaired);
+            $damage = new Damage($obj->d_id, $obj->vehicle, $obj->user, $obj->title, $obj->description, $obj->evidenceDamage, $obj->area, $obj->type, $obj->isRepaired, $obj->fecha);
         }
 
         $result->close();
@@ -58,6 +57,24 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         return $damages;
     }
 
+    public function findAllId() {
+        $damagesID = [];
+
+        $sql = sprintf("select d_id from Damage");
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_assoc()) {
+            $id = $row['d_id'];
+            $damagesID[] = $id;
+        }
+
+        return $damagesID;
+    }
+
     public function findByVehicle($vehicle) {
         $damages[] = array();
 
@@ -80,7 +97,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
     public function deleteById($d_id) {
         // Check if the damage already exists
         if ($this->findById($d_id) !== null) {
-            $sql = sprintf("SET FOREIGN_KEY_CHECKS=0");
+            /*$sql = sprintf("SET FOREIGN_KEY_CHECKS=0");
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
             $stmt->close();
@@ -91,9 +108,12 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
             $sql = sprintf("SET FOREIGN_KEY_CHECKS=1");
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
+            $stmt->close();*/
+            
+            $sql = sprintf("delete from Damage where d_id = %d", $d_id);
+            $stmt = $this->db->prepare($sql);
+            $result = $stmt->execute();
             $stmt->close();
-            
-            
             if (!$result)
                 error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
             

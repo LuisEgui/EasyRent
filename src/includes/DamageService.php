@@ -71,8 +71,15 @@ class DamageService {
      * @param string $d_id Damage's identification number.
      * @return bool
      */
-    public function deleteDamage($id) {
-        return $this->damageRepository->deleteById($id);
+    public function deleteDamageById($id) {
+        $damage = $this->damageRepository->findById($id);
+        $oldUserImageId = $damage->getEvidenceDamage();
+        $oldUserImage = $this->imageRepository->findById($oldUserImageId);
+        $oldUserImageFile = "{$oldUserImage->getId()}-{$oldUserImage->getPath()}";
+        $oldUserImagePath =
+            implode(DIRECTORY_SEPARATOR, [dirname(dirname(__FILE__)).'\img\damage', $oldUserImageFile]);
+        unlink($oldUserImagePath);
+        return ($this->damageRepository->deleteById($id) && $this->imageRepository->deleteById($damage->getEvidenceDamage()));
     }
 
     /**
@@ -82,6 +89,15 @@ class DamageService {
      */
     public function readAllDamages(){
         return $this->damageRepository->findAll();
+    }
+
+    /**
+     * Returns all the damages id in the system.
+     *
+     * @return Vehicle[] Returns the damages id from the database.
+     */
+    public function readAllDamagesID(){
+        return $this->damageRepository->findAllId();
     }
 
     /**

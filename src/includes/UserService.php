@@ -45,7 +45,7 @@ class UserService {
     }
 
     /**
-     * Returns all the users in the system.
+     * Returns all the users in the system, except the admin.
      *
      * @return User[] Returns the users from the database.
      */
@@ -54,9 +54,9 @@ class UserService {
     }
 
     /**
-     * Returns all the users in the system.
+     * Returns all the users id in the system, except the admin one.
      *
-     * @return User[] Returns the users from the database.
+     * @return User[] Returns the users id from the database.
      */
     public function readAllUsersIDNoAdmin(){
         return $this->userRepository->findAllIDNoAdmin();

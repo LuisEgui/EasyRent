@@ -1,34 +1,36 @@
 <?php
 
+require_once __DIR__.'/config.php';
 require_once __DIR__.'/Formulario.php';
 require_once __DIR__.'/DamageService.php';
 require_once __DIR__.'/DamageList.php';
 
-class FormularioActualizarIncidente extends Formulario {
+class FormularioEliminarIncidente extends Formulario {
 
     private $damageService;
 
-    private $damagesList;
+    private $damageList;
 
     private $orderDamagesBy;
 
     public function __construct($orderByFunction) {
-        parent::__construct('formUpdateDamage', ['urlRedireccion' => 'actualizarDatosIncidente.php']);
+        parent::__construct('formDeleteDamage', ['urlRedireccion' => 'incidentesAdmin.php']);
         $this->damageService = DamageService::getInstance();
-        $this->damagesList = new DamageList();
+        $this->damageList = new DamageList();
         if(isset($orderByFunction)){
             $this->orderDamagesBy = $orderByFunction;
         }
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores); // Se muestra como una lista
-        
+        $erroresCampos = self::generaErroresCampos([], $this->errores, 'span', array('class' => 'error')); // Agrupa los errores por campos para luego mostrar cada tipo de error donde corresponda haciendo uso de la posicion del array erroresCampos correcta
+
         // Se leen todos los vehiculos de la base de datos y se almacenan en un array de la instancia de la clase VehicleList
-        $this->damagesList->setArray($this->damageService->readAllDamages());
-        if(isset($this->orderVehiclesBy)){
-            $this->damagesList->orderBy($this->orderVehiclesBy);
+        $this->damageList->setArray($this->damageService->readAllDamages());
+        if(isset($this->orderDamagesBy)){
+            $this->damageList->orderBy($this->orderDamagesBy);
         }
 
         // Se genera el HTML asociado al formulario y los mensajes de error.
@@ -49,14 +51,14 @@ class FormularioActualizarIncidente extends Formulario {
                 </tr>
         EOS;
 
-        foreach($this->damagesList->getArray() as $damage) {
+        foreach($this->damageList->getArray() as $damage) {
             $state = "No";
             if($damage->getIsRepaired()){
                 $state = "Si";
             }
             $html .= <<<EOS
                 <tr>
-                    <td><input type="radio" name="updatedDamageId" value="{$damage->getId()}" required></td>
+                    <td><input type="radio" name="deletedDamageId" value="{$damage->getId()}" required></td>
                     <td>{$damage->getId()}</td>
                     <td>{$damage->getUser()}</td>
                     <td>{$damage->getVehicle()}</td>
@@ -72,32 +74,38 @@ class FormularioActualizarIncidente extends Formulario {
             </table>
             </div>
             <div>
-                <button type="submit" name="update"> Actualizar </button>
+                <button type="submit" name="delete"> Eliminar </button>
             </div>
         EOS;
 
         return $html;
-        
     }
 
-    protected function procesaFormulario(&$datos) {    
-        
+    protected function procesaFormulario(&$datos) {
         $this->errores = [];
 
-        if(!isset($datos['updatedDamageId']))
+        if(!isset($datos['deletedDamageId']))
             $this->errores[] = 'Debe seleccionar un incidente.';
 
-        if (!self::validDamage($datos['updatedDamageId']))
+        if (!self::validDamage($datos['deletedDamageId']))
             $this->errores[] = "El incidente a eliminar no coincide con ninguno de los existentes.";
+        else
+            $damage = $this->damageService->readDamageById($datos['deletedDamageId']);
+            if($damage->getIsRepaired() == false){
+                $this->errores[] = "El incidente a eliminar no ha sido reparado previamente, por favor actualice este incidente antes de eliminarlo.";
+            }
 
-        if (count($this->errores) === 0) { 
-            $this->changeUlrRedireccion("{$this->urlRedireccion}?idDamageToUpdate={$datos['updatedDamageId']}");
-            header("Location: {$this->urlRedireccion}");
+        if (count($this->errores) === 0) {
+            $result = $this->damageService->deleteDamageById($datos['deletedDamageId']);
+            if (!$result)
+                $this->errores[] = "Damage doesn't exist!";
+            else
+                header("Location: {$this->urlRedireccion}");
         }
     }
 
     protected function validDamage($damage) {
         $damagesInDatabase = $this->damageService->readAllDamagesID();
         return in_array($damage, $damagesInDatabase);
-    }    
+    }
 }
