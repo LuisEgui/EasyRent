@@ -104,8 +104,14 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
       }
     
       function fin(){
-        link = "finChat.php";
-        echo '<meta http-equiv="refresh" content="1; url=chat.php">';
+        httpObject = getHTTPObject();
+         if (httpObject != null) {
+            link = "finChat.php";
+            httpObject.open("GET", link , true);
+            httpObject.onreadystatechange = setOutput;
+            httpObject.send(null);
+         }
+         UpdateTimer();  
       }
     
       function keypressed(e){
