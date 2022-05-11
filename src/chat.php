@@ -38,7 +38,7 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
 <html>
 <head>
    <title>Micro Chat | Fuente Web</title>
-   <link href="estiloChat.css" rel="stylesheet" type="text/css" />
+   <link href="/src/includes/estiloChat.css" rel="stylesheet" type="text/css" />
    <link href="/style/globe.png" rel="shortcut icon">
     <script language="javascript" type="text/javascript">
       var httpObject = null;
@@ -83,7 +83,7 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
       function doWork(){    
          httpObject = getHTTPObject();
          if (httpObject != null) {
-            link = "message.php?nick="+nickName+"&msg="+document.getElementById('msg').value;
+            link = "chatMessage.php?nick="+nickName+"&msg="+document.getElementById('msg').value;
             httpObject.open("GET", link , true);
             httpObject.onreadystatechange = setOutput;
             httpObject.send(null);
@@ -95,7 +95,7 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
          httpObject = getHTTPObject();
          var randomnumber=Math.floor(Math.random()*10000);
          if (httpObject != null) {
-            link = "message.php?all=1&rnd="+randomnumber;
+            link = "chatMessage.php?all=1&rnd="+randomnumber;
             httpObject.open("GET", link , true);
             httpObject.onreadystatechange = setAll;
             httpObject.send(null);
@@ -146,8 +146,10 @@ if (!isset($_SESSION['nickname']) ){
          <button onclick="doWork();">Enviar</button>
       </div>   
 <?php            
-    }
+//require __DIR__.'/includes/vistas/plantillas/plantilla.php';   
+}
 
 ?>
     </div>
 </body>   
+
