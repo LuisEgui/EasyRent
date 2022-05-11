@@ -2,17 +2,15 @@
 
 namespace easyrent\includes\service;
 
-use easyrent\includes\persistance\entity\Image;
 use easyrent\includes\persistance\entity\Vehicle;
 use easyrent\includes\persistance\repository\MysqlVehicleRepository;
-use easyrent\includes\persistance\repository\Repository;
 
 /**
  * Vehicle Service class.
  *
  * It manages the logic of the vehicle's actions.
  */
-class VehicleService {
+class VehicleService{
 
     /**
      * @var MysqlVehicleRepository Vehicle repository
@@ -20,20 +18,31 @@ class VehicleService {
     private $vehicleRepository;
 
     /**
-     * @var Repository Image repository
+     * @var VehicleService Single instance of VehicleService class.
      */
-    private $imageRepository;
+    private static $instance;
 
     /**
      * Creates a VehicleService
      *
      * @param MysqlVehicleRepository $vehicleRepository Instance of an MysqlVehicleRepository
-     * @param Repository $imageRepository Instance of an MysqlImageRepository
      * @return void
      */
-    public function __construct(MysqlVehicleRepository $vehicleRepository, Repository $imageRepository) {
-        $this->vehicleRepository = $vehicleRepository;
-        $this->imageRepository = $imageRepository;
+    private function __construct() {
+        $this->vehicleRepository = $GLOBALS['db_vehicle_repository'];
+    }
+
+    /**
+     * Controls the Singleton Pattern of VehicleService class. If the instance of VehicleService class exists, returns it. If not, returns it after creting it.
+     *
+     * @return VehicleService $instance Single instance of VehicleService
+     */
+    public static function getInstance()
+    {
+        if (!self::$instance instanceof self) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     /**
@@ -42,18 +51,20 @@ class VehicleService {
      * @param string $vin Vehicle's VIN. Valid vehicle's vin.
      * @param string $licensePlate Vehicle's license plate. Valid vehicle's license plate.
      * @param string $model Vehicle's model. Valid vehicle's model.
-     * @param string $fuelType Vehicle's fuel type. Valid roles are: 'diesel', 'ehybrid', 'hybrid', 'petrol', 'plugInHybrid'.
-     * @param string $seatCount Vehicle's seat count. Valid vehicle's seat count.
      * @param string $state Vehicle's state. As it is recently registered, state is 'available'.
      * @return Vehicle|null Returns null when there is an already existing vehicle with the same $vin
      */
-    public function createVehicle($vin, $licensePlate, $model, $fuelType, $seatCount, $state) {
+    public function createVehicle($vin, $licensePlate, $model, $state) {
         $referenceVehicle = $this->vehicleRepository->findById($vin);
         if ($referenceVehicle === null) {
-            $vehicle = new Vehicle($vin, $licensePlate, $model, null, $fuelType, $seatCount, $state);
+            $vehicle = new Vehicle($vin, $licensePlate, $model, $state);
             return $this->vehicleRepository->save($vehicle);
         }
         return null;
+    }
+
+    public function updateVehicle($vehicle) {
+        return $this->vehicleRepository->save($vehicle);
     }
 
     /**
@@ -62,9 +73,10 @@ class VehicleService {
      * @param string $vin Vehicle's identification number.
      * @return bool
      */
-    public function deleteVehicle($vin) {
+    public function deleteVehicleByVin($vin) {
         return $this->vehicleRepository->deleteById($vin);
     }
+
 
     /**
      * Returns all the vehicles in the system.
@@ -76,6 +88,24 @@ class VehicleService {
     }
 
     /**
+     * Returns the vehicle by its vin
+     *
+     * @return Vehicle|null Returns null when there is not an existing vehicle with the same $vin
+     */
+    public function readVehicleByVin($vin){
+        return $this->vehicleRepository->findById($vin);
+    }
+
+    /**
+     * Returns the vehicle by its model
+     *
+     * @return Vehicle[]|null Returns null when there is not an existing vehicle with the same $model
+     */
+    public function readVehiclesByModel($model){
+        return $this->vehicleRepository->findByModel($model);
+    }
+
+    /**
      * Checks if the current user is an admin in the system, at the moment of the
      * call to this function.
      * @return bool
@@ -83,39 +113,4 @@ class VehicleService {
     private function isAdmin() {
         return isset($_SESSION['esAdmin']) && isset($_SESSION['login']);
     }
-
-    /**
-     * Uploads the vehicle's image
-     *
-     * @param string $vin Vehicle identification number
-     * @param string $path Image's path.
-     * @param string $mimeType Image's MIME Type.
-     * @return bool
-     */
-    public function updateVehicleImage($vin, $path, $mimeType) {
-        if ($this->isAdmin()) {
-            $vehicle = $this->vehicleRepository->findById($vin);
-            $image = new Image(null, $path, $mimeType);
-            /**
-             * 1. Store temp the old vehicle image key
-             * 2. Remove it from the vehicle table
-             * 3. Remove it from the image table
-             * 4. Insert the new image in the vehicle
-             * 5. Save the vehicle
-             */
-            if ($vehicle->getImage() !== null) {
-                $oldVehicleImage = $vehicle->getImage();
-                $vehicle->setImage(null);
-                $this->vehicleRepository->save($vehicle);
-                $this->imageRepository->deleteById($oldVehicleImage);
-            }
-
-            $image = $this->imageRepository->save($image);
-            $vehicle->setImage($image);
-            $this->vehicleRepository->save($vehicle);
-            return true;
-        }
-        return false;
-    }
-
 }

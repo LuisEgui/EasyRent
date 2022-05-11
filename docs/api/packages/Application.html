@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+            <title>EasyRent</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="../">
+    <link rel="icon" href="images/favicon.ico"/>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/base.css">
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/template.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism-okaidia.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
+                <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
+        <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/search.js"></script>
+        <script defer src="js/searchIndex.js"></script>
+    </head>
+<body id="top">
+    <header class="phpdocumentor-header phpdocumentor-section">
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">EasyRent</a></h1>
+    <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
+    <label class="phpdocumentor-header__menu-icon" for="menu-button">
+        <i class="fas fa-bars"></i>
+    </label>
+    <section data-search-form class="phpdocumentor-search">
+    <label>
+        <span class="visually-hidden">Search for</span>
+        <svg class="phpdocumentor-search__icon" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" stroke-width="2"/>
+            <line x1="12.4892" y1="12.2727" x2="19.1559" y2="18.9393" stroke="currentColor" stroke-width="3"/>
+        </svg>
+        <input type="search" class="phpdocumentor-field phpdocumentor-search__field" placeholder="Loading .." disabled />
+    </label>
+</section>
+
+    <nav class="phpdocumentor-topnav">
+    <ul class="phpdocumentor-topnav__menu">
+        </ul>
+</nav>
+</header>
+
+    <main class="phpdocumentor">
+        <div class="phpdocumentor-section">
+            <input class="phpdocumentor-sidebar__menu-button" type="checkbox" id="sidebar-button" name="sidebar-button" />
+<label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
+    Menu
+</label>
+<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+                    <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/easyrent.html" class="">easyrent</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="namespaces/easyrent-includes.html" class="">includes</a>
+                
+            </li>
+            </ul>
+
+                        </section>
+                <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="-active">Application</a>
+</h4>
+
+                        </section>
+            
+    <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
+                <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
+    </section>
+
+    <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
+    </section>
+</aside>
+
+            <div class="phpdocumentor-column -eight phpdocumentor-content">
+                    <ul class="phpdocumentor-breadcrumbs">
+    </ul>
+
+    <article class="phpdocumentor-element -package">
+        <h2 class="phpdocumentor-content__title">Application</h2>
+
+        
+
+<h3 id="interfaces_class_traits">
+    Interfaces, Classes, Traits and Enums
+    <a href="#interfaces_class_traits" class="headerlink"><i class="fas fa-link"></i></a>
+</h3>
+
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/easyrent-includes-persistance-repository-DatabaseConnection.html"><abbr title="\easyrent\includes\persistance\repository\DatabaseConnection">DatabaseConnection</abbr></a></dt>
+        <dd>Database connection interface.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/easyrent-includes-persistance-repository-Repository.html"><abbr title="\easyrent\includes\persistance\repository\Repository">Repository</abbr></a></dt>
+        <dd>General repository interface.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/easyrent-includes-persistance-repository-UserRepository.html"><abbr title="\easyrent\includes\persistance\repository\UserRepository">UserRepository</abbr></a></dt>
+        <dd>A specific repository for Users</dd>
+    
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-Formulario.html"><abbr title="\easyrent\includes\forms\Formulario">Formulario</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioActualizarDatosVehiculo.html"><abbr title="\easyrent\includes\forms\FormularioActualizarDatosVehiculo">FormularioActualizarDatosVehiculo</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioActualizarEmailUsuario.html"><abbr title="\easyrent\includes\forms\FormularioActualizarEmailUsuario">FormularioActualizarEmailUsuario</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioActualizarImagenUsuario.html"><abbr title="\easyrent\includes\forms\FormularioActualizarImagenUsuario">FormularioActualizarImagenUsuario</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioActualizarPasswordUsuario.html"><abbr title="\easyrent\includes\forms\FormularioActualizarPasswordUsuario">FormularioActualizarPasswordUsuario</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioActualizarRoleUsuario.html"><abbr title="\easyrent\includes\forms\FormularioActualizarRoleUsuario">FormularioActualizarRoleUsuario</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioActualizarVehiculo.html"><abbr title="\easyrent\includes\forms\FormularioActualizarVehiculo">FormularioActualizarVehiculo</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioBorrarCuenta.html"><abbr title="\easyrent\includes\forms\FormularioBorrarCuenta">FormularioBorrarCuenta</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioEliminarModelo.html"><abbr title="\easyrent\includes\forms\FormularioEliminarModelo">FormularioEliminarModelo</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioEliminarVehiculo.html"><abbr title="\easyrent\includes\forms\FormularioEliminarVehiculo">FormularioEliminarVehiculo</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioLogin.html"><abbr title="\easyrent\includes\forms\FormularioLogin">FormularioLogin</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioRegistroModelo.html"><abbr title="\easyrent\includes\forms\FormularioRegistroModelo">FormularioRegistroModelo</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioRegistroUsuario.html"><abbr title="\easyrent\includes\forms\FormularioRegistroUsuario">FormularioRegistroUsuario</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-forms-FormularioRegistroVehiculo.html"><abbr title="\easyrent\includes\forms\FormularioRegistroVehiculo">FormularioRegistroVehiculo</abbr></a></dt>
+        <dd>Clase base para la gestión de formularios.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-entity-Image.html"><abbr title="\easyrent\includes\persistance\entity\Image">Image</abbr></a></dt>
+        <dd>Class for Image entity.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-entity-Model.html"><abbr title="\easyrent\includes\persistance\entity\Model">Model</abbr></a></dt>
+        <dd>Class for model entity.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-entity-User.html"><abbr title="\easyrent\includes\persistance\entity\User">User</abbr></a></dt>
+        <dd>Class for user entity.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-entity-Vehicle.html"><abbr title="\easyrent\includes\persistance\entity\Vehicle">Vehicle</abbr></a></dt>
+        <dd>Class for user entity.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-lists-ModelList.html"><abbr title="\easyrent\includes\persistance\lists\ModelList">ModelList</abbr></a></dt>
+        <dd>Class for modelList entity.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-lists-VehicleList.html"><abbr title="\easyrent\includes\persistance\lists\VehicleList">VehicleList</abbr></a></dt>
+        <dd>Class for vehicleList entity.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-repository-AbstractMysqlRepository.html"><abbr title="\easyrent\includes\persistance\repository\AbstractMysqlRepository">AbstractMysqlRepository</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-repository-MysqlConnector.html"><abbr title="\easyrent\includes\persistance\repository\MysqlConnector">MysqlConnector</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-repository-MysqlImageRepository.html"><abbr title="\easyrent\includes\persistance\repository\MysqlImageRepository">MysqlImageRepository</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-repository-MysqlModelRepository.html"><abbr title="\easyrent\includes\persistance\repository\MysqlModelRepository">MysqlModelRepository</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-repository-MysqlUserRepository.html"><abbr title="\easyrent\includes\persistance\repository\MysqlUserRepository">MysqlUserRepository</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-persistance-repository-MysqlVehicleRepository.html"><abbr title="\easyrent\includes\persistance\repository\MysqlVehicleRepository">MysqlVehicleRepository</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-service-ModelService.html"><abbr title="\easyrent\includes\service\ModelService">ModelService</abbr></a></dt>
+        <dd>Vehicle Service class.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-service-UserService.html"><abbr title="\easyrent\includes\service\UserService">UserService</abbr></a></dt>
+        <dd>User Service class.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/easyrent-includes-service-VehicleService.html"><abbr title="\easyrent\includes\service\VehicleService">VehicleService</abbr></a></dt>
+        <dd>Vehicle Service class.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/ImageRepositoryIT.html"><abbr title="\ImageRepositoryIT">ImageRepositoryIT</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/UserRepositoryIT.html"><abbr title="\UserRepositoryIT">UserRepositoryIT</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/UserServiceIT.html"><abbr title="\UserServiceIT">UserServiceIT</abbr></a></dt>
+        <dd></dd>
+    
+    
+    </dl>
+
+
+<h3 id="toc">
+    Table of Contents
+    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+</h3>
+
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/default.html#constant_BD_HOST">BD_HOST</a>
+    <span>
+        &nbsp;= &#039;localhost&#039;                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/default.html#constant_BD_NAME">BD_NAME</a>
+    <span>
+        &nbsp;= &#039;easyrent_db&#039;                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/default.html#constant_BD_PASS">BD_PASS</a>
+    <span>
+        &nbsp;= &#039;1234&#039;                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/default.html#constant_BD_PORT">BD_PORT</a>
+    <span>
+        &nbsp;= &#039;3305&#039;                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/default.html#constant_BD_USER">BD_USER</a>
+    <span>
+        &nbsp;= &#039;user&#039;                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/default.html#constant_RAIZ_APP">RAIZ_APP</a>
+    <span>
+        &nbsp;= __DIR__                            </span>
+</dt>
+<dd>Config parameters used to generate URLs and routings for files in the app</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/default.html#constant_RUTA_APP">RUTA_APP</a>
+    <span>
+        &nbsp;= &#039;/sw-practices&#039;                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/default.html#constant_RUTA_IMGS">RUTA_IMGS</a>
+    <span>
+        &nbsp;= \RUTA_APP . &#039;/doc/web/images&#039;                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/default.html#constant_RUTA_USER_IMAGES">RUTA_USER_IMAGES</a>
+    <span>
+        &nbsp;= \implode(\DIRECTORY_SEPARATOR, [__DIR__ . &#039;\\src\\includes\\img&#039;, &#039;usr&#039;])                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/default.html#constant_RUTA_VEHICLE_IMAGES">RUTA_VEHICLE_IMAGES</a>
+    <span>
+        &nbsp;= \implode(\DIRECTORY_SEPARATOR, [__DIR__ . &#039;\\src\\includes\\img&#039;, &#039;vehicle&#039;])                            </span>
+</dt>
+<dd></dd>
+
+                            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_mostrarSaludo">mostrarSaludo()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_mostrarMenu">mostrarMenu()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd></dd>
+
+    </dl>
+
+        
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="packages/Application.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_BD_HOST">
+        BD_HOST
+        <a href="namespaces/default.html#constant_BD_HOST" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/persistance/repository/MysqlConnector.php"><a href="files/src-includes-persistance-repository-mysqlconnector.html"><abbr title="src/includes/persistance/repository/MysqlConnector.php">MysqlConnector.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">10</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">BD_HOST</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;localhost&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_BD_NAME">
+        BD_NAME
+        <a href="namespaces/default.html#constant_BD_NAME" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/persistance/repository/MysqlConnector.php"><a href="files/src-includes-persistance-repository-mysqlconnector.html"><abbr title="src/includes/persistance/repository/MysqlConnector.php">MysqlConnector.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">11</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">BD_NAME</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;easyrent_db&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_BD_PASS">
+        BD_PASS
+        <a href="namespaces/default.html#constant_BD_PASS" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/persistance/repository/MysqlConnector.php"><a href="files/src-includes-persistance-repository-mysqlconnector.html"><abbr title="src/includes/persistance/repository/MysqlConnector.php">MysqlConnector.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">13</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">BD_PASS</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;1234&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_BD_PORT">
+        BD_PORT
+        <a href="namespaces/default.html#constant_BD_PORT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/persistance/repository/MysqlConnector.php"><a href="files/src-includes-persistance-repository-mysqlconnector.html"><abbr title="src/includes/persistance/repository/MysqlConnector.php">MysqlConnector.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">14</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">BD_PORT</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;3305&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_BD_USER">
+        BD_USER
+        <a href="namespaces/default.html#constant_BD_USER" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/persistance/repository/MysqlConnector.php"><a href="files/src-includes-persistance-repository-mysqlconnector.html"><abbr title="src/includes/persistance/repository/MysqlConnector.php">MysqlConnector.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">12</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">BD_USER</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;user&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_RAIZ_APP">
+        RAIZ_APP
+        <a href="namespaces/default.html#constant_RAIZ_APP" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/config/config.php"><a href="files/src-includes-config-config.html"><abbr title="src/includes/config/config.php">config.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">7</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Config parameters used to generate URLs and routings for files in the app</p>
+
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">RAIZ_APP</span>
+    = <span class="phpdocumentor-signature__default-value">__DIR__</span>
+</code>
+
+
+    
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_RUTA_APP">
+        RUTA_APP
+        <a href="namespaces/default.html#constant_RUTA_APP" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/config/config.php"><a href="files/src-includes-config-config.html"><abbr title="src/includes/config/config.php">config.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">8</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">RUTA_APP</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;/sw-practices&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_RUTA_IMGS">
+        RUTA_IMGS
+        <a href="namespaces/default.html#constant_RUTA_IMGS" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/config/config.php"><a href="files/src-includes-config-config.html"><abbr title="src/includes/config/config.php">config.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">11</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">RUTA_IMGS</span>
+    = <span class="phpdocumentor-signature__default-value">\RUTA_APP . &#039;/doc/web/images&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_RUTA_USER_IMAGES">
+        RUTA_USER_IMAGES
+        <a href="namespaces/default.html#constant_RUTA_USER_IMAGES" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/config/config.php"><a href="files/src-includes-config-config.html"><abbr title="src/includes/config/config.php">config.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">9</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">RUTA_USER_IMAGES</span>
+    = <span class="phpdocumentor-signature__default-value">\implode(\DIRECTORY_SEPARATOR, [__DIR__ . &#039;\\src\\includes\\img&#039;, &#039;usr&#039;])</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_RUTA_VEHICLE_IMAGES">
+        RUTA_VEHICLE_IMAGES
+        <a href="namespaces/default.html#constant_RUTA_VEHICLE_IMAGES" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/config/config.php"><a href="files/src-includes-config-config.html"><abbr title="src/includes/config/config.php">config.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">10</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">RUTA_VEHICLE_IMAGES</span>
+    = <span class="phpdocumentor-signature__default-value">\implode(\DIRECTORY_SEPARATOR, [__DIR__ . &#039;\\src\\includes\\img&#039;, &#039;vehicle&#039;])</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+            </section>
+
+            <section class="phpdocumentor-functions">
+        <h3 class="phpdocumentor-elements__header" id="functions">
+            Functions
+            <a href="packages/Application.html#functions" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_mostrarSaludo">
+        mostrarSaludo()
+        <a href="namespaces/default.html#function_mostrarSaludo" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/vistas/comun/cabecera.php"><a href="files/src-includes-vistas-comun-cabecera.html"><abbr title="src/includes/vistas/comun/cabecera.php">cabecera.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">3</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">mostrarSaludo</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+        
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_mostrarMenu">
+        mostrarMenu()
+        <a href="namespaces/default.html#function_mostrarMenu" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/includes/vistas/comun/cabecera.php"><a href="files/src-includes-vistas-comun-cabecera.html"><abbr title="src/includes/vistas/comun/cabecera.php">cabecera.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">11</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">mostrarMenu</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+        
+    
+</article>
+            </section>
+
+    </article>
+                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+    <section class="phpdocumentor-search-results__dialog">
+        <header class="phpdocumentor-search-results__header">
+            <h2 class="phpdocumentor-search-results__title">Search results</h2>
+            <button class="phpdocumentor-search-results__close"><i class="fas fa-times"></i></button>
+        </header>
+        <section class="phpdocumentor-search-results__body">
+            <ul class="phpdocumentor-search-results__entries"></ul>
+        </section>
+    </section>
+</section>
+            </div>
+        </div>
+        <a href="packages/Application.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+
+    </main>
+
+    <script>
+        cssVars({});
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
+</body>
+</html>
