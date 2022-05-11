@@ -1,31 +1,29 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-//require_once __DIR__.'/includes/Formulario.php';
 require_once __DIR__.'/includes/DamageService.php';
 require_once __DIR__.'/includes/UserService.php';
 require_once __DIR__.'/includes/Damage.php';
 require_once __DIR__.'/includes/DamageList.php';
-//require_once __DIR__.'/includes/FormularioRegistroIncidente.php';
 
 
 $damageService = DamageService::getInstance();
 $userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
 
-$defaultFunctions = array('cmpID', 'cmpVehicle', 'cmpUser', 'cmpType', 'cmpIsRepaired', 'cmpFecha');
-$functionNames = ['cmpID' => 'ID Incidente', 'cmpVehicle' => 'Modelo', 'cmpUser' => 'Categoria', 'cmpType' => 'Caja de cambios', 'cmpIsRepaired' => 'Tipor de combustible', 'cmpFecha' => 'Fecha de modificacion'];
+$defaultFunctions = array('cmpID', 'cmpUser', 'cmpVehicle', 'cmpType', 'cmpIsRepaired', 'cmpFecha');
+$functionNames = ['cmpID' => 'ID Incidente', 'cmpUser' => 'ID Usuario', 'cmpVehicle' => 'VIN ', 'cmpType' => 'Tipo de incidencia', 'cmpIsRepaired' => 'Estado de reparacion', 'cmpFecha' => 'Fecha de modificacion'];
 
 $damagesList = new DamageList($damageService->readAllDamages());
 
 if(isset($_GET['orderDamagesBy']) && in_array($_GET['orderDamagesBy'], $defaultFunctions)){
-    $modelsList->orderBy($_GET['orderDamagesBy']);
+    $damagesList->orderBy($_GET['orderDamagesBy']);
 }
 
 $rutaApp = RUTA_APP;
 $filterSelector = '';
 if(!empty($defaultFunctions)){
     foreach($defaultFunctions as $function) {
-        $filterSelector .= "<a href=\"{$rutaApp}/src/modelsAdmin.php?orderDamagesBy={$function}\">{$functionNames[$function]}</a>";
+        $filterSelector .= "<a href=\"{$rutaApp}/src/incidentesAdmin.php?orderDamagesBy={$function}\">{$functionNames[$function]}</a>";
     }
 }
 $filterSelector .= '';

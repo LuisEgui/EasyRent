@@ -67,7 +67,7 @@ class DamageList
 
     private function cmpFecha($a, $b)
     {
-        return ($a->getTimeStamp() < $b->getTimeStamp()) ? 1 : 0;
+        return ($a->getTimeStamp() > $b->getTimeStamp()) ? 1 : 0;
     }
 
     function orderBy($function){
