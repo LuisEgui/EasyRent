@@ -1,7 +1,3 @@
-<!--
-Fuente Web
-Suscríbete para mas contenido!!!
--->
 <?php
 
 session_start();
@@ -34,11 +30,11 @@ if (isset($_POST['submitBtn'])){
 $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";   
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" "DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-   <title>Micro Chat | Fuente Web</title>
-   <link href="/src/includes/estiloChat.css" rel="stylesheet" type="text/css" />
+   <title>Chat de incidencias</title>
+   <link href="/src/includes/estilo.css" rel="stylesheet" type="text/css" />
    <link href="/style/globe.png" rel="shortcut icon">
     <script language="javascript" type="text/javascript">
       var httpObject = null;
@@ -122,7 +118,7 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
    
    <body onload="UpdateTimer();">
     <div id="main">
-      <div id="caption">Micro Chat | Fuente Web</div>
+      <div id="caption">Chat de incidencias</div>
       <div id="icon">&nbsp;</div>
 <?php 
 
