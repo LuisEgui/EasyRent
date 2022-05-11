@@ -85,7 +85,7 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
             httpObject.send(null);
          }
       }
-
+ 
       // Implementar la lógica   
       function doReload(){    
          httpObject = getHTTPObject();
@@ -103,13 +103,23 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
          timerID = setTimeout("UpdateTimer()", 5000);
       }
     
+      function fin(){
+        httpObject = getHTTPObject();
+         if (httpObject != null) {
+            link = "finChat.php";
+            httpObject.open("GET", link , true);
+            httpObject.onreadystatechange = setOutput;
+            httpObject.send(null);
+         }
+         UpdateTimer();  
+      }
     
       function keypressed(e){
          if(e.keyCode=='13'){
             doWork();
          }
       }
-    //-->
+
     </script>   
 </head>
 
@@ -118,7 +128,7 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
    
    <body onload="UpdateTimer();">
     <div id="main">
-      <div id="caption">Chat de incidencias</div>
+      <div id="caption"><h1>Chat de incidencias</h1></div>
       <div id="icon">&nbsp;</div>
 <?php 
 
@@ -131,7 +141,7 @@ if (!isset($_SESSION['nickname']) ){
       
      <div id="result">
      <?php 
-        $data = file("msg.html");
+        $data = file("msg.txt");
         foreach ($data as $line) {
         	echo $line;
         }
@@ -140,7 +150,10 @@ if (!isset($_SESSION['nickname']) ){
       <div id="sender" onkeyup="keypressed(event);">
          Mensaje: <input type="text" name="msg" size="30" id="msg" />
          <button onclick="doWork();">Enviar</button>
-      </div>   
+      </div>  
+      <div>
+      <button onclick="fin();">Finalizar chat</button>
+    </div>
 <?php            
 //require __DIR__.'/includes/vistas/plantillas/plantilla.php';   
 }

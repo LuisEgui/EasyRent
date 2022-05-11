@@ -1,9 +1,9 @@
 <?php 
 	if (isset($_GET['msg'])){
-		if (file_exists('msg.html')) {
-		   $f = fopen('msg.html',"a+");
+		if (file_exists('msg.txt')) {
+		   $f = fopen('msg.txt',"a+");
 		} else {
-		   $f = fopen('msg.html',"w+");
+		   $f = fopen('msg.txt',"w+");
 		}
       $nick = isset($_GET['nick']) ? $_GET['nick'] : "Hidden";
       $msg  = isset($_GET['msg']) ? htmlspecialchars($_GET['msg']) : ".";
@@ -14,7 +14,7 @@
 		echo $line;
 		
 	} else if (isset($_GET['all'])) {
-	   $flag = file('msg.html');
+	   $flag = file('msg.txt');
 	   $content = "";
 	   foreach ($flag as $value) {
 	   	$content .= $value;
