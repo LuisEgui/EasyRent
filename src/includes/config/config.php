@@ -25,6 +25,8 @@ use easyrent\includes\persistance\repository\MysqlConnector;
 use easyrent\includes\persistance\repository\MysqlImageRepository;
 use easyrent\includes\persistance\repository\MysqlUserRepository;
 use easyrent\includes\persistance\repository\MysqlVehicleRepository;
+use easyrent\includes\persistance\repository\MysqlAdvertisementRepository;
+use easyrent\includes\persistance\repository\MysqlPriorityRepository;
 
 session_start();
 
@@ -36,3 +38,7 @@ $GLOBALS['db_user_repository'] = $userRepository;
 $GLOBALS['db_image_repository'] = $imageRepository;
 $vehicleRepository = new MysqlVehicleRepository($db);
 $GLOBALS['db_vehicle_repository'] = $vehicleRepository;
+$advertisementRepository = new MysqlAdvertisementRepository($db);
+$GLOBALS['db_advertisement_repository'] = $advertisementRepository;
+$priorityRepository = new MysqlPriorityRepository($db);
+$GLOBALS['db_priority_repository'] = $priorityRepository;

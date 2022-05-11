@@ -44,20 +44,19 @@ class MysqlAdvertisementRepository extends AbstractMysqlRepository implements Re
 
     public function findAll(): array
     {
-        $ads[] = array();
+        $ads = [];
 
-        $sql = "select a_id, banner, releaseDate, endDate, priority from Advertisement";
+        $sql = sprintf("select a_id, banner, releaseDate, endDate, priority from Advertisement");
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
         $result = $stmt->get_result();
         $stmt->close();
 
-        while ($row = $result->fetch_array(MYSQLI_NUM)) {
-            foreach ($row as $ad)
-                $ads[] = $ad;
+        while ($row = $result->fetch_assoc()) {
+            $ad = new Advertisement($row['a_id'], $row['banner'], $row['releaseDate'], $row['endDate'], $row['priority']);
+            $ads[] = $ad;
         }
-
         return $ads;
     }
 
@@ -98,11 +97,12 @@ class MysqlAdvertisementRepository extends AbstractMysqlRepository implements Re
             $importedAd = $this->findById($ad->getId());
             if ($importedAd !== null) {
                 $ad->setId($importedAd->getId());
-                $sql = sprintf("update Advertisement set banner = '%d', releaseDate = '%s', endDate = '%s', priority = '%d'",
+                $sql = sprintf("update Advertisement set banner = '%d', releaseDate = '%s', endDate = '%s', priority = '%d' where a_id = %d",
                     $ad->getBanner(),
                     $this->db->getConnection()->real_escape_string($ad->getReleaseDate()),
                     $this->db->getConnection()->real_escape_string($ad->getEndDate()),
-                    $ad->getPriority()
+                    $ad->getPriority(),
+                    $ad->getId()
                 );
 
                 $stmt = $this->db->prepare($sql);

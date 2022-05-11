@@ -17,6 +17,12 @@ $contenidoPrincipal = <<<EOS
     <div id="info">
     <a href="mostrarVehiculosAdminPanel.php">Mostrar vehiculos</a>
     </div>
+    <div id="info">
+    <a href="nuevoAnuncio.php">Añadir anuncio</a>
+    </div>
+    <div id="info">
+    <a href="modificarAnuncios.php">Modificar anuncios</a>
+    </div>
 	</div>
 EOS;
 

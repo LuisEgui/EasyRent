@@ -63,7 +63,7 @@ class Advertisement {
      * Returns ad banner's id
      * @return string
      */
-    public function getBanner(): string
+    public function getBanner(): ?string
     {
         return $this->banner;
     }
@@ -108,7 +108,7 @@ class Advertisement {
      * Sets ad banner's id
      * @param string $banner
      */
-    public function setBanner(string $banner): void
+    public function setBanner(?string $banner): void
     {
         $this->banner = $banner;
     }
