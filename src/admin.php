@@ -8,10 +8,10 @@ $tituloPagina = 'Admin';
 $contenidoPrincipal = <<<EOS
     <div class="promociones">
     <h2>Administrar</h2>
-    <div id="info">
+    <div class="info">
     <a href="vehiclesAdmin.php">Administrar vehiculos</a>
     </div>
-    <div id="info">
+    <div class="info">
     <a href="modelsAdmin.php">Administrar modelo</a>
     </div>
 	</div>
