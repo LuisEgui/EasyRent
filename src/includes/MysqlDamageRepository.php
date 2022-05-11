@@ -142,7 +142,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
             if ($importedDamage !== null) {
                 $damage->setId($importedDamage->getId());
                 if ($damage->getEvidenceDamage() !== null) {
-                $sql = sprintf("update Damage set vehicle = '%d', user = '%d', title = '%d', description  = '%d', evidenceDamage ='%d', area ='%d', type ='%d', isRepaired ='%d'",
+                $sql = sprintf("update Damage set vehicle = '%d', user = '%d', title = '%d', description  = '%s', evidenceDamage ='%d', area ='%d', type ='%d', isRepaired ='%d'",
                         $damage->getVehicle(),
                         $damage->getUser(),
                         $this->db->getConnection()->real_escape_string($damage->getTitle()),
@@ -154,7 +154,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
                         $damage->getId()
                        );
                 } else {
-                    $sql = sprintf("update Damage set vehicle = '%d', user = '%d', title = '%d', description  = '%d', evidenceDamage = NULL, area ='%d', type ='%d', isRepaired ='%d'",
+                    $sql = sprintf("update Damage set vehicle = '%d', user = '%d', title = '%d', description  = '%s', evidenceDamage = NULL, area ='%d', type ='%d', isRepaired ='%d'",
                     $damage->getVehicle(),
                     $damage->getUser(),
                     $this->db->getConnection()->real_escape_string($damage->getTitle()),
@@ -177,7 +177,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
                 // If the reserve is not in the database, we insert it.
             } else {
                 if ($damage->getEvidenceDamage() !== null) {
-                    $sql = sprintf("insert into Damage (d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired) values ('%d', '%d', '%s', '%s', '%d', '%d', '%s', '%s', '%s')",
+                    $sql = sprintf("insert into Damage (d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired) values ('%d', '%d', '%s', '%s', '%s', '%d', '%s', '%s', '%s')",
                         $damage->getId(),
                         $damage->getVehicle(),
                         $this->db->getConnection()->real_escape_string($damage->getUser()),

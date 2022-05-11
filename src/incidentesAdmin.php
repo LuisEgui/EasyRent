@@ -4,6 +4,7 @@ require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/DamageService.php';
 require_once __DIR__.'/includes/Damage.php';
 require_once __DIR__.'/includes/DamageList.php';
+require_once __DIR__.'/includes/FormularioRegistroIncidente.php';
 
 
 $damageService = DamageService::getInstance();
@@ -69,6 +70,16 @@ foreach($damagesList->getArray() as $damage) {
             <td>{$damage->getType()}</td>
             <td>{$state}</td>
             <td>{$damage->getTimeStamp()}</td>
+            <td> <a href="borrarIncidente.php?id=
+        EOS;
+        $contenidoPrincipal .= $damage->getId();
+        $contenidoPrincipal .= <<<EOS
+            ">Borrar</a></td>
+            <td> <a href="actualizarIncidente.php?id=
+        EOS;
+        $contenidoPrincipal .= $damage->getId();
+        $contenidoPrincipal .= <<<EOS
+            ">Editar</a></td>
         </tr>
     EOS;
 }  
@@ -76,20 +87,20 @@ $contenidoPrincipal .= <<<EOS
     </table>
     </div>
     </div>
-    <div>
-    <div id="info">
-    <a href="nuevoIncidente.php">Añadir incidente</a>
-    </div>
-    <div id="info">
-    <a href="borrarIncidente.php">Borrar incidente</a>
-    </div>
-	<div id="info">
-    <a href="actualizarIncidente.php">Actualizar incidente</a>
-    </div>
+EOS;
+    $form = new FormularioRegistroIncidente();
+	$htmlFormRegMessage = $form->gestiona();
+
+	$tituloPagina = 'Agregar incidente';
+
+	$contenidoPrincipal .= <<<EOS
+	<h1>Nuevo incidente</h1>
+	$htmlFormRegMessage
     <div id="anteriorUrl">
     <a href="admin.php">Atrás</a>
     </div>
     </div>
 EOS;
+
 
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';

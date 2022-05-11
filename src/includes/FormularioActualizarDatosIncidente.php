@@ -13,7 +13,7 @@ class FormularioActualizarDatosIncidente extends Formulario {
     private $defaultStates = array(true, false);
 
     public function __construct($idToUpdate) {
-        parent::__construct('formUpdateDamageData', ['urlRedireccion' => 'incidentesAdmin.php']);
+        parent::__construct('formUpdateDamageData'. $idToUpdate, ['urlRedireccion' => 'incidentesAdmin.php']);
         $this->damageService = DamageService::getInstance();
         if(isset($idToUpdate)){
             $this->damageIdToUpdate = $idToUpdate;
@@ -74,10 +74,10 @@ class FormularioActualizarDatosIncidente extends Formulario {
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
 
-        $description = trim($datos['description'] ?? '');
-        $description = filter_var($description, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $damageDescription = trim($datos['description'] ?? '');
+        $damageDescription = filter_var($damageDescription, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        if ( ! $description || empty($description))
+        if ( ! $damageDescription || empty($damageDescription))
             $this->errores['description'] = 'La descripcion de la incidencia no puede estar vacía';
 
         $state = trim($datos['state'] ?? '');
@@ -87,7 +87,7 @@ class FormularioActualizarDatosIncidente extends Formulario {
             $this->errores['state'] = 'El estado introducido es inválido!';
 
         if (count($this->errores) === 0) {
-            $this->damageService->updateDamage($state, $description, $this->damageIdToUpdate);
+            $this->damageService->updateDamage($state, $damageDescription, $this->damageIdToUpdate);
             header("Location: {$this->urlRedireccion}");
         }
     }
