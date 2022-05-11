@@ -52,6 +52,8 @@ $contenidoPrincipal = <<<EOS
 			<th>Tipo</th>
             <th>Reparado</th>
             <th>Fecha de modificacion</th>
+            <th></th>
+            <th></th>
         </tr>
 EOS; 
 foreach($damagesList->getArray() as $damage) {
@@ -68,21 +70,13 @@ foreach($damagesList->getArray() as $damage) {
             <td>{$damage->getVehicle()}</td>
             <td>{$damage->getTitle()}</td>
             <td>{$damage->getDescription()}</td>
-            <td><img src="img/damage/$damageImage" width="50" height="50"></td>
+            <td><img src="img/damage/$damageImage" width="50" height="50" alt="Imagen incidente"></td>
             <td>{$damage->getArea()}</td>
             <td>{$damage->getType()}</td>
             <td>{$state}</td>
             <td>{$damage->getTimeStamp()}</td>
-            <td> <a href="borrarIncidente.php?id=
-        EOS;
-        $contenidoPrincipal .= $damage->getId();
-        $contenidoPrincipal .= <<<EOS
-            ">Borrar</a></td>
-            <td> <a href="actualizarIncidente.php?id=
-        EOS;
-        $contenidoPrincipal .= $damage->getId();
-        $contenidoPrincipal .= <<<EOS
-            ">Editar</a></td>
+            <td> <a href="borrarIncidente.php?id={$damage->getId()}">Borrar</a></td>
+            <td> <a href="actualizarIncidente.php?id={$damage->getId()};">Editar</a></td>
         </tr>
     EOS;
 }  
@@ -101,7 +95,6 @@ EOS;
 	$htmlFormRegMessage
     <div id="anteriorUrl">
     <a href="admin.php">Atrás</a>
-    </div>
     </div>
 EOS;
 

@@ -275,8 +275,4 @@ abstract class Formulario
         EOS;
         return $htmlForm;
     }
-
-    protected function changeUlrRedireccion($url) {
-        $this->urlRedireccion = $url;
-    }
 }

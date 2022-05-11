@@ -30,7 +30,7 @@ class FormularioActualizarDatosIncidente extends Formulario {
                 $string = "Reparado";
             $html .= "<option ";
             $selected='';
-            if ($selectedState && $state == $selectedState)
+            if ($state == $selectedState)
                 $selected='selected';
             $html .= "value=\"{$state}\" {$selected}>{$string}</option>";
         }
