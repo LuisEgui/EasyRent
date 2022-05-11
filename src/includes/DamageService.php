@@ -136,4 +136,8 @@ class DamageService {
     public function saveImage($image){
         return $this->imageRepository->save($image);
     }
+
+    public function getDamageImage($id){
+        return $this->imageRepository->findById($id);
+    }
 }

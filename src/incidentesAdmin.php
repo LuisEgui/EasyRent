@@ -5,6 +5,7 @@ require_once __DIR__.'/includes/DamageService.php';
 require_once __DIR__.'/includes/Damage.php';
 require_once __DIR__.'/includes/DamageList.php';
 require_once __DIR__.'/includes/FormularioRegistroIncidente.php';
+require_once __DIR__.'/includes/Image.php';
 
 
 $damageService = DamageService::getInstance();
@@ -46,7 +47,7 @@ $contenidoPrincipal = <<<EOS
             <th>VIN Vehiculo</th>
             <th>Titulo</th>
             <th>Descripcion</th>
-            <th>ID Imagen</th>
+            <th>Imagen</th>
             <th>Area</th>
 			<th>Tipo</th>
             <th>Reparado</th>
@@ -58,6 +59,8 @@ foreach($damagesList->getArray() as $damage) {
     if($damage->getIsRepaired()){
         $state = "Si";
     }
+
+    $damageImage = $damage->getEvidenceDamage() . "-" . $damageService->getDamageImage($damage->getEvidenceDamage())->getPath();
     $contenidoPrincipal .= <<<EOS
         <tr>
             <td>{$damage->getId()}</td>
@@ -65,7 +68,7 @@ foreach($damagesList->getArray() as $damage) {
             <td>{$damage->getVehicle()}</td>
             <td>{$damage->getTitle()}</td>
             <td>{$damage->getDescription()}</td>
-            <td>{$damage->getEvidenceDamage()}</td>
+            <td><img src="img/damage/$damageImage" width="50" height="50"></td>
             <td>{$damage->getArea()}</td>
             <td>{$damage->getType()}</td>
             <td>{$state}</td>
