@@ -11,7 +11,7 @@ define('BD_HOST', 'localhost');
 define('BD_NAME', 'easyrent_db');
 define('BD_USER', 'user');
 define('BD_PASS', '1234');
-define('BD_PORT', '3305');
+define('BD_PORT', '3306');
 
 class MysqlConnector implements DatabaseConnection {
 

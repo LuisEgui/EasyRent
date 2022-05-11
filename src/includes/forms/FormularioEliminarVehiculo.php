@@ -3,22 +3,38 @@
 namespace easyrent\includes\forms;
 
 use easyrent\includes\service\VehicleService;
+use easyrent\includes\service\ModelService;
+use easyrent\includes\persistance\lists\VehicleList;
 
 class FormularioEliminarVehiculo extends Formulario {
 
     private $vehicleService;
 
-    public function __construct() {
-        parent::__construct('formDeleteVehicle', ['urlRedireccion' => 'admin.php']);
-        $this->vehicleService = new VehicleService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
+    private $modelService;
+
+    private $vehiclesList;
+
+    private $orderVehiclesBy;
+
+    public function __construct($orderByFunction) {
+        parent::__construct('formDeleteVehicle', ['urlRedireccion' => 'vehiclesAdmin.php']);
+        $this->vehicleService = VehicleService::getInstance();
+        $this->modelService = ModelService::getInstance();
+        $this->vehiclesList = new VehicleList();
+        if(isset($orderByFunction)){
+            $this->orderVehiclesBy = $orderByFunction;
+        }
     }
 
     protected function generaCamposFormulario(&$datos) {
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores); // Se muestra como una lista
 
-        // Se leen todos los vehiculos de la base de datos
-        $vehicles = $this->vehicleService->readAllVehicles();
+        // Se leen todos los vehiculos de la base de datos y se almacenan en un array de la instancia de la clase VehicleList
+        $this->vehiclesList->setArray($this->vehicleService->readAllVehicles());
+        if(isset($this->orderVehiclesBy)){
+            $this->vehiclesList->orderBy($this->orderVehiclesBy);
+        }
 
         // Se genera el HTML asociado al formulario y los mensajes de error.
         $html = <<<EOS
@@ -29,23 +45,28 @@ class FormularioEliminarVehiculo extends Formulario {
                     <th></th>
                     <th>VIN</th>
                     <th>Matricula</th>
+                    <th>Marca</th>
                     <th>Modelo</th>
-                    <th>Tipo de combustible</th>
-                    <th>Numero de asientos</th>
+                    <th>Submodelo</th>
+                    <th>Ubicacion</th>
                     <th>Estado</th>
+                    <th>Fecha de modificación</th>
                 </tr>
         EOS;
 
-        foreach($vehicles as $vehicle) {
+        foreach($this->vehiclesList->getArray() as $vehicle) {
+            $vehicleModel = $this->modelService->readModelById($vehicle->getModel());
             $html .= <<<EOS
                 <tr>
-                    <td><input type="radio" name="deletedVehicleVIN" value="{$vehicle->getVin()} required"></td>
+                    <td><input type="radio" name="deletedVehicleVIN" value="{$vehicle->getVin()}" required></td>
                     <td>{$vehicle->getVin()}</td>
                     <td>{$vehicle->getLicensePlate()}</td>
-                    <td>{$vehicle->getModel()}</td>
-                    <td>{$vehicle->getFuelType()}</td>
-                    <td>{$vehicle->getSeatCount()}</td>
+                    <td>{$vehicleModel->getBrand()}</td>
+                    <td>{$vehicleModel->getModel()}</td>
+                    <td>{$vehicleModel->getSubmodel()}</td>
+                    <td>{$vehicle->getLocation()}</td>
                     <td>{$vehicle->getState()}</td>
+                    <td>{$vehicle->getTimeStamp()}</td>
                 </tr>
             EOS;
         }
@@ -67,7 +88,7 @@ class FormularioEliminarVehiculo extends Formulario {
             $this->errores[] = 'Debe seleccionar un vehiculo.';
 
         if (count($this->errores) === 0) {
-            $result = $this->vehicleService->deleteVehicle($datos['deletedVehicleVIN']);
+            $result = $this->vehicleService->deleteVehicleByVin($datos['deletedVehicleVIN']);
             if (!$result)
                 $this->errores[] = "Vehicle doesn't exist!";
             else
