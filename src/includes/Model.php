@@ -1,7 +1,5 @@
 <?php
 
-namespace easyrent\includes\persistance\entity;
-
 /**
  * Class for model entity.
  */

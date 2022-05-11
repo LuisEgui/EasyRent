@@ -5,6 +5,7 @@ require_once __DIR__.'/DamageService.php';
 require_once __DIR__.'/VehicleService.php';
 require_once __DIR__.'/ModelService.php';
 require_once __DIR__.'/UserService.php';
+require_once __DIR__.'/User.php';
 
 class FormularioRegistroIncidente extends Formulario {
 
@@ -54,7 +55,7 @@ class FormularioRegistroIncidente extends Formulario {
 
     private function generateAreaSelector($name, $tipoSeleccionado=null)
     {
-        $html = "<label for=\"area\">Tipo de incidencia:</label>
+        $html = "<label for=\"area\">Area de incidencia:</label>
             <select id=\"area\" name=\"{$name}\">";
         foreach(self::DEFAULTAREA as $area) {
             $html .= "<option ";
@@ -79,9 +80,9 @@ class FormularioRegistroIncidente extends Formulario {
                 $model = $this->modelService->readModelById($vehicle->getModel());
                 $html .= "<option ";
                 $selected='';
-                if ($tipoSeleccionado && $vehicle->getId() == $tipoSeleccionado)
+                if ($tipoSeleccionado && $vehicle->getVin() == $tipoSeleccionado)
                     $selected='selected';
-                $html .= "value=\"{$vehicle->getId()}\" {$selected}>Matricula: {$vehicle->getLicensePlate()} Coche: {$model->getBrand()} {$model->getModel()}</option>";
+                $html .= "value=\"{$vehicle->getVin()}\" {$selected}>Matricula: {$vehicle->getLicensePlate()} | Coche: {$model->getBrand()} {$model->getModel()}</option>";
             }
             $html .= "</select>";
         }
@@ -102,7 +103,7 @@ class FormularioRegistroIncidente extends Formulario {
                 $selected='';
                 if ($tipoSeleccionado && $user->getId() == $tipoSeleccionado)
                     $selected='selected';
-                $html .= "value=\"{$user->getId()}\" {$selected}>ID: {$user->getId()} Email: {$user->getEmail()} </option>";
+                $html .= "value=\"{$user->getId()}\" {$selected}>ID: {$user->getId()} | Email: {$user->getEmail()} </option>";
             }
             $html .= "</select>";
         }
@@ -114,8 +115,8 @@ class FormularioRegistroIncidente extends Formulario {
     protected function generaCamposFormulario(&$datos) {
         $vehicles = $this->vehicleService->readAllVehicles();
         // Se reutiliza el email introducido previamente o se deja en blanco
-        $type = $datos['type'] ?? self::MINOR;
-        $area = $datos['area'] ?? self::GENERAL;
+        $type = $datos['type'] ?? '';
+        $area = $datos['area'] ?? '';
         $title = $datos['title'] ?? '';
         $description = $datos['description'] ?? '';
         $vehicle = $datos['vehicle'] ?? '';
@@ -123,12 +124,12 @@ class FormularioRegistroIncidente extends Formulario {
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = $this->generaErroresCampos(['user', 'vehicle', 'type', 'title', 'description', 'evidenceDamage', 'area'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos = $this->generaErroresCampos(['user', 'vehicle', 'type', 'title', 'description', 'archivo', 'area'], $this->errores, 'span', array('class' => 'error'));
         
         $typeSelector = $this->generateTypeSelector('type', $type);
         $areaSelector = $this->generateAreaSelector('area', $area);
-        $vehicleSelector = $this->generateVehicleSelector('vehicle', $model);
-        $userSelector = $this->generateUserSelector('user', $model);
+        $vehicleSelector = $this->generateVehicleSelector('vehicle', $vehicle);
+        $userSelector = $this->generateUserSelector('user', $user);
 
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
@@ -150,15 +151,15 @@ class FormularioRegistroIncidente extends Formulario {
                 <textarea id="d" name="description" placeholder="Describe la incidencia que desea notificar">$description</textarea>{$erroresCampos['description']}
             </div>
             <div>
-                $typeSelector{$erroresCampos['area']}
+                $areaSelector{$erroresCampos['area']}
             </div>
             <div>
-                $categorySelector{$erroresCampos['type']}
+                $typeSelector{$erroresCampos['type']}
             </div>
             <div>
             <label for="archivo">Archivo: (prueba del incidente) (Máx. 8MB):
                 <input type="file" name="archivo" id="archivo"/>
-            </label>{$erroresCampos['evidenceDamage']}
+            </label>{$erroresCampos['archivo']}
             </div>
             <div>
                 <button type="submit" name="register"> Registrar </button>
@@ -271,7 +272,7 @@ class FormularioRegistroIncidente extends Formulario {
         }
 
         if (count($this->errores) === 0) {
-            $damage = $this->damageService->createDamage($vehicle, $user->getId(), $title, $description, $imagenSubidaEnElServidor->getId(), $area, $type);
+            $damage = $this->damageService->createDamage($vehicle, $user, $title, $description, $imagenSubidaEnElServidor->getId(), $area, $type);
         
             if (!$damage)
                 $this->errores[] = "Error al crear la incidencia";
@@ -281,7 +282,7 @@ class FormularioRegistroIncidente extends Formulario {
     }
 
     protected function validArea($area = array()) {
-        return in_array($fuelTareaype, self::DEFAULTAREA);
+        return in_array($area, self::DEFAULTAREA);
     }
 
     protected function validType($type = array()) {
@@ -289,12 +290,12 @@ class FormularioRegistroIncidente extends Formulario {
     }
     
     protected function validUser($user) {
-        $usersInDatabase = $this->userService->readAllUsersNoAdmin();
+        $usersInDatabase = $this->userService->readAllUsersIDNoAdmin();
         return in_array($user, $usersInDatabase);
     }
 
     protected function validVehicle($vehicle) {
-        $vehiclesInDatabase = $this->vehicleService->readAllVehicles();
+        $vehiclesInDatabase = $this->vehicleService->readAllVehiclesVIN();
         return in_array($vehicle, $vehiclesInDatabase);
     }
 

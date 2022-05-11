@@ -111,6 +111,7 @@ create table
     area enum ('Brakes', 'Controls', 'Engine', 'Front', 'General', 'Interior', 'Left', 'Right', 'Rear', 'Roof', 'Trunk', 'Underbody', 'Wheels') not null,
     type enum ('Minor', 'Moderate', 'Severe'),
     isRepaired boolean default false,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
     foreign key (vehicle) references Vehicle(vin),
     foreign key (evidenceDamage) references Image(img_id),
     foreign key (user) references User(u_id)

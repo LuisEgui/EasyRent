@@ -46,7 +46,7 @@ $contenidoPrincipal = <<<EOS
         <tr>
             <th>ID Incidencia</th>
             <th>ID Usuario</th>
-            <th>ID Vehiculo</th>
+            <th>VIN Vehiculo</th>
             <th>Titulo</th>
             <th>Descripcion</th>
             <th>ID Imagen</th>
@@ -57,6 +57,10 @@ $contenidoPrincipal = <<<EOS
         </tr>
 EOS; 
 foreach($damagesList->getArray() as $damage) {
+    $state = "No";
+    if($damage->getIsRepaired()){
+        $state = "Si";
+    }
     $contenidoPrincipal .= <<<EOS
         <tr>
             <td>{$damage->getId()}</td>
@@ -67,7 +71,8 @@ foreach($damagesList->getArray() as $damage) {
             <td>{$damage->getEvidenceDamage()}</td>
             <td>{$damage->getArea()}</td>
             <td>{$damage->getType()}</td>
-            <td>{$damage->getIsRepaired()}</td>
+            <td>{$state}</td>
+            <td>{$damage->getTimeStamp()}</td>
         </tr>
     EOS;
 }  

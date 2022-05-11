@@ -27,7 +27,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         if(!isset($id))
             return null;
 
-        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired from Damage where d_id = %d", $id);
+        $sql = sprintf("select * from Damage where d_id = %d", $id);
         $result = $this->db->query($sql);
 
         if ($result !== false && $result->num_rows > 0) {
@@ -43,7 +43,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
     public function findAll() {
         $damages = [];
 
-        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired from Damage");
+        $sql = sprintf("select * from Damage");
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -51,7 +51,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         $stmt->close();
 
         while ($row = $result->fetch_assoc()) {
-            $damage = new Damage($row['d_id'], $row['vehicle'], $row['user'], $row['title'], $row['description'], $row['evidenceDamage'], $row['area'], $row['type'], $row['isRepaired']);
+            $damage = new Damage($row['d_id'], $row['vehicle'], $row['user'], $row['title'], $row['description'], $row['evidenceDamage'], $row['area'], $row['type'], $row['isRepaired'], $row['fecha']);
             $damages[] = $damage;
         }
 
@@ -61,7 +61,7 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
     public function findByVehicle($vehicle) {
         $damages[] = array();
 
-        $sql = sprintf("select d_id, vehicle, user, title, description, evidenceDamage, area, type, isRepaired from Damage where vehicle = '%d'",
+        $sql = sprintf("select * from Damage where vehicle = '%d'",
                         $vehicle->getVin());
         $stmt = $this->db->prepare($sql);
         $stmt->execute();

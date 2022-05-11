@@ -60,8 +60,8 @@ class DamageService {
      * @param string $isRepaired damage´s isRepaired
      * @return Damage|null Returns null when there is an already existing Damage with the same $d_id
      */
-    public function createDamage($vehicle, $user, $title, $description, $evidenceDamage,$area, $type, $isRepaired) {
-        $damage = new Damage(null, $vehicle, $user, $title, $description, $evidenceDamage, $area, $type, $isRepaired);
+    public function createDamage($vehicle, $user, $title, $description, $evidenceDamage,$area, $type) {
+        $damage = new Damage(null, $vehicle, $user, $title, $description, $evidenceDamage, $area, $type);
         return $this->damageRepository->save($damage);
     }
 

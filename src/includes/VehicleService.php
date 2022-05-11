@@ -85,6 +85,15 @@ class VehicleService{
     }
 
     /**
+     * Returns all the vehicles in the system.
+     *
+     * @return Vehicle[] Returns the vehicles from the database.
+     */
+    public function readAllVehiclesVIN(){
+        return $this->vehicleRepository->findAllVin();
+    }
+
+    /**
      * Returns the vehicle by its vin
      *
      * @return Vehicle|null Returns null when there is not an existing vehicle with the same $vin
