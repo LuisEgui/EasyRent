@@ -67,6 +67,32 @@ class ReserveService {
         }
         return true;
     }
+
+    public function findIfExistingReserve($vin, $pickUpTime, $returnTime) {
+        if($pickUpTime === '' && $returnTime === '') return true;
+
+        $reservas = $this->reserveRepository->findAllByVin($vin);
+        if($pickUpTime === '') {
+            for($i = 0; $i < count($reservas); $i++) {    
+                if(($reservas[$i]->getPickUpTime() < $returnTime) && ($reservas[$i]->getReturnTime() > $returnTime)) return false;
+            }
+        }
+        else if($returnTime === '') {
+            for($i = 0; $i < count($reservas); $i++) {    
+                if(($reservas[$i]->getPickUpTime() < $pickUpTime) && ($reservas[$i]->getReturnTime() > $pickUpTime)) return false;
+            }
+        }
+        else {
+            if($pickUpTime >= $returnTime) return false;
+            if($returnTime <= $pickUpTime) return false;
+            for($i = 0; $i < count($reservas); $i++) {    
+                if(($reservas[$i]->getPickUpTime() < $pickUpTime) && ($reservas[$i]->getReturnTime() > $pickUpTime)) return false;
+                if(($reservas[$i]->getPickUpTime() < $returnTime) && ($reservas[$i]->getReturnTime() > $returnTime)) return false;
+                if(($pickUpTime < $reservas[$i]->getPickUpTime()) && ($reservas[$i]->getReturnTime() < $returnTime)) return false;
+            }
+        }
+        return true;
+    }
     /**
      * Persists a new reserve into the system
      * 

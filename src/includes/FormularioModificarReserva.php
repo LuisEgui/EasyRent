@@ -28,7 +28,7 @@ class FormularioModificarReserva extends Formulario {
         // Se leen todos los vehiculos de la base de datos y se almacenan en un array de la instancia de la clase VehicleList
         $this->reservesList->setArray($this->reserveService->getAllReserves());
         if(isset($this->orderReservesBy)){
-            $this->vehiclesList->orderBy($this->orderReservesBy);
+            $this->reservesList->orderBy($this->orderReservesBy);
         }
 
         // Se genera el HTML asociado al formulario y los mensajes de error.
@@ -79,8 +79,6 @@ class FormularioModificarReserva extends Formulario {
 
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
-        //$this->urlDireccion = "{$this->urlRedireccion}?vinVehicleToUpdate={$datos['updatedVehicleVIN']}";
-        //echo "{$this->urlRedireccion}";
         if(!isset($datos['updatedReserveID']))
             $this->errores[] = 'Debe seleccionar una reserva.';
 

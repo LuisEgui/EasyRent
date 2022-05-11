@@ -31,7 +31,7 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
 
         if ($result !== false && $result->num_rows > 0) {
             $obj = $result->fetch_object();
-            $vehicle = new Vehicle($obj->vin, $obj->licensePlate, $obj->model, $obj->fuelType, $obj->seatCount, $obj->state);
+            $vehicle = new Vehicle($obj->vin, $obj->licensePlate, $obj->model, $obj->location, $obj->state, $obj->fecha);
         }
 
         $result->close();
@@ -43,6 +43,24 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         $vehicles = [];
 
         $sql = sprintf("select * from Vehicle");
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_assoc()) {
+            $vehicle = new Vehicle($row['vin'], $row['licensePlate'], $row['model'], $row['location'], $row['state'], $row['fecha']);
+            $vehicles[] = $vehicle;
+        }
+
+        return $vehicles;
+    }
+
+    public function findAllbyLocation($location) {
+        $vehicles = [];
+
+        $sql = sprintf("select vin, licensePlate, model, location, state, fecha from Vehicle where location = '%s'", $location);
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 

@@ -1,15 +1,49 @@
 <?php
 
-require_once __DIR__.'\includes\config.php';
-require_once __DIR__.'\includes\Vehicle.php';
-require_once __DIR__.'\includes\VehicleService.php';
+require_once __DIR__.'/includes/config.php';
+require_once __DIR__.'/includes/Vehicle.php';
+require_once __DIR__.'/includes/VehicleService.php';
+require_once __DIR__.'/includes/ReserveService.php';
+
+$vehicleService = VehicleService::getInstance();
+$reserveService = ReserveService::getInstance();
+
+$location = $_GET['location'];
+$vehiculos = $vehicleService->readAllVehiclesInLocation($location);
 
 $tituloPagina = 'Lista vehiculos';
-$vehicleService = new VehicleService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
-$vehiculos = $vehicleService->readAllVehicles();
 $contenidoPrincipal = <<<EOS
-<h1>Listar vehiculos</h1>
+<h1>Lista vehiculos</h1>
 EOS;
+if (count($vehiculos) === 0) {
+    $contenidoPrincipal .= <<<EOS
+    <h3>No hay vehiculos en la localizacion elegida</h3>
+    EOS;
+}
+else{
+    $pickupDate = null;
+    $returnDate = null;
+
+    if(isset($_GET['pDate'])){
+        $pickupDate = $_GET['pDate'];
+    }
+    if(isset($_GET['rDate'])){
+        $returnDate = $_GET['rDate'];
+    }
+    for ($i = 0; $i < count($vehiculos); $i++) { 
+        if(!$reserveService->findIfExistingReserve($vehiculos[$i]->getVin(), $pickupDate, $returnDate)) {
+            array_splice($vehiculos, $i, 1);
+            $i--;
+        }
+    }
+    if (count($vehiculos) === 0) {
+        $contenidoPrincipal .= <<<EOS
+        <h3>Hay vehiculos en la localizacion elegida pero no en las fechas seleccionadas</h3>
+        EOS;
+    }
+}
+
+
 for ($i = 0; $i < count($vehiculos); $i++) {
     //hacer algo para que vehiculos reservados no salgan
     $contenidoPrincipal .= <<<EOS
@@ -38,15 +72,9 @@ for ($i = 0; $i < count($vehiculos); $i++) {
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Fuel type:  
+        Location:  
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getFuelType();
-    $contenidoPrincipal .= <<<EOS
-        </p>
-        <p>
-        Seat count: 
-    EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getSeatCount();
+    $contenidoPrincipal .= $vehiculos[$i]->getLocation();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
@@ -61,6 +89,10 @@ for ($i = 0; $i < count($vehiculos); $i++) {
         <a href="reserva.php?id=
     EOS;
         $contenidoPrincipal .= $vehiculos[$i]->getVin();
+        $contenidoPrincipal .= <<<EOS
+        &location=
+    EOS;
+        $contenidoPrincipal .= $vehiculos[$i]->getLocation();
         $contenidoPrincipal .= <<<EOS
         ">Reservar</a> 
         </div>

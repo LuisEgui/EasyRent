@@ -41,18 +41,48 @@ class FormularioReserva extends Formulario {
             <div>
                 <label for="pickupLocation">Lugar recogida:</label>
                 <select id="pickupLocation" name="pickupLocation">
-                    <option value="Madrid">Madrid</option>
-                    <option value="Barcelona">Barcelona</option>
-                    <option value="Sevilla">Sevilla</option>
+                    <option value="
+        EOF;
+        $html .= $_GET["location"];
+        $html .= <<<EOF
+         Aeropuerto">
+        EOF;
+        $html .= $_GET["location"];
+        $html .= <<<EOF
+                    Aeropuerto</option>
+                    <option value="
+        EOF;
+        $html .= $_GET["location"];
+        $html .= <<<EOF
+         Estacion de tren">
+        EOF;
+        $html .= $_GET["location"];
+        $html .= <<<EOF
+                    Estacion de tren</option>
                 </select>
                 {$erroresCampos['localizacion']}
             </div>
             <div>
                 <label for="returnLocation">Lugar devolucion:</label>
                 <select id="returnLocation" name="returnLocation">
-                    <option value="Madrid">Madrid</option>
-                    <option value="Barcelona">Barcelona</option>
-                    <option value="Sevilla">Sevilla</option>
+                    <option value="
+        EOF;
+        $html .= $_GET["location"];
+        $html .= <<<EOF
+         Aeropuerto">
+        EOF;
+        $html .= $_GET["location"];
+        $html .= <<<EOF
+                    Aeropuerto</option>
+                    <option value="
+        EOF;
+        $html .= $_GET["location"];
+        $html .= <<<EOF
+         Estacion de tren">
+        EOF;
+        $html .= $_GET["location"];
+        $html .= <<<EOF
+                    Estacion de tren</option>
                 </select>
                 {$erroresCampos['localizacion']}
             </div>

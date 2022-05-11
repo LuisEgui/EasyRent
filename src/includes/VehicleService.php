@@ -82,6 +82,15 @@ class VehicleService {
     }
 
     /**
+     * Returns all the vehicles in the system in the given location.
+     * 
+     * @return Vehicle[] Returns the vehicles from the database.
+     */
+    public function readAllVehiclesInLocation($location){
+        return $this->vehicleRepository->findAllbyLocation($location);
+    }
+
+    /**
      * Checks if the current user is an admin in the system, at the moment of the
      * call to this function. 
      * @return bool

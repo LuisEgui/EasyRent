@@ -1,30 +1,15 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Formulario.php';
+require_once __DIR__.'/includes/FormularioBuscarVehiculo.php';
+
+$searchForm = new FormularioBuscarVehiculo();
+$htmlFormSearch = $searchForm->gestiona();
 
 $tituloPagina = 'Index';
 
 $contenidoPrincipal = <<<EOS
-<div class="buscadorVehiculo">
-    <form id="inrow" action="mostrarVehiculos.php" method="POST">
-    <div>
-        <label for="ubi">Ubicación de recogida: </label>
-        <input type="text" id="ubi" name="ubicacion" />
-    </div>
-    <div>
-        <label for="rec">Recogida: </label>
-        <input type="date" id="rec" name="recogida" />
-    </div>
-    <div>
-        <label for="dev">Devolución: </label>
-        <input type="date" id="dev" name="devolucion"/>
-    </div>
-    <div>
-        <input type="submit" name="buscar" value="Buscar"/>
-    </div>
-    </form>
-	</div>
+  $htmlFormSearch
 
   <div class="promociones">
     <h2>Promociones</h2>

@@ -5,7 +5,7 @@ require_once __DIR__.'/includes/Reserve.php';
 require_once __DIR__.'/includes/MysqlReserveRepository.php';
 require_once __DIR__.'/includes/ReserveService.php';
 
-$reserveService = new ReserveService($GLOBALS['db_reserve_repository'], $GLOBALS['db_vehicle_repository'], $GLOBALS['db_user_repository']);
+$reserveService = ReserveService::getInstance();
 $tituloPagina = 'Lista reservas';
 
 $reservas = $reserveService->getAllPersonalReserves();

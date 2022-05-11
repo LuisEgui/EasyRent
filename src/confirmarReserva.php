@@ -10,7 +10,6 @@ $tituloPagina = 'Confirmar reserva de vehiculo';
 
 $contenidoPrincipal = <<<EOS
 <h1>Confirmar reserva de vehiculo</h1>
-<h3>Modificar localizacion de devolucion</h3>
 $htmlFormConfirm
 EOS;
 
