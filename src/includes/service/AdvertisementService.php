@@ -149,7 +149,7 @@ class AdvertisementService
 
         if ($id === '0') return null;
 
-        $ad = $this->advertisementRepository->findById($id);;
+        $ad = $this->advertisementRepository->findById($id);
         $banner = $ad->getBanner();
         return $this->imageRepository->findById($banner);
     }
@@ -160,7 +160,7 @@ class AdvertisementService
      */
     public function deleteAdvertisement($id)
     {
-        $ad = $this->readAdById($id);
+        $ad = $this->advertisementRepository->findById($id);
         $this->imageRepository->deleteById($ad->getBanner());
         $this->advertisementRepository->delete($ad);
         return true;
