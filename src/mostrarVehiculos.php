@@ -6,7 +6,7 @@ require_once __DIR__.'/includes/config/config.php';
 use easyrent\includes\service\VehicleService;
 
 $tituloPagina = 'Lista vehiculos';
-$vehicleService = new VehicleService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
+$vehicleService = VehicleService::getInstance();
 $vehiculos = $vehicleService->readAllVehicles();
 $contenidoPrincipal = <<<EOS
 <h1>Listar vehiculos</h1>
