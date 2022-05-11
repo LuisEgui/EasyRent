@@ -109,4 +109,15 @@ class DamageService {
         $this->damageRepository->save($presentDamage);
         return true;
     }
+
+    /**
+     * Uploads the user's profile image.
+     *
+     * @param string $path Image's path.
+     * @param string $mimeType Image's MIME Type.
+     * @return bool
+     */
+    public function saveImage($image){
+        return $this->imageRepository->save($image);
+    }
 }

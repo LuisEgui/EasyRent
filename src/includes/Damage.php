@@ -75,7 +75,7 @@ class Damage {
      * @param string $timeStamp Damage's time of insertion or update
      * @return Damage
      */
-    public function __construct($id = null, $vehicle, $user, $title, $description, $evidenceDamage, $area, $type, $isRepaired, $timeStamp = null) {
+    public function __construct($id = null, $vehicle, $user, $title, $description, $evidenceDamage, $area, $type, $isRepaired = false, $timeStamp = null) {
         $this->d_id = $id;
         $this->vehicle = $vehicle;
         $this->user = $user;

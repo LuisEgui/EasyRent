@@ -3,52 +3,108 @@
 require_once __DIR__.'/Formulario.php';
 require_once __DIR__.'/DamageService.php';
 require_once __DIR__.'/VehicleService.php';
+require_once __DIR__.'/ModelService.php';
 require_once __DIR__.'/UserService.php';
 
 class FormularioRegistroIncidente extends Formulario {
 
     private $damageService;
+
     private $vehicleService;
+
+    private $modelService;
+
     private $userService;
-    const MINOR = 'minor', MODERATE = 'moderate', SEVERE = 'severe';
+
+    /*const MINOR = 'minor', MODERATE = 'moderate', SEVERE = 'severe';
     const TYPE = [self::MINOR => 'minor', self::MODERATE => 'moderate', self::SEVERE => 'severe'];
+    
     const BRAKES = 'brakes', CONTROLS = 'controls', ENGINE = 'engine', FRONT = 'front', GENERAL = 'general', INTERIOR = 'interior', LEFT = 'left', RIGHT = 'right', REAR = 'rear', ROOF = 'roof', TRUNK = 'trunk', UNDERBODY = 'underbody', WHEELS = 'wheels';
     const AREA = [self::BRAKES => 'brakes', self::CONTROLS => 'controls', self::ENGINE => 'engine', self::FRONT => 'front', self::GENERAL => 'general', self::INTERIOR => 'interior', self::LEFT => 'left', self::RIGHT => 'right', self::REAR => 'rear', self::ROOF => 'roof', self::TRUNK => 'trunk', self::UNDERBODY => 'underbody', self::WHEELS => 'wheels'];
-    
+    */
+
+    private const DEFAULTTYPE = ['Minor', 'Moderate', 'Severe'];
+
+    private const DEFAULTAREA = ['Brakes', 'Controls', 'Engine', 'Front', 'General', 'Interior', 'Left', 'Right', 'Rear', 'Roof', 'Trunk', 'Underbody', 'Wheels'];
+
     public function __construct() {
-        parent::__construct('formRegisterDamage', ['urlRedireccion' => 'incidente.php']);
-        $this->damageService = new DamageService($GLOBALS['db_damage_repository']);
-        $this->vehicleService = new VehicleService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
+        parent::__construct('formRegisterDamage', ['enctype' => 'multipart/form-data', 'urlRedireccion' => 'incidentesAdmin.php']);
+        $this->damageService = DamageService::getInstance();
+        $this->vehicleService = VehicleService::getInstance();
+        $this->modelService = ModelService::getInstance();
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
         
     }
 
-    private static function generateTypeSelector($name, $tipoSeleccionado=null)
+    private function generateTypeSelector($name, $tipoSeleccionado=null)
     {
-        $html = '';
-        foreach(self::TYPE as $clave => $valor) {
-            $html .= "<label>";
-            $html .= "<input type='radio' name=\"{$name}\" ";
+        $html = "<label for=\"type\">Tipo de incidencia:</label>
+            <select id=\"type\" name=\"{$name}\">";
+        foreach(self::DEFAULTTYPE as $type) {
+            $html .= "<option ";
             $selected='';
-            if ($tipoSeleccionado && $clave == $tipoSeleccionado)
-                $selected='checked';
-            $html .= "value=\"{$clave}\" {$selected}>{$valor} </label>";
+            if ($tipoSeleccionado && $type == $tipoSeleccionado)
+                $selected='selected';
+            $html .= "value=\"{$type}\" {$selected}>{$type}</option>";
+        }
+        $html .= "</select>";
+
+        return $html;
+    }
+
+    private function generateAreaSelector($name, $tipoSeleccionado=null)
+    {
+        $html = "<label for=\"area\">Tipo de incidencia:</label>
+            <select id=\"area\" name=\"{$name}\">";
+        foreach(self::DEFAULTAREA as $area) {
+            $html .= "<option ";
+            $selected='';
+            if ($tipoSeleccionado && $area == $tipoSeleccionado)
+                $selected='selected';
+            $html .= "value=\"{$area}\" {$selected}>{$area}</option>";
+        }
+        $html .= "</select>";
+
+        return $html;
+    }
+
+    private function generateVehicleSelector($name, $tipoSeleccionado=null)
+    {
+        $vehicles = $this->vehicleService->readAllVehicles();
+        $html = '';
+        if(!empty($vehicles)){
+            $html .= "<label for=\"vehicle\">Vehiculo relacionado:</label>
+                <select id=\"vehicle\" name=\"{$name}\">";
+            foreach($vehicles as $vehicle) {
+                $model = $this->modelService->readModelById($vehicle->getModel());
+                $html .= "<option ";
+                $selected='';
+                if ($tipoSeleccionado && $vehicle->getId() == $tipoSeleccionado)
+                    $selected='selected';
+                $html .= "value=\"{$vehicle->getId()}\" {$selected}>Matricula: {$vehicle->getLicensePlate()} Coche: {$model->getBrand()} {$model->getModel()}</option>";
+            }
+            $html .= "</select>";
         }
         $html .= '';
 
         return $html;
     }
 
-    private static function generateAreaSelector($name, $tipoSeleccionado=null)
+    private function generateUserSelector($name, $tipoSeleccionado=null)
     {
+        $users = $this->userService->readAllUsersNoAdmin();
         $html = '';
-        foreach(self::AREA as $clave => $valor) {
-            $html .= "<label>";
-            $html .= "<input type='radio' name=\"{$name}\" ";
-            $selected='';
-            if ($tipoSeleccionado && $clave == $tipoSeleccionado)
-                $selected='checked';
-            $html .= "value=\"{$clave}\" {$selected}>{$valor} </label>";
+        if(!empty($users)){
+            $html .= "<label for=\"usr\">Usuario relacionado:</label>
+                <select id=\"usr\" name=\"{$name}\">";
+            foreach($users as $user) {
+                $html .= "<option ";
+                $selected='';
+                if ($tipoSeleccionado && $user->getId() == $tipoSeleccionado)
+                    $selected='selected';
+                $html .= "value=\"{$user->getId()}\" {$selected}>ID: {$user->getId()} Email: {$user->getEmail()} </option>";
+            }
+            $html .= "</select>";
         }
         $html .= '';
 
@@ -63,96 +119,88 @@ class FormularioRegistroIncidente extends Formulario {
         $title = $datos['title'] ?? '';
         $description = $datos['description'] ?? '';
         $vehicle = $datos['vehicle'] ?? '';
+        $user = $datos['user'] ?? '';
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['user', 'vehicle', 'type', 'title', 'description', 'evidenceDamage', 'area'], $this->errores, 'span', array('class' => 'error'));
-        $typeSelector = self::generateTypeSelector('type', $type);
-        $areaSelector = self::generateAreaSelector('area', $area);
-
+        $erroresCampos = $this->generaErroresCampos(['user', 'vehicle', 'type', 'title', 'description', 'evidenceDamage', 'area'], $this->errores, 'span', array('class' => 'error'));
         
+        $typeSelector = $this->generateTypeSelector('type', $type);
+        $areaSelector = $this->generateAreaSelector('area', $area);
+        $vehicleSelector = $this->generateVehicleSelector('vehicle', $model);
+        $userSelector = $this->generateUserSelector('user', $model);
+
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
-        $html = <<<EOS
-                   $htmlErroresGlobales
-                    <fieldset>
-            <legend>Vehículo, Título, Descripción, Imagen, Tipo y Área</legend>
+        $html = <<<EOF
+        $htmlErroresGlobales
+        <fieldset>
             <div>
-                <label>Vehículo: </label>
-             </div>
-            EOS;
-            $html = <<<EOS
-            <div>
-            <table>
-            <tr>
-                <th></th>
-                <th>VIN</th>
-                <th>Matricula</th>
-                <th>Modelo</th>
-                <th>Tipo de combustible</th>
-                <th>Numero de asientos</th>
-                <th>Estado</th>
-            </tr>
-            EOS;
-            foreach($vehicles as $vehicle) {
-                $html .= <<<EOS
-                    <tr>
-                        <td><input type="radio" name="vehicle" value="{$vehicle->getVin()}"></td>
-                        <td>{$vehicle->getVin()}</td>
-                        <td>{$vehicle->getLicensePlate()}</td>
-                        <td>{$vehicle->getModel()}</td>
-                        <td>{$vehicle->getFuelType()}</td>
-                        <td>{$vehicle->getSeatCount()}</td>
-                        <td>{$vehicle->getState()}</td>
-                    </tr>
-                EOS;
-            }
-            $html .= <<<EOS
-            </table>
+                $userSelector{$erroresCampos['user']}
             </div>
             <div>
-                <label for="title">Título:</label>
-                <input id="title" type="text" name="title" value="$title" />{$erroresCampos['title']}
+                $vehicleSelector{$erroresCampos['vehicle']}
             </div>
             <div>
-                <label for="description">Descripción:</label>
-                <input id="description" type="text" name="description" value="$description" />{$erroresCampos['description']}
+                <label for="tit">Titulo:</label>
+                <input id="tit" type="text" name="title" value="$title" />{$erroresCampos['title']}
             </div>
             <div>
-                <label for="evidenceDamage">Imagen:</label>
+                <label for="d">Descripcion:</label>
+                <textarea id="d" name="description" placeholder="Describe la incidencia que desea notificar">$description</textarea>{$erroresCampos['description']}
             </div>
             <div>
-                <label>Tipo: </label>
-                $typeSelector{$erroresCampos['type']}
+                $typeSelector{$erroresCampos['area']}
             </div>
             <div>
-                <label>Area: </label>
-                $areaSelector{$erroresCampos['area']}
+                $categorySelector{$erroresCampos['type']}
             </div>
             <div>
-                <button type="submit" name="register">Registrarse</button>
+            <label for="archivo">Archivo: (prueba del incidente) (Máx. 8MB):
+                <input type="file" name="archivo" id="archivo"/>
+            </label>{$erroresCampos['evidenceDamage']}
             </div>
-        EOS;
+            <div>
+                <button type="submit" name="register"> Registrar </button>
+            </div>
+        </fieldset>
+        EOF;
         return $html;
     }
 
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
+
         $title = trim($datos['title']);
-        $description = trim($datos['description']);
+        $title = filter_var($title, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         if ( ! $title || empty($title))
             $this->errores['title'] = 'El título de la incidencia no puede estar vacío';
-        
 
-        $useremail = $_SESSION['email'];
-        $user = $this->userService->readUserByEmail($useremail);
+        $description = trim($datos['description']);
+        $description = filter_var($description, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if ( ! $description || empty($description))
+            $this->errores['description'] = 'La descripcion de la incidencia no puede estar vacío';
+        
+        $user = trim($datos['user']);
+        $user = filter_var($user, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if ( ! $user || empty($user))
+            $this->errores['user'] = 'La usuario relacionado con la incidencia no puede estar vacío';
+        
+        if (!self::validUser($user))
+            $this->errores['user'] = "El usuario relacionado con la incidencia no coincide con ninguno de los existentes. Introduce uno de los posibles";
+        
         
         $vehicle = trim($datos['vehicle'] ?? '');
         $vehicle = filter_var($vehicle, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         if (!$vehicle || empty($vehicle))
-            $this->errores['vehicle'] = 'El vehículo no puede estar vacío.';
+            $this->errores['vehicle'] = 'El vehículo relacionado con la incidenciano puede estar vacío.';
+
+        if (!self::validVehicle($vehicle))
+            $this->errores['vehicle'] = "El vehiculo relacionado con la incidencia no coincide con ninguno de los existentes. Introduce uno de los posibles";
         
         $area = trim($datos['area'] ?? '');
         $area = filter_var($area, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -172,8 +220,58 @@ class FormularioRegistroIncidente extends Formulario {
         if (!self::validType($type))
             $this->errores['type'] = "El tipo no es válido. Introduce uno de los posibles";
         
+        //Procesar la imagen del incidente:
+
+        // Verificamos que la subida ha sido correcta
+        $ok = $_FILES['archivo']['error'] == UPLOAD_ERR_OK && count($_FILES) == 1;
+        if (! $ok) {
+            $this->errores['archivo'] = 'Error al subir el archivo. Es necesario subir una foto del incidente para registrarlo.';
+            return;
+        }
+
+        $nombre = $_FILES['archivo']['name'];
+
+        /* 1.a) Valida el nombre del archivo */
+        $ok = self::checkFileUploadedName($nombre) && $this->checkFileUploadedLength($nombre);
+
+        /* 1.b) Sanitiza el nombre del archivo (elimina los caracteres que molestan)
+        $ok = self::sanitize_file_uploaded_name($nombre);
+        */
+
+        /* 1.c) Utilizar un id de la base de datos como nombre de archivo */
+        // Vamos a optar por esta opción que es la que se implementa más adelante
+
+        /* 2. comprueba si la extensión está permitida */
+        $extension = pathinfo($nombre, PATHINFO_EXTENSION);
+        $ok = $ok && in_array($extension, self::ALLOWED_EXTENSIONS);
+
+        /* 3. comprueba el tipo mime del archivo corresponde a una imagen image/* */
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->file($_FILES['archivo']['tmp_name']);
+        $ok = preg_match('/image\/*./', $mimeType);
+
+        if (!$ok) {
+            $this->errores['archivo'] = 'El archivo tiene un nombre o tipo no soportado';
+        }
+
+        if (count($this->errores) > 0) {
+            return;
+        }
+
+        $tmp_name = $_FILES['archivo']['tmp_name'];
+
+        $path = $nombre;
+        $image = new Image(null, $path, $mimeType);
+        $imagenSubidaEnElServidor = $this->damageService->saveImage($image);
+        $fichero = "{$imagenSubidaEnElServidor->getId()}-{$imagenSubidaEnElServidor->getPath()}";
+        $ruta = implode(DIRECTORY_SEPARATOR, [dirname(dirname(__FILE__)).'\img\damage', $fichero]);
+
+        if (!move_uploaded_file($tmp_name, $ruta)) {
+            $this->errores['archivo'] = 'Error al mover el archivo';
+        }
+
         if (count($this->errores) === 0) {
-            $damage = $this->damageService->createDamage($vehicle, $user->getId(), $title, $description, NULL, $area, $type, false);
+            $damage = $this->damageService->createDamage($vehicle, $user->getId(), $title, $description, $imagenSubidaEnElServidor->getId(), $area, $type);
         
             if (!$damage)
                 $this->errores[] = "Error al crear la incidencia";
@@ -182,15 +280,70 @@ class FormularioRegistroIncidente extends Formulario {
         }
     }
 
-
     protected function validArea($area = array()) {
-        $defaultRoles = array('brakes', 'controls',  'engine', 'front', 'general', 'interior', 'left', 'right', 'rear', 'roof','trunk', 'underbody', 'wheels');
-        return in_array($area, $defaultRoles);
+        return in_array($fuelTareaype, self::DEFAULTAREA);
     }
 
     protected function validType($type = array()) {
-        $defaultRoles = array('minor', 'severe',  'moderate');
-        return in_array($type, $defaultRoles);
+        return in_array($type, self::DEFAULTTYPE);
     }
     
+    protected function validUser($user) {
+        $usersInDatabase = $this->userService->readAllUsersNoAdmin();
+        return in_array($user, $usersInDatabase);
+    }
+
+    protected function validVehicle($vehicle) {
+        $vehiclesInDatabase = $this->vehicleService->readAllVehicles();
+        return in_array($vehicle, $vehiclesInDatabase);
+    }
+
+    /**
+     * Check $_FILES[][name]
+     *
+     * @param  (string) $filename - Uploaded file name.
+     * @author Yousef Ismaeil Cliprz
+     * @See    http://php.net/manual/es/function.move-uploaded-file.php#111412
+     */
+    private static function checkFileUploadedName($filename)
+    {
+        return mb_ereg_match('/^[0-9A-Z-_\.]+$/i', $filename) == 1;
+    }
+
+    /**
+     * Sanitize $_FILES[][name]. Remove anything which isn't a word, whitespace, number
+     * or any of the following caracters -_~,;[]().
+     *
+     * If you don't need to handle multi-byte characters you can use preg_replace
+     * rather than mb_ereg_replace.
+     *
+     * @param  (string) $filename - Uploaded file name.
+     * @author Sean Vieira
+     * @see    http://stackoverflow.com/a/2021729
+     */
+    private static function sanitizeFileUploadedName($filename)
+    {
+        /**
+         * Remove anything which isn't a word, whitespace, number
+         * or any of the following caracters -_~,;[]().
+         * If you don't need to handle multi-byte characters
+         * you can use preg_replace rather than mb_ereg_replace
+         * Thanks @Łukasz Rysiak!
+         */
+        $newName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $filename);
+        // Remove any runs of periods (thanks falstro!)
+        return mb_ereg_replace("([\.]{2,})", '', $newName);
+    }
+
+    /**
+     * Check $_FILES[][name] length.
+     *
+     * @param  (string) $filename - Uploaded file name.
+     * @author Yousef Ismaeil Cliprz.
+     * @See    http://php.net/manual/es/function.move-uploaded-file.php#111412
+     */
+    private function checkFileUploadedLength($filename)
+    {
+        return mb_strlen($filename, 'UTF-8') < 250;
+    }
 }

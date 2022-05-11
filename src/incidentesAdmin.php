@@ -45,8 +45,8 @@ $contenidoPrincipal = <<<EOS
     <table>
         <tr>
             <th>ID Incidencia</th>
-            <th>ID Vehiculo</th>
             <th>ID Usuario</th>
+            <th>ID Vehiculo</th>
             <th>Titulo</th>
             <th>Descripcion</th>
             <th>ID Imagen</th>
@@ -60,8 +60,8 @@ foreach($damagesList->getArray() as $damage) {
     $contenidoPrincipal .= <<<EOS
         <tr>
             <td>{$damage->getId()}</td>
-            <td>{$damage->getVehicle()}</td>
             <td>{$damage->getUser()}</td>
+            <td>{$damage->getVehicle()}</td>
             <td>{$damage->getTitle()}</td>
             <td>{$damage->getDescription()}</td>
             <td>{$damage->getEvidenceDamage()}</td>

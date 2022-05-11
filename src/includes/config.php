@@ -24,6 +24,7 @@ require_once RAIZ_APP.'/UserService.php';
 require_once RAIZ_APP.'/VehicleService.php';
 require_once RAIZ_APP.'/MessageService.php';
 require_once RAIZ_APP.'/DamageService.php';
+require_once RAIZ_APP.'/ModelService.php';
 
 session_start();
 
@@ -39,3 +40,5 @@ $messageRepository = new MysqlMessageRepository($db);
 $GLOBALS['db_message_repository'] = $messageRepository;
 $damageRepository = new MysqlDamageRepository($db);
 $GLOBALS['db_damage_repository'] = $damageRepository;
+$modelRepository = new MysqlModelRepository($db);
+$GLOBALS['db_model_repository'] = $modelRepository;

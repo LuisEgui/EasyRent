@@ -45,6 +45,15 @@ class UserService {
     }
 
     /**
+     * Returns all the users in the system.
+     *
+     * @return User[] Returns the users from the database.
+     */
+    public function readAllUsersNoAdmin(){
+        return $this->userRepository->findAllNoAdmin();
+    }
+
+    /**
      * Returns the user from the system given an user's email.
      * 
      * @param string $email User's email.

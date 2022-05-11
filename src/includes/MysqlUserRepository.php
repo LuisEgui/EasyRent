@@ -61,9 +61,27 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
     }
 
     public function findAll() {
+        /*$users[] = array();
+
+        $sql = sprintf("select * from User");
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_array(MYSQLI_NUM)) {
+            foreach ($row as $user)
+                $users[] = $user;
+        }
+
+        return $users;*/
+    }
+
+    public function findAllNoAdmin() {
         $users[] = array();
 
-        $sql = sprintf("select u_id, email, password, role, userImg from User");
+        $sql = sprintf("select * from User where role != admin");
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 

@@ -1,19 +1,5 @@
 -- Author: Luis Egui
 
--- Model table creation
-create table
-  Model (
-    m_id serial primary key,
-    make varchar(40),
-    model varchar(40),
-    submodel varchar(40),
-    gearbox enum('manual', 'automatic', 'semi-automatic', 'duplex'),
-    category enum('coupe', 'pickup', 'roadster', 'sedan', 'small-car', 'suv', 'van')
-  );
-
--- Aux: check Model fields
--- describe Model;
-
 -- Image table creation
 create table
   Image (
@@ -25,21 +11,39 @@ create table
 -- Aux: check Image fields
 -- describe Image;
 
+-- Model table creation
+create table
+  Model (
+    m_id serial primary key,
+    brand varchar(40),
+    model varchar(40),
+    submodel varchar(40) unique not null,
+    gearbox enum('Manual', 'Automatic', 'Semi-automatic', 'Duplex'),
+    category enum('Coupe', 'Pickup', 'Roadster', 'Sedan', 'Small-car', 'Suv', 'Van'),
+    fuelType enum ('Diesel', 'Electric-hybrid', 'Electric', 'Petrol', 'Plug-in-hybrid') not null,
+    seatCount tinyint not null,
+    vehicleImg bigint unsigned,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
+    foreign key (vehicleImg) references Image(img_id),
+    check (seatCount regexp '^[2-9]{1}$')
+  );
+
+-- Aux: check Model fields
+-- describe Model;
+
 -- Vehicle table creation
 create table
   Vehicle (
     vin bigint primary key,
     licensePlate varchar(10) not null,
     model bigint unsigned,
-    vehicleImg bigint unsigned,
-    fuelType enum ('diesel', 'electric-hybrid', 'electric', 'petrol', 'plug-in-hybrid') not null,
-    seatCount tinyint not null,
-    state enum ('available', 'unavailable', 'reserved') default 'available',
-    foreign key (model) references Model(m_id),
-    foreign key (vehicleImg) references Image(img_id),
+    location varchar(40),
+    state enum ('Available', 'Unavailable', 'Reserved') default 'Available',
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
+    foreign key (model) references Model(m_id) ON DELETE RESTRICT,   
     check (vin regexp '^[0-9]{6}$'),   
-    check (seatCount regexp '^[2-9]{1}$'),
     check (licensePlate regexp '^[0-9]{4}-(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{1,3}$')
+    
   );
 
 -- Aux: check Vehicle fields
@@ -104,22 +108,8 @@ create table
     title varchar(30) not null,
     description varchar(70) not null,
     evidenceDamage bigint unsigned,
-    area enum (
-      'brakes',
-      'controls',
-      'engine',
-      'front',
-      'general',
-      'interior',
-      'left',
-      'right',
-      'rear',
-      'roof',
-      'trunk',
-      'underbody',
-      'wheels'
-    ) not null,
-    type enum ('minor', 'moderate', 'severe'),
+    area enum ('Brakes', 'Controls', 'Engine', 'Front', 'General', 'Interior', 'Left', 'Right', 'Rear', 'Roof', 'Trunk', 'Underbody', 'Wheels') not null,
+    type enum ('Minor', 'Moderate', 'Severe'),
     isRepaired boolean default false,
     foreign key (vehicle) references Vehicle(vin),
     foreign key (evidenceDamage) references Image(img_id),
