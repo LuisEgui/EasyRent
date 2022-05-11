@@ -2,9 +2,8 @@
 Fuente Web
 Suscríbete para mas contenido!!!
 -->
-
-
 <?php
+
 session_start();
 
 function createForm(){
@@ -39,10 +38,9 @@ $nickname = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : "Hidden";
 <html>
 <head>
    <title>Micro Chat | Fuente Web</title>
-   <link href="style/style.css" rel="stylesheet" type="text/css" />
+   <link href="estiloChat.css" rel="stylesheet" type="text/css" />
    <link href="/style/globe.png" rel="shortcut icon">
     <script language="javascript" type="text/javascript">
-    <!--
       var httpObject = null;
       var link = "";
       var timerID = 0;
