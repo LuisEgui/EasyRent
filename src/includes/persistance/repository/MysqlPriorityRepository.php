@@ -53,9 +53,9 @@ class MysqlPriorityRepository extends AbstractMysqlRepository implements Reposit
         $result = $stmt->get_result();
         $stmt->close();
 
-        while ($row = $result->fetch_array(MYSQLI_NUM)) {
-            foreach ($row as $priority)
-                $priorities[] = $priority;
+        while ($row = $result->fetch_assoc()) {
+            $priority = new Priority($row['p_id'], $row['level'], $row['price']);
+            $priorities[] = $priority;
         }
 
         return $priorities;

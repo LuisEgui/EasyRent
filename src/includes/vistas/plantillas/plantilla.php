@@ -11,6 +11,7 @@
 	<div id="contenedor">
 	<?php
 		require('includes/vistas/comun/cabecera.php');
+		require('includes/vistas/comun/sidebarIzq.php');
 	?>
 		<main>
 			<article>
@@ -18,6 +19,7 @@
 			</article>
 		</main>
 	<?php
+		require('includes/vistas/comun/sidebarDer.php');
 		require('includes/vistas/comun/pie.php');
 	?>
 	</div>

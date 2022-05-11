@@ -130,11 +130,19 @@ nav a:hover {
   text-decoration: underline;
 }
 
-aside {
-  padding: 10px;
-  float: right;
-  width: 170px;
-  height: 400px;
+aside#sidebarDer {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 1rem;
+  background-color: #dddddd;
+}
+
+aside#sidebarIzq {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 1rem;
   background-color: #dddddd;
 }
 
