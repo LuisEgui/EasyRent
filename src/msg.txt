@@ -1,1 +1,3 @@
 <p><span class="name">Luison: </span><span class="txt">Hola</span></p>
+<p><span class="name">Maria: </span><span class="txt">hola</span></p>
+<p><span class="name">Administrador: luis: </span><span class="txt">adios</span></p>

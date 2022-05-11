@@ -24,6 +24,7 @@ if (isset($_GET['u'])){
 // Procesar información de inicio de sesión
 if (isset($_POST['submitBtn'])){
       $name    = isset($_POST['name']) ? $_POST['name'] : "Unnamed";
+      if($_SESSION['esAdmin']) $name = "Administrador -> " . $name;
       $_SESSION['nickname'] = $name;
 }
 
