@@ -72,10 +72,10 @@ $contenidoPrincipal .= <<<EOS
     </div>
     </div>
     <div>
-    <div id="info">
+    <div class="info">
     <a href="nuevoModelo.php">Añadir modelo</a>
     </div>
-    <div id="info">
+    <div class="info">
     <a href="borrarModelo.php">Borrar modelo</a>
     </div>
     <div id="anteriorUrl">

@@ -81,13 +81,13 @@ $contenidoPrincipal .= <<<EOS
     </div>
     </div>
     <div>
-    <div id="info">
+    <div class="info">
     <a href="nuevoVehiculo.php">Añadir vehiculo</a>
     </div>
-    <div id="info">
+    <div class="info">
     <a href="borrarVehiculo.php">Borrar vehiculo</a>
     </div>
-    <div id="info">
+    <div class="info">
     <a href="actualizarVehiculo.php">Actualizar vehiculo</a>
     </div>
     <div id="anteriorUrl">
