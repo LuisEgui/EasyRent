@@ -45,15 +45,10 @@ if ($user) {
 
     $contenidoPrincipal .= <<<EOS
     <a href='{$rutaApp}/src/modperfil.php'>Modificar datos</a>
-    </div>
 
     <div class="promociones">
     <h2>Reservas</h2>
-    <h4>Reservas activas</h4>
-    <p>Reserva 1</p>
-    <h4>Reservas anteriores</h4>
-    <p>Reserva Julio</p>
-    <h2>Factores</h2>
+    <a href='{$rutaApp}/src/tusreservas.php'>Tus reservas</a>
     </div>
     </div>
     EOS;
