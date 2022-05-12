@@ -10,7 +10,7 @@ class FormularioActualizarPickupTimeReserva extends Formulario {
     private $reserveService;
 
     public function __construct() {
-        parent::__construct('formUpdateReservePickupTime', ['urlRedireccion' => RUTA_APP.'/index.php']);
+        parent::__construct('formUpdateReservePickupTime', ['urlRedireccion' => '../index.php']);
         $this->reserveService = ReserveService::getInstance();
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }

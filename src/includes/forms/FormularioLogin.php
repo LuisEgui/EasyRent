@@ -12,7 +12,7 @@ class FormularioLogin extends Formulario
 
     public function __construct()
     {
-        parent::__construct('formLogin', ['urlRedireccion' => RUTA_APP.'/index.php']);
+        parent::__construct('formLogin', ['urlRedireccion' => '../index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
 

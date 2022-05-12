@@ -10,7 +10,7 @@ class FormularioActualizarPriorityAd extends Formulario {
     private $priorityRepository;
 
     public function __construct() {
-        parent::__construct('formUpdatePriority', ['urlRedireccion' => RUTA_APP.'/index.php']);
+        parent::__construct('formUpdatePriority', ['urlRedireccion' => '../index.php']);
         $this->advertisementService = new AdvertisementService($GLOBALS['db_advertisement_repository'], $GLOBALS['db_image_repository']);
         $this->priorityRepository = $GLOBALS['db_priority_repository'];
     }

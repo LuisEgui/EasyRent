@@ -14,4 +14,4 @@ $contenidoPrincipal = <<<EOS
 <h1 class="adminClass">Nuevo anuncio</h1>
 $htmlFormNewAd
 EOS;
-require __DIR__.'\includes\vistas\plantillas\plantilla.php';
+require __DIR__.'/includes/vistas/plantillas/plantilla.php';

@@ -35,4 +35,4 @@ $htmlRoleForm
 $htmlDeleteForm
 EOS;
 
-require __DIR__.'\includes\vistas\plantillas\plantilla.php';
+require __DIR__.'/includes/vistas/plantillas/plantilla.php';

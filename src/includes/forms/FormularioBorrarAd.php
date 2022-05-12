@@ -9,7 +9,7 @@ class FormularioBorrarAd extends Formulario {
     private $advertisementService;
 
     public function __construct() {
-        parent::__construct('formDeleteAd', ['urlRedireccion' => RUTA_APP.'/index.php']);
+        parent::__construct('formDeleteAd', ['urlRedireccion' => '../index.php']);
         $this->advertisementService = new AdvertisementService($GLOBALS['db_advertisement_repository'], $GLOBALS['db_image_repository']);
     }
 

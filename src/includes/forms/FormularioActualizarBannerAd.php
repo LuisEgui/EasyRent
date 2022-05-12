@@ -14,7 +14,7 @@ class FormularioActualizarBannerAd extends Formulario
     public function __construct()
     {
         parent::__construct('formUpdateUserImage', ['enctype' => 'multipart/form-data',
-                            'urlRedireccion' => RUTA_APP.'/index.php']);
+                            'urlRedireccion' => '../index.php']);
         $this->advertisementService = new AdvertisementService($GLOBALS['db_advertisement_repository'], $GLOBALS['db_image_repository']);
     }
 
