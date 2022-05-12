@@ -19,7 +19,7 @@ class FormularioRegistroIncidente extends Formulario {
 
     private $userService;
 
-    private const ALLOWED_EXTENSIONS = array('jpg','png');
+    private const ALLOWED_EXTENSIONS = array('jpg','png', 'jpeg');
 
     private const DEFAULTTYPE = ['Minor', 'Moderate', 'Severe'];
 

@@ -74,7 +74,7 @@ foreach($damagesList->getArray() as $damage) {
             <td>{$damage->getVehicle()}</td>
             <td>{$damage->getTitle()}</td>
             <td>{$damage->getDescription()}</td>
-            <td><img src="RUTA_DAMAGE_IMAGES/$damageImage" width="50" height="50" alt="Imagen incidente"></td>
+            <td><img src="includes/img/damage/$damageImage" width="50" height="50" alt="Imagen incidente"></td>
             <td>{$damage->getArea()}</td>
             <td>{$damage->getType()}</td>
             <td>{$state}</td>
