@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Formulario.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
 $tituloPagina = 'Admin';
 
@@ -16,6 +16,13 @@ $contenidoPrincipal = <<<EOS
     </div>
     <div class="info">
     <a href="incidentesAdmin.php">Administrar incidentes</a>
+        <a href="reservasAdmin.php">Administrar reservas</a>
+    </div>
+    <div class="info">
+    <a href="nuevoAnuncio.php">Añadir anuncio</a>
+    </div>
+    <div class="info">
+    <a href="modificarAnuncios.php">Modificar anuncios</a>
     </div>
 	</div>
 EOS;

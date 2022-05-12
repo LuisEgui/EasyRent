@@ -1,65 +1,123 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Vehicle.php';
-require_once __DIR__.'/includes/VehicleService.php';
+
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
+
+use easyrent\includes\service\ModelService;
+use easyrent\includes\service\VehicleService;
+use easyrent\includes\service\ReserveService;
+
+$vehicleService = VehicleService::getInstance();
+$reserveService = ReserveService::getInstance();
+$modelService = ModelService::getInstance();
+
+$location = $_GET['location'];
+$vehiculos = $vehicleService->readAllVehiclesInLocation($location);
 
 $tituloPagina = 'Lista vehiculos';
-$vehicleService = new VehicleService($GLOBALS['db_vehicle_repository'], $GLOBALS['db_image_repository']);
-$vehiculos = $vehicleService->readAllVehicles();
+
 $contenidoPrincipal = <<<EOS
-<h1>Listar vehiculos</h1>
+<h1>Lista vehiculos</h1>
 EOS;
+if (count($vehiculos) === 0) {
+    $contenidoPrincipal .= <<<EOS
+    <h3>No hay vehiculos en la localizacion elegida</h3>
+    EOS;
+}
+else{
+    $pickupDate = null;
+    $returnDate = null;
+
+    if(isset($_GET['pDate'])){
+        $pickupDate = $_GET['pDate'];
+    }
+    if(isset($_GET['rDate'])){
+        $returnDate = $_GET['rDate'];
+    }
+    for ($i = 0; $i < count($vehiculos); $i++) {
+        if(!$reserveService->findIfExistingReserve($vehiculos[$i]->getVin(), $pickupDate, $returnDate)) {
+            array_splice($vehiculos, $i, 1);
+            $i--;
+        }
+    }
+    if (count($vehiculos) === 0) {
+        $contenidoPrincipal .= <<<EOS
+        <h3>Hay vehiculos en la localizacion elegida pero no en las fechas seleccionadas</h3>
+        EOS;
+    }
+}
+
+
 for ($i = 0; $i < count($vehiculos); $i++) {
+    $vehicleModel = $modelService->readModelById($vehiculos[$i]->getModel());
     $contenidoPrincipal .= <<<EOS
     <div class="v">
-        <h2>Vehiculo 
+        <h2>Vehiculo
     EOS;
     $contenidoPrincipal .= $i + 1;
     $contenidoPrincipal .= <<<EOS
         </h2>
         <p>
-        Vin: 
+        Marca:
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getVin();
+    $contenidoPrincipal .= $vehicleModel->getBrand();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        License plate: 
+        Model:
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getLicensePlate();
+    $contenidoPrincipal .= $vehicleModel->getModel();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Model: 
+        Submodel:
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getModel();
+    $contenidoPrincipal .= $vehicleModel->getSubmodel();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Fuel type:  
+        Location:
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getFuelType();
+    $contenidoPrincipal .= $vehiculos[$i]->getLocation();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Seat count: 
+        Fuel type:
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getSeatCount();
+    $contenidoPrincipal .= $vehicleModel->getFuelType();
     $contenidoPrincipal .= <<<EOS
         </p>
-        <p>
-        State: 
+        Seat count:
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getState();
+    $contenidoPrincipal .= $vehicleModel->getSeatCount();
     $contenidoPrincipal .= <<<EOS
         </p>
+    EOS;
+    if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
+        $contenidoPrincipal .= <<<EOS
         <h4>TARIFA</h4>
         <h4>20€</h4>
-        <a href="index.php">Reservar</a> 
-    </div>
+        <a href="reserva.php?id=
     EOS;
-    
-}
+        $contenidoPrincipal .= $vehiculos[$i]->getVin();
+        $contenidoPrincipal .= <<<EOS
+        &location=
+    EOS;
+        $contenidoPrincipal .= $vehiculos[$i]->getLocation();
+        $contenidoPrincipal .= <<<EOS
+        ">Reservar</a>
+        </div>
+    EOS;
+    }
+    else{
+        $contenidoPrincipal .= <<<EOS
+        <h4>TARIFA</h4>
+        <h4>20€</h4>
+        <p>[Para reservar inicie sesión]</p>
+        </div>
+    EOS;
+    }
 
+}
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';

@@ -1,7 +1,9 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioActualizarDatosIncidente.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
+
+use easyrent\includes\forms\FormularioActualizarDatosIncidente;
 
 $idDamage = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $form = new FormularioActualizarDatosIncidente($idDamage);

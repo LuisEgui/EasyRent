@@ -40,10 +40,10 @@ create table
     location varchar(40),
     state enum ('Available', 'Unavailable', 'Reserved') default 'Available',
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
-    foreign key (model) references Model(m_id) ON DELETE RESTRICT,   
-    check (vin regexp '^[0-9]{6}$'),   
+    foreign key (model) references Model(m_id) ON DELETE RESTRICT,
+    check (vin regexp '^[0-9]{6}$'),
     check (licensePlate regexp '^[0-9]{4}-(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{1,3}$')
-    
+
   );
 
 -- Aux: check Vehicle fields
@@ -55,7 +55,7 @@ create table
     u_id serial primary key,
     email varchar(30) unique not null,
     password varchar(70) not null,
-    role enum ('admin', 'particular', 'enterprise'),
+    role enum ('admin', 'particular', 'enterprise', 'sponsor'),
     userImg bigint unsigned,
     foreign key (userImg) references Image(img_id),
     check (
@@ -72,20 +72,20 @@ create table
     id serial primary key,
     vehicle bigint not null,
     user bigint unsigned not null,
-    state enum ('reserved', 'pending', 'cancelled') default 'pending',
+    state enum ('reserved', 'pending') default 'pending',
     pickupLocation varchar(40) not null,
     returnLocation varchar(40),
     pickupTime datetime not null,
     returnTime datetime not null,
     price float,
-    foreign key (vehicle) references Vehicle(vin),
-    foreign key (user) references User(u_id),
+    foreign key (vehicle) references Vehicle(vin) ON DELETE RESTRICT,
+    foreign key (user) references User(u_id) ON DELETE RESTRICT,
     unique (vehicle, user, pickupTime),
     check (timediff(returnTime, pickupTime) > 0)
   );
 
 -- Message table creation
-create table 
+create table
   Message (
     id serial primary key,
     author bigint unsigned not null,
@@ -114,8 +114,26 @@ create table
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
     foreign key (vehicle) references Vehicle(vin),
     foreign key (evidenceDamage) references Image(img_id),
-    foreign key (user) references User(u_id)
+    foreign key (user) references User(u_id),
   );
 
 -- Aux: check Damage fields:
 -- describe Damage;
+-- Priority table creation
+create table
+  Priority (
+    p_id serial primary key,
+    level enum('1', '2') not null,
+    price decimal(5,2) not null
+);
+
+-- Advertisement table creation
+create table
+  Advertisement (
+      a_id serial primary key,
+      banner bigint unsigned,
+      releaseDate datetime not null,
+      endDate datetime not null,
+      priority bigint unsigned not null,
+      foreign key (banner) references Image(img_id)
+);

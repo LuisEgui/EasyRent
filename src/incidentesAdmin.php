@@ -1,12 +1,11 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/DamageService.php';
-require_once __DIR__.'/includes/Damage.php';
-require_once __DIR__.'/includes/DamageList.php';
-require_once __DIR__.'/includes/FormularioRegistroIncidente.php';
-require_once __DIR__.'/includes/Image.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
+use easyrent\includes\service\DamageService;
+use easyrent\includes\service\lists\DamageList;
+use easyrent\includes\forms\FormularioRegistroIncidente;
 
 $damageService = DamageService::getInstance();
 
@@ -55,14 +54,19 @@ $contenidoPrincipal = <<<EOS
             <th></th>
             <th></th>
         </tr>
-EOS; 
+EOS;
 foreach($damagesList->getArray() as $damage) {
     $state = "No";
     if($damage->getIsRepaired()){
         $state = "Si";
     }
 
-    $damageImage = $damage->getEvidenceDamage() . "-" . $damageService->getDamageImage($damage->getEvidenceDamage())->getPath();
+    $damageImage = null;
+
+    if ($damageService->getDamageImage($damage->getEvidenceDamage())) {
+        $damageImage = $damage->getEvidenceDamage() . "-" . $damageService->getDamageImage($damage->getEvidenceDamage())->getPath();
+    }
+
     $contenidoPrincipal .= <<<EOS
         <tr>
             <td>{$damage->getId()}</td>
@@ -70,7 +74,7 @@ foreach($damagesList->getArray() as $damage) {
             <td>{$damage->getVehicle()}</td>
             <td>{$damage->getTitle()}</td>
             <td>{$damage->getDescription()}</td>
-            <td><img src="img/damage/$damageImage" width="50" height="50" alt="Imagen incidente"></td>
+            <td><img src="RUTA_DAMAGE_IMAGES/$damageImage" width="50" height="50" alt="Imagen incidente"></td>
             <td>{$damage->getArea()}</td>
             <td>{$damage->getType()}</td>
             <td>{$state}</td>
@@ -79,7 +83,7 @@ foreach($damagesList->getArray() as $damage) {
             <td> <a href="actualizarIncidente.php?id={$damage->getId()};">Editar</a></td>
         </tr>
     EOS;
-}  
+}
 $contenidoPrincipal .= <<<EOS
     </table>
     </div>

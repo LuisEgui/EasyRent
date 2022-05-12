@@ -1,16 +1,14 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioEliminarMensaje.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
-$form = new FormularioEliminarMensaje();
-$htmlFormDelMessage = $form->gestiona();
+use easyrent\includes\service\MessageService;
+use easyrent\includes\service\UserService;
 
-$tituloPagina = 'Eliminar mensaje';
+$idMensaje = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$messageService = new MessageService($GLOBALS['db_message_repository']);
+$userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
+$messageService->deleteMessage($idMensaje);
 
-$contenidoPrincipal = <<<EOS
-<h1>Eliminar mensaje</h1>
-$htmlFormDelMessage
-EOS;
-
-require __DIR__.'/includes/vistas/plantillas/plantilla.php';
+echo '<meta http-equiv="refresh" content="1; url=foro.php">';

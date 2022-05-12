@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Formulario.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
 $tituloPagina = 'Contacto';
 
@@ -16,30 +16,27 @@ $contenidoPrincipal = <<<EOS
     </p>
     </div>
 
-    <div id="promo">
+    <div class="promo">
     <h4>Teléfono S</h4>
     <p>
       666666666
     </p>
     </div>
 
-    <div id="promo">
+    <div class="promo">
     <h4>Ticket</h4>
     <p>
       ticket
     </p>
     </div>
 
-    <div id="promo">
+    <div class="promo">
     <h4>Email</h4>
     <p>
       contacto@easyrent.com
     </p>
     </div>
 	</div>
-    
-    
-
 EOS;
 
 
