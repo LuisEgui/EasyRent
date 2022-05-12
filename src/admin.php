@@ -1,25 +1,28 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Formulario.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
 $tituloPagina = 'Admin';
 
 $contenidoPrincipal = <<<EOS
     <div class="promociones">
-        <h2>Administrar</h2>
-        <div id="info">
-        <a href="nuevoVehiculo.php">Añadir vehiculo</a>
-        </div>
-        <div id="info">
-        <a href="borrarVehiculo.php">Borrar vehiculo</a> 
-        </div>
-        <div id="info">
-        <a href="mostrarVehiculosAdminPanel.php">Mostrar vehiculos</a>
-        </div>
-        <div id="info">
+    <h2>Administrar</h2>
+    <div class="info">
+    <a href="vehiclesAdmin.php">Administrar vehiculos</a>
+    </div>
+    <div class="info">
+    <a href="modelsAdmin.php">Administrar modelo</a>
+    </div>
+    <div class="info">
         <a href="reservasAdmin.php">Administrar reservas</a>
-        </div>
+    </div>
+    <div id="info">
+    <a href="nuevoAnuncio.php">Añadir anuncio</a>
+    </div>
+    <div id="info">
+    <a href="modificarAnuncios.php">Modificar anuncios</a>
+    </div>
 	</div>
 EOS;
 

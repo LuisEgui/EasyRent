@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>EasyRent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="../" />
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/template.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+      integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0="
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/js/all.min.js"
+      integrity="sha256-0vuk8LXoyrmCjp1f0O300qo1M75ZQyhH9X3J6d+scmk="
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/search.js"></script>
+    <script defer src="js/searchIndex.js"></script>
+  </head>
+  <body id="top">
+    <header class="phpdocumentor-header phpdocumentor-section">
+      <h1 class="phpdocumentor-title">
+        <a href="" class="phpdocumentor-title__link">EasyRent</a>
+      </h1>
+      <input
+        class="phpdocumentor-header__menu-button"
+        type="checkbox"
+        id="menu-button"
+        name="menu-button"
+      />
+      <label class="phpdocumentor-header__menu-icon" for="menu-button">
+        <i class="fas fa-bars"></i>
+      </label>
+      <section data-search-form class="phpdocumentor-search">
+        <label>
+          <span class="visually-hidden">Search for</span>
+          <svg
+            class="phpdocumentor-search__icon"
+            width="21"
+            height="20"
+            viewBox="0 0 21 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="7.5"
+              cy="7.5"
+              r="6.5"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <line
+              x1="12.4892"
+              y1="12.2727"
+              x2="19.1559"
+              y2="18.9393"
+              stroke="currentColor"
+              stroke-width="3"
+            />
+          </svg>
+          <input
+            type="search"
+            class="phpdocumentor-field phpdocumentor-search__field"
+            placeholder="Loading .."
+            disabled
+          />
+        </label>
+      </section>
+
+      <nav class="phpdocumentor-topnav">
+        <ul class="phpdocumentor-topnav__menu"></ul>
+      </nav>
+    </header>
+
+    <main class="phpdocumentor">
+      <div class="phpdocumentor-section">
+        <input
+          class="phpdocumentor-sidebar__menu-button"
+          type="checkbox"
+          id="sidebar-button"
+          name="sidebar-button"
+        />
+        <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
+          Menu
+        </label>
+        <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+          <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
+            <h3 class="phpdocumentor-sidebar__root-namespace">
+              <a href="namespaces/default.html"
+                ><abbr title="\">Global</abbr></a
+              >
+            </h3>
+            <h4 class="phpdocumentor-sidebar__root-namespace">
+              <a href="namespaces/easyrent.html"
+                ><abbr title="\easyrent">easyrent</abbr></a
+              >
+            </h4>
+            <ul class="phpdocumentor-list">
+              <li>
+                <a href="namespaces/easyrent-includes.html"
+                  ><abbr title="\easyrent\includes">includes</abbr></a
+                >
+              </li>
+            </ul>
+          </section>
+
+          <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
+            <h3 class="phpdocumentor-sidebar__root-package">
+              <a href="reports/deprecated.html">Deprecated</a>
+            </h3>
+            <h3 class="phpdocumentor-sidebar__root-package">
+              <a href="reports/errors.html">Errors</a>
+            </h3>
+            <h3 class="phpdocumentor-sidebar__root-package">
+              <a href="reports/markers.html">Markers</a>
+            </h3>
+          </section>
+
+          <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
+            <h3 class="phpdocumentor-sidebar__root-package">
+              <a href="indices/files.html">Files</a>
+            </h3>
+          </section>
+        </aside>
+
+        <div class="phpdocumentor-column -eight phpdocumentor-content">
+          <ul class="phpdocumentor-breadcrumbs">
+            <li class="phpdocumentor-breadcrumb">
+              <a href="namespaces/easyrent.html">easyrent</a>
+            </li>
+            <li class="phpdocumentor-breadcrumb">
+              <a href="namespaces/easyrent-includes.html">includes</a>
+            </li>
+            <li class="phpdocumentor-breadcrumb">
+              <a href="namespaces/easyrent-includes-service.html">service</a>
+            </li>
+          </ul>
+
+          <article class="phpdocumentor-element -class">
+            <h2 class="phpdocumentor-content__title">UserService</h2>
+
+            <aside class="phpdocumentor-element-found-in">
+              <abbr
+                class="phpdocumentor-element-found-in__file"
+                title="src/includes/service/UserService.php"
+                ><a href="files/src-includes-service-userservice.html"
+                  ><abbr title="src/includes/service/UserService.php"
+                    >UserService.php</abbr
+                  ></a
+                ></abbr
+              >
+              :
+              <span class="phpdocumentor-element-found-in__line">15</span>
+            </aside>
+
+            <p class="phpdocumentor-summary">User Service class.</p>
+
+            <section class="phpdocumentor-description">
+              <p>It manages the logic of the user's actions.</p>
+            </section>
+
+            <h3 id="toc">
+              Table of Contents
+              <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+            </h3>
+
+            <dl class="phpdocumentor-table-of-contents">
+              <dt
+                class="phpdocumentor-table-of-contents__entry -property -private"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#property_imageRepository"
+                  >$imageRepository</a
+                >
+                <span>
+                  &nbsp;:
+                  <a
+                    href="classes/easyrent-includes-persistance-repository-Repository.html"
+                    ><abbr
+                      title="\easyrent\includes\persistance\repository\Repository"
+                      >Repository</abbr
+                    ></a
+                  >
+                </span>
+              </dt>
+              <dd></dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -property -private"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#property_userRepository"
+                  >$userRepository</a
+                >
+                <span>
+                  &nbsp;:
+                  <a
+                    href="classes/easyrent-includes-persistance-repository-UserRepository.html"
+                    ><abbr
+                      title="\easyrent\includes\persistance\repository\UserRepository"
+                      >UserRepository</abbr
+                    ></a
+                  >
+                </span>
+              </dt>
+              <dd></dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -public"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method___construct"
+                  >__construct()</a
+                >
+                <span> &nbsp;: void </span>
+              </dt>
+              <dd>Creates an UserService</dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -public"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_createUser"
+                  >createUser()</a
+                >
+                <span>
+                  &nbsp;:
+                  <a
+                    href="classes/easyrent-includes-persistance-entity-User.html"
+                    ><abbr title="\easyrent\includes\persistance\entity\User"
+                      >User</abbr
+                    ></a
+                  >|null
+                </span>
+              </dt>
+              <dd>
+                Persists a new user into the system if the user is not register
+                before.
+              </dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -public"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_deleteUserAccount"
+                  >deleteUserAccount()</a
+                >
+                <span> &nbsp;: bool </span>
+              </dt>
+              <dd>Deletes the user&#039;s account</dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -public"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_getUserImage"
+                  >getUserImage()</a
+                >
+                <span>
+                  &nbsp;:
+                  <a
+                    href="classes/easyrent-includes-persistance-entity-Image.html"
+                    ><abbr title="\easyrent\includes\persistance\entity\Image"
+                      >Image</abbr
+                    ></a
+                  >|null
+                </span>
+              </dt>
+              <dd>Gets the user&#039;s profile image</dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -public"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_login"
+                  >login()</a
+                >
+                <span> &nbsp;: bool </span>
+              </dt>
+              <dd>Logs in an user into the system.</dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -public"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_readUserByEmail"
+                  >readUserByEmail()</a
+                >
+                <span>
+                  &nbsp;:
+                  <a
+                    href="classes/easyrent-includes-persistance-entity-User.html"
+                    ><abbr title="\easyrent\includes\persistance\entity\User"
+                      >User</abbr
+                    ></a
+                  >|null
+                </span>
+              </dt>
+              <dd>
+                Returns the user from the system given an user&#039;s email.
+              </dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -public"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_updateUserEmail"
+                  >updateUserEmail()</a
+                >
+                <span> &nbsp;: bool </span>
+              </dt>
+              <dd>Changes the user&#039;s email given a new email.</dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -public"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_updateUserPassword"
+                  >updateUserPassword()</a
+                >
+                <span> &nbsp;: bool </span>
+              </dt>
+              <dd>Updates the user&#039;s password.</dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -public"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_updateUserRole"
+                  >updateUserRole()</a
+                >
+                <span> &nbsp;: bool </span>
+              </dt>
+              <dd>Updates the user&#039;s role.</dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -public"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_uploadUserImage"
+                  >uploadUserImage()</a
+                >
+                <span> &nbsp;: bool </span>
+              </dt>
+              <dd>Uploads the user&#039;s profile image.</dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -private"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_hashPassword"
+                  >hashPassword()</a
+                >
+                <span> &nbsp;: string </span>
+              </dt>
+              <dd>Creates a password hash.</dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -private"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_isLogged"
+                  >isLogged()</a
+                >
+                <span> &nbsp;: bool </span>
+              </dt>
+              <dd>
+                Checks if there&#039;s a logged user into the system, at the
+                moment of the call to this function.
+              </dd>
+
+              <dt
+                class="phpdocumentor-table-of-contents__entry -method -private"
+              >
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#method_validRole"
+                  >validRole()</a
+                >
+                <span> &nbsp;: bool </span>
+              </dt>
+              <dd>Checks if the given role is valid to change.</dd>
+            </dl>
+
+            <section class="phpdocumentor-properties">
+              <h3 class="phpdocumentor-elements__header" id="properties">
+                Properties
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#properties"
+                  class="headerlink"
+                  ><i class="fas fa-link"></i
+                ></a>
+              </h3>
+              <article class="phpdocumentor-element -property -private">
+                <h4
+                  class="phpdocumentor-element__name"
+                  id="property_imageRepository"
+                >
+                  $imageRepository
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#property_imageRepository"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                  <span class="phpdocumentor-element__modifiers"> </span>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">25</span>
+                </aside>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >private</span
+                  >
+                  <span class="phpdocumentor-signature__type"
+                    ><a
+                      href="classes/easyrent-includes-persistance-repository-Repository.html"
+                      ><abbr
+                        title="\easyrent\includes\persistance\repository\Repository"
+                        >Repository</abbr
+                      ></a
+                    ></span
+                  >
+                  <span class="phpdocumentor-signature__name"
+                    >$imageRepository</span
+                  >
+                </code>
+
+                <section class="phpdocumentor-description"></section>
+              </article>
+              <article class="phpdocumentor-element -property -private">
+                <h4
+                  class="phpdocumentor-element__name"
+                  id="property_userRepository"
+                >
+                  $userRepository
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#property_userRepository"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                  <span class="phpdocumentor-element__modifiers"> </span>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">20</span>
+                </aside>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >private</span
+                  >
+                  <span class="phpdocumentor-signature__type"
+                    ><a
+                      href="classes/easyrent-includes-persistance-repository-UserRepository.html"
+                      ><abbr
+                        title="\easyrent\includes\persistance\repository\UserRepository"
+                        >UserRepository</abbr
+                      ></a
+                    ></span
+                  >
+                  <span class="phpdocumentor-signature__name"
+                    >$userRepository</span
+                  >
+                </code>
+
+                <section class="phpdocumentor-description"></section>
+              </article>
+            </section>
+
+            <section class="phpdocumentor-methods">
+              <h3 class="phpdocumentor-elements__header" id="methods">
+                Methods
+                <a
+                  href="classes/easyrent-includes-service-UserService.html#methods"
+                  class="headerlink"
+                  ><i class="fas fa-link"></i
+                ></a>
+              </h3>
+              <article class="phpdocumentor-element -method -public">
+                <h4 class="phpdocumentor-element__name" id="method___construct">
+                  __construct()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method___construct"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">33</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">Creates an UserService</p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >public</span
+                  >
+                  <span class="phpdocumentor-signature__name">__construct</span
+                  ><span>(</span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      ><a
+                        href="classes/easyrent-includes-persistance-repository-UserRepository.html"
+                        ><abbr
+                          title="\easyrent\includes\persistance\repository\UserRepository"
+                          >UserRepository</abbr
+                        ></a
+                      >&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$userRepository</span
+                    ></span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span>, </span
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      ><a
+                        href="classes/easyrent-includes-persistance-repository-Repository.html"
+                        ><abbr
+                          title="\easyrent\includes\persistance\repository\Repository"
+                          >Repository</abbr
+                        ></a
+                      >&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$imageRepository</span
+                    ></span
+                  ><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    >void</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+                <dl class="phpdocumentor-argument-list">
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$userRepository</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      ><a
+                        href="classes/easyrent-includes-persistance-repository-UserRepository.html"
+                        ><abbr
+                          title="\easyrent\includes\persistance\repository\UserRepository"
+                          >UserRepository</abbr
+                        ></a
+                      ></span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>Instance of an UserRepository</p>
+                    </section>
+                  </dd>
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$imageRepository</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      ><a
+                        href="classes/easyrent-includes-persistance-repository-Repository.html"
+                        ><abbr
+                          title="\easyrent\includes\persistance\repository\Repository"
+                          >Repository</abbr
+                        ></a
+                      ></span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition"></dd>
+                </dl>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type">void</span>
+                &mdash;
+                <section class="phpdocumentor-description"></section>
+              </article>
+              <article class="phpdocumentor-element -method -public">
+                <h4 class="phpdocumentor-element__name" id="method_createUser">
+                  createUser()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_createUser"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">85</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Persists a new user into the system if the user is not
+                  register before.
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >public</span
+                  >
+                  <span class="phpdocumentor-signature__name">createUser</span
+                  ><span>(</span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$email</span
+                    ></span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span>, </span
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$password</span
+                    ></span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span>, </span
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$role</span
+                    ></span
+                  ><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    ><a
+                      href="classes/easyrent-includes-persistance-entity-User.html"
+                      ><abbr title="\easyrent\includes\persistance\entity\User"
+                        >User</abbr
+                      ></a
+                    >|null</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+                <dl class="phpdocumentor-argument-list">
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$email</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>User's email. Valid user's email.</p>
+                    </section>
+                  </dd>
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$password</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>User's password. No requirements on this string.</p>
+                    </section>
+                  </dd>
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$role</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>
+                        User's role. Valid roles are: 'particular', 'enterprise'
+                        and 'admin'.
+                      </p>
+                    </section>
+                  </dd>
+                </dl>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type"
+                  ><a
+                    href="classes/easyrent-includes-persistance-entity-User.html"
+                    ><abbr title="\easyrent\includes\persistance\entity\User"
+                      >User</abbr
+                    ></a
+                  >|null</span
+                >
+                &mdash;
+                <section class="phpdocumentor-description">
+                  <p>
+                    Returns null when there is an already existing user with the
+                    same $email
+                  </p>
+                </section>
+              </article>
+              <article class="phpdocumentor-element -method -public">
+                <h4
+                  class="phpdocumentor-element__name"
+                  id="method_deleteUserAccount"
+                >
+                  deleteUserAccount()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_deleteUserAccount"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">231</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Deletes the user&#039;s account
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >public</span
+                  >
+                  <span class="phpdocumentor-signature__name"
+                    >deleteUserAccount</span
+                  ><span>(</span><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    >bool</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type">bool</span>
+                &mdash;
+                <section class="phpdocumentor-description"></section>
+              </article>
+              <article class="phpdocumentor-element -method -public">
+                <h4
+                  class="phpdocumentor-element__name"
+                  id="method_getUserImage"
+                >
+                  getUserImage()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_getUserImage"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">219</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Gets the user&#039;s profile image
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >public</span
+                  >
+                  <span class="phpdocumentor-signature__name">getUserImage</span
+                  ><span>(</span><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    ><a
+                      href="classes/easyrent-includes-persistance-entity-Image.html"
+                      ><abbr title="\easyrent\includes\persistance\entity\Image"
+                        >Image</abbr
+                      ></a
+                    >|null</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type"
+                  ><a
+                    href="classes/easyrent-includes-persistance-entity-Image.html"
+                    ><abbr title="\easyrent\includes\persistance\entity\Image"
+                      >Image</abbr
+                    ></a
+                  >|null</span
+                >
+                &mdash;
+                <section class="phpdocumentor-description"></section>
+              </article>
+              <article class="phpdocumentor-element -method -public">
+                <h4 class="phpdocumentor-element__name" id="method_login">
+                  login()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_login"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">46</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Logs in an user into the system.
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >public</span
+                  >
+                  <span class="phpdocumentor-signature__name">login</span
+                  ><span>(</span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$email</span
+                    ></span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span>, </span
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$password</span
+                    ></span
+                  ><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    >bool</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+                <dl class="phpdocumentor-argument-list">
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$email</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>User's email.</p>
+                    </section>
+                  </dd>
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$password</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>User's password, not hashed.</p>
+                    </section>
+                  </dd>
+                </dl>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type">bool</span>
+                &mdash;
+                <section class="phpdocumentor-description">
+                  <p>
+                    Returns true if the email and password corresponds to a
+                    valid user. Returns false otherwise.
+                  </p>
+                </section>
+              </article>
+              <article class="phpdocumentor-element -method -public">
+                <h4
+                  class="phpdocumentor-element__name"
+                  id="method_readUserByEmail"
+                >
+                  readUserByEmail()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_readUserByEmail"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">57</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Returns the user from the system given an user&#039;s email.
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >public</span
+                  >
+                  <span class="phpdocumentor-signature__name"
+                    >readUserByEmail</span
+                  ><span>(</span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$email</span
+                    ></span
+                  ><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    ><a
+                      href="classes/easyrent-includes-persistance-entity-User.html"
+                      ><abbr title="\easyrent\includes\persistance\entity\User"
+                        >User</abbr
+                      ></a
+                    >|null</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+                <dl class="phpdocumentor-argument-list">
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$email</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>User's email.</p>
+                    </section>
+                  </dd>
+                </dl>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type"
+                  ><a
+                    href="classes/easyrent-includes-persistance-entity-User.html"
+                    ><abbr title="\easyrent\includes\persistance\entity\User"
+                      >User</abbr
+                    ></a
+                  >|null</span
+                >
+                &mdash;
+                <section class="phpdocumentor-description"></section>
+              </article>
+              <article class="phpdocumentor-element -method -public">
+                <h4
+                  class="phpdocumentor-element__name"
+                  id="method_updateUserEmail"
+                >
+                  updateUserEmail()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_updateUserEmail"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">110</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Changes the user&#039;s email given a new email.
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >public</span
+                  >
+                  <span class="phpdocumentor-signature__name"
+                    >updateUserEmail</span
+                  ><span>(</span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$newEmail</span
+                    ></span
+                  ><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    >bool</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+                <dl class="phpdocumentor-argument-list">
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$newEmail</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>User's new email.</p>
+                    </section>
+                  </dd>
+                </dl>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type">bool</span>
+                &mdash;
+                <section class="phpdocumentor-description">
+                  <p>
+                    True if the user is already logged in and the $newEmail is
+                    not registered before. False otherwise.
+                  </p>
+                </section>
+              </article>
+              <article class="phpdocumentor-element -method -public">
+                <h4
+                  class="phpdocumentor-element__name"
+                  id="method_updateUserPassword"
+                >
+                  updateUserPassword()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_updateUserPassword"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">136</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Updates the user&#039;s password.
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >public</span
+                  >
+                  <span class="phpdocumentor-signature__name"
+                    >updateUserPassword</span
+                  ><span>(</span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$newPassword</span
+                    ></span
+                  ><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    >bool</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+                <dl class="phpdocumentor-argument-list">
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$newPassword</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>User's new password.</p>
+                    </section>
+                  </dd>
+                </dl>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type">bool</span>
+                &mdash;
+                <section class="phpdocumentor-description">
+                  <p>True if the user is already logged in. False otherwise.</p>
+                </section>
+              </article>
+              <article class="phpdocumentor-element -method -public">
+                <h4
+                  class="phpdocumentor-element__name"
+                  id="method_updateUserRole"
+                >
+                  updateUserRole()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_updateUserRole"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">165</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Updates the user&#039;s role.
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >public</span
+                  >
+                  <span class="phpdocumentor-signature__name"
+                    >updateUserRole</span
+                  ><span>(</span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$role</span
+                    ></span
+                  ><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    >bool</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+                <dl class="phpdocumentor-argument-list">
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$role</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>User's new role.</p>
+                    </section>
+                  </dd>
+                </dl>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type">bool</span>
+                &mdash;
+                <section class="phpdocumentor-description">
+                  <p>
+                    True if the user is already logged in and the $role is
+                    valid. Returns false otherwise.
+                  </p>
+                </section>
+              </article>
+              <article class="phpdocumentor-element -method -public">
+                <h4
+                  class="phpdocumentor-element__name"
+                  id="method_uploadUserImage"
+                >
+                  uploadUserImage()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_uploadUserImage"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">185</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Uploads the user&#039;s profile image.
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >public</span
+                  >
+                  <span class="phpdocumentor-signature__name"
+                    >uploadUserImage</span
+                  ><span>(</span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$path</span
+                    ></span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span>, </span
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$mimeType</span
+                    ></span
+                  ><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    >bool</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+                <dl class="phpdocumentor-argument-list">
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$path</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>Image's path.</p>
+                    </section>
+                  </dd>
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$mimeType</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>Image's MIME Type.</p>
+                    </section>
+                  </dd>
+                </dl>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type">bool</span>
+                &mdash;
+                <section class="phpdocumentor-description"></section>
+              </article>
+              <article class="phpdocumentor-element -method -private -static">
+                <h4
+                  class="phpdocumentor-element__name"
+                  id="method_hashPassword"
+                >
+                  hashPassword()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_hashPassword"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">69</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">Creates a password hash.</p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >private</span
+                  >
+                  <span class="phpdocumentor-signature__static">static</span>
+                  <span class="phpdocumentor-signature__name">hashPassword</span
+                  ><span>(</span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$password</span
+                    ></span
+                  ><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    >string</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description">
+                  <p>
+                    This algorithm is using BCrypt with 12 rounds by default.
+                  </p>
+                </section>
+
+                <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+                <dl class="phpdocumentor-argument-list">
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$password</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>The user's password.</p>
+                    </section>
+                  </dd>
+                </dl>
+
+                <h5 class="phpdocumentor-tag-list__heading" id="tags">
+                  Tags
+                  <a href="#tags" class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h5>
+                <dl class="phpdocumentor-tag-list">
+                  <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                  </dt>
+                  <dd class="phpdocumentor-tag-list__definition">
+                    <a
+                      class="phpdocumentor-tag-link"
+                      href="https://www.php.net/manual/en/function.password-hash"
+                    >
+                      https://www.php.net/manual/en/function.password-hash
+                    </a>
+                  </dd>
+                </dl>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type"
+                  >string</span
+                >
+                &mdash;
+                <section class="phpdocumentor-description">
+                  <p>Returns the hashed password.</p>
+                </section>
+              </article>
+              <article class="phpdocumentor-element -method -private">
+                <h4 class="phpdocumentor-element__name" id="method_isLogged">
+                  isLogged()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_isLogged"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">99</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Checks if there&#039;s a logged user into the system, at the
+                  moment of the call to this function.
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >private</span
+                  >
+                  <span class="phpdocumentor-signature__name">isLogged</span
+                  ><span>(</span><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    >bool</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type">bool</span>
+                &mdash;
+                <section class="phpdocumentor-description"></section>
+              </article>
+              <article class="phpdocumentor-element -method -private">
+                <h4 class="phpdocumentor-element__name" id="method_validRole">
+                  validRole()
+                  <a
+                    href="classes/easyrent-includes-service-UserService.html#method_validRole"
+                    class="headerlink"
+                    ><i class="fas fa-link"></i
+                  ></a>
+                </h4>
+                <aside class="phpdocumentor-element-found-in">
+                  <abbr
+                    class="phpdocumentor-element-found-in__file"
+                    title="src/includes/service/UserService.php"
+                    ><a href="files/src-includes-service-userservice.html"
+                      ><abbr title="src/includes/service/UserService.php"
+                        >UserService.php</abbr
+                      ></a
+                    ></abbr
+                  >
+                  :
+                  <span class="phpdocumentor-element-found-in__line">153</span>
+                </aside>
+
+                <p class="phpdocumentor-summary">
+                  Checks if the given role is valid to change.
+                </p>
+
+                <code class="phpdocumentor-code phpdocumentor-signature">
+                  <span class="phpdocumentor-signature__visibility"
+                    >private</span
+                  >
+                  <span class="phpdocumentor-signature__name">validRole</span
+                  ><span>(</span
+                  ><span class="phpdocumentor-signature__argument"
+                    ><span
+                      class="phpdocumentor-signature__argument__return-type"
+                      >string&nbsp;</span
+                    ><span class="phpdocumentor-signature__argument__name"
+                      >$role</span
+                    ></span
+                  ><span>)</span><span> : </span
+                  ><span class="phpdocumentor-signature__response_type"
+                    >bool</span
+                  ></code
+                >
+
+                <section class="phpdocumentor-description"></section>
+
+                <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+                <dl class="phpdocumentor-argument-list">
+                  <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name"
+                      >$role</span
+                    >
+                    :
+                    <span class="phpdocumentor-signature__argument__return-type"
+                      >string</span
+                    >
+                  </dt>
+                  <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description">
+                      <p>Desired role.</p>
+                    </section>
+                  </dd>
+                </dl>
+
+                <h5 class="phpdocumentor-return-value__heading">
+                  Return values
+                </h5>
+                <span class="phpdocumentor-signature__response_type">bool</span>
+                &mdash;
+                <section class="phpdocumentor-description">
+                  <p>
+                    True if the $role is in the array: ('particular',
+                    enterprise'). False otherwise.
+                  </p>
+                </section>
+              </article>
+            </section>
+          </article>
+          <section
+            data-search-results
+            class="phpdocumentor-search-results phpdocumentor-search-results--hidden"
+          >
+            <section class="phpdocumentor-search-results__dialog">
+              <header class="phpdocumentor-search-results__header">
+                <h2 class="phpdocumentor-search-results__title">
+                  Search results
+                </h2>
+                <button class="phpdocumentor-search-results__close">
+                  <i class="fas fa-times"></i>
+                </button>
+              </header>
+              <section class="phpdocumentor-search-results__body">
+                <ul class="phpdocumentor-search-results__entries"></ul>
+              </section>
+            </section>
+          </section>
+        </div>
+      </div>
+      <a
+        href="classes/easyrent-includes-service-UserService.html#top"
+        class="phpdocumentor-back-to-top"
+        ><i class="fas fa-chevron-circle-up"></i
+      ></a>
+    </main>
+
+    <script>
+      cssVars({});
+    </script>
+  </body>
+</html>

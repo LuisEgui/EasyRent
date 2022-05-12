@@ -1,5 +1,16 @@
 -- Author: Luis Egui
 
+-- Image table creation
+create table
+  Image (
+    img_id serial primary key,
+    path varchar(256) not null,
+    mimeType enum('image/jpeg','image/jpg','image/png') not null
+  );
+
+-- Aux: check Image fields
+-- describe Image;
+
 -- Model table creation
 create table
   Model (
@@ -20,17 +31,6 @@ create table
 -- Aux: check Model fields
 -- describe Model;
 
--- Image table creation
-create table
-  Image (
-    img_id serial primary key,
-    path varchar(256) not null,
-    mimeType enum('image/jpeg','image/jpg','image/png') not null
-  );
-
--- Aux: check Image fields
--- describe Image;
-
 -- Vehicle table creation
 create table
   Vehicle (
@@ -40,9 +40,10 @@ create table
     location varchar(40),
     state enum ('Available', 'Unavailable', 'Reserved') default 'Available',
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
-    foreign key (model) references Model(m_id) ON DELETE RESTRICT,   
-    check (vin regexp '^[0-9]{6}$'),   
+    foreign key (model) references Model(m_id) ON DELETE RESTRICT,
+    check (vin regexp '^[0-9]{6}$'),
     check (licensePlate regexp '^[0-9]{4}-(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{1,3}$')
+
   );
 
 -- Aux: check Vehicle fields
@@ -79,8 +80,8 @@ create table
 -- EvidenceDamage table creation
 create table
   EvidenceDamage (
-    damage bigint not null, 
-    image bigint not null, 
+    damage bigint unsigned not null,
+    image bigint unsigned not null,
     primary key (damage, image),
     foreign key (damage) references Damage(d_id),
     foreign key (image) references Image(img_id)
@@ -95,7 +96,7 @@ create table
     u_id serial primary key,
     email varchar(30) unique not null,
     password varchar(70) not null,
-    role enum ('admin', 'particular', 'enterprise'),
+    role enum ('admin', 'particular', 'enterprise', 'sponsor'),
     userImg bigint unsigned,
     foreign key (userImg) references Image(img_id),
     check (
@@ -125,7 +126,7 @@ create table
   );
 
 -- Message table creation
-create table 
+create table
   Message (
     id serial primary key,
     author bigint unsigned not null,
@@ -138,3 +139,22 @@ create table
 
 -- Aux: check Message fields:
 -- describe Message;
+
+-- Priority table creation
+create table
+  Priority (
+    p_id serial primary key,
+    level enum('1', '2') not null,
+    price decimal(5,2) not null
+);
+
+-- Advertisement table creation
+create table
+  Advertisement (
+      a_id serial primary key,
+      banner bigint unsigned,
+      releaseDate datetime not null,
+      endDate datetime not null,
+      priority bigint unsigned not null,
+      foreign key (banner) references Image(img_id)
+);
