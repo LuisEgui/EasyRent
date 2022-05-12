@@ -152,6 +152,9 @@ if (!isset($_SESSION['nickname']) ){
       <div>
       <button onclick="fin();">Finalizar chat</button>
     </div>
+    <div>
+    <a href="index.php">Salir</a>
+      </div>
 <?php            
 }
 

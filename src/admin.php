@@ -16,7 +16,9 @@ $contenidoPrincipal = <<<EOS
     </div>
     <div class="info">
     <a href="incidentesAdmin.php">Administrar incidentes</a>
-        <a href="reservasAdmin.php">Administrar reservas</a>
+    </div>
+    <div class="info">
+    <a href="reservasAdmin.php">Administrar reservas</a>
     </div>
     <div class="info">
     <a href="nuevoAnuncio.php">Añadir anuncio</a>

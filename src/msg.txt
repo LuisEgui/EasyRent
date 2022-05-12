@@ -1,1 +1,2 @@
-<p><span class="name">Administrador -> Hola: </span><span class="txt">Hola</span></p>
+<p><span class="name">Administrador -> Aurelio: </span><span class="txt">Hola</span></p>
+<p><span class="name">Administrador -> Aurelio: </span><span class="txt">Que necesitas?</span></p>
