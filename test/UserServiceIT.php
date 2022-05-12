@@ -1,5 +1,7 @@
 <?php
 
+namespace test;
+
 use easyrent\includes\persistance\repository\MysqlConnector;
 use easyrent\includes\persistance\repository\MysqlImageRepository;
 use easyrent\includes\persistance\repository\MysqlUserRepository;
@@ -14,10 +16,10 @@ use function PHPUnit\Framework\assertNotEquals;
 
 class UserServiceIT extends TestCase {
 
-    public $userRepository;
-    public $imageRepository;
-    public $userService;
-    public $db;
+    public MysqlUserRepository $userRepository;
+    public MysqlImageRepository $imageRepository;
+    public UserService $userService;
+    public MysqlConnector $db;
 
     protected function setUp(): void {
         $this->db = MysqlConnector::getInstance();

@@ -2,22 +2,22 @@
 
 namespace easyrent\includes\service;
 
-use easyrent\includes\persistance\entity\Vehicle;
 use easyrent\includes\persistance\repository\MysqlVehicleRepository;
+use easyrent\includes\persistance\entity\Vehicle;
 
 /**
  * Vehicle Service class.
- *
- * It manages the logic of the vehicle's actions.
+ * 
+ * It manages the logic of the vehicle's actions. 
  */
-class VehicleService{
+class VehicleService {
 
     /**
      * @var MysqlVehicleRepository Vehicle repository
      */
     private $vehicleRepository;
 
-    /**
+/**
      * @var VehicleService Single instance of VehicleService class.
      */
     private static $instance;
@@ -106,11 +106,11 @@ class VehicleService{
     }
 
     /**
-     * Checks if the current user is an admin in the system, at the moment of the
-     * call to this function.
-     * @return bool
+     * Returns all the vehicles in the system in the given location.
+     * 
+     * @return Vehicle[] Returns the vehicles from the database.
      */
-    private function isAdmin() {
-        return isset($_SESSION['esAdmin']) && isset($_SESSION['login']);
+    public function readAllVehiclesInLocation($location){
+        return $this->vehicleRepository->findAllbyLocation($location);
     }
 }

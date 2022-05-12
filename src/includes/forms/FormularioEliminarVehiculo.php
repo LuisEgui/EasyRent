@@ -4,7 +4,7 @@ namespace easyrent\includes\forms;
 
 use easyrent\includes\service\VehicleService;
 use easyrent\includes\service\ModelService;
-use easyrent\includes\persistance\lists\VehicleList;
+use easyrent\includes\service\lists\VehicleList;
 
 class FormularioEliminarVehiculo extends Formulario {
 

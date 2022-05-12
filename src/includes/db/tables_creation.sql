@@ -113,14 +113,14 @@ create table
     id serial primary key,
     vehicle bigint not null,
     user bigint unsigned not null,
-    state enum ('reserved', 'pending', 'cancelled') default 'pending',
+    state enum ('reserved', 'pending') default 'pending',
     pickupLocation varchar(40) not null,
     returnLocation varchar(40),
     pickupTime datetime not null,
     returnTime datetime not null,
     price float,
-    foreign key (vehicle) references Vehicle(vin),
-    foreign key (user) references User(u_id),
+    foreign key (vehicle) references Vehicle(vin) ON DELETE RESTRICT,
+    foreign key (user) references User(u_id) ON DELETE RESTRICT,
     unique (vehicle, user, pickupTime),
     check (timediff(returnTime, pickupTime) > 0)
   );
@@ -130,7 +130,7 @@ create table
   Message (
     id serial primary key,
     author bigint unsigned not null,
-    message varchar(140) not null,
+    txt varchar(140) not null,
     sendTime datetime not null,
     idParentMessage bigint unsigned default null,
     foreign key (idParentMessage) references Message(id),

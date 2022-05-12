@@ -1,5 +1,7 @@
 <?php
 
+namespace test;
+
 use easyrent\includes\persistance\entity\User;
 use easyrent\includes\persistance\repository\MysqlConnector;
 use easyrent\includes\persistance\repository\MysqlUserRepository;
@@ -12,8 +14,8 @@ use function PHPUnit\Framework\assertTrue;
 
 class UserRepositoryIT extends TestCase {
 
-    public $repository;
-    public $db;
+    public MysqlUserRepository $repository;
+    public MysqlConnector $db;
 
     protected function setUp(): void {
         $this->db = MysqlConnector::getInstance();
@@ -77,7 +79,6 @@ class UserRepositoryIT extends TestCase {
      * @covers MysqlUserRepository::findAll()
      */
     public function testFindAll() : void {
-        $users = array();
         $users = $this->repository->findAll();
 
         assertTrue($users != null);

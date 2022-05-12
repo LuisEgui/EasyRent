@@ -62,7 +62,7 @@ class MysqlMessageRepository extends AbstractMysqlRepository implements MessageR
         return $messages;
     }
 
-    public function findByAuthor($author) : ?Message
+    public function findByAuthor($author) : array
     {
         $messages[] = array();
 

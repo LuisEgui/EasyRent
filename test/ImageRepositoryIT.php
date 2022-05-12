@@ -1,5 +1,7 @@
 <?php
 
+namespace test;
+
 use easyrent\includes\persistance\entity\Image;
 use easyrent\includes\persistance\repository\MysqlConnector;
 use easyrent\includes\persistance\repository\MysqlImageRepository;
@@ -13,8 +15,8 @@ use function PHPUnit\Framework\assertTrue;
 
 class ImageRepositoryIT extends TestCase {
 
-    public $repository;
-    public $db;
+    public MysqlImageRepository $repository;
+    public MysqlConnector $db;
 
     protected function setUp(): void {
         $this->db = MysqlConnector::getInstance();

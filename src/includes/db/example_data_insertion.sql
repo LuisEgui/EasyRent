@@ -16,12 +16,6 @@ from Model;
 -- Insert example Vehicle row:
 insert into Vehicle(vin, licensePlate, model, location)
 values (123456, '1234-BCB', 1, 'Madrid'),
-       (123455, '1235-BCB', 2, 'Madrid'),
-       (122455, '1223-JHB', 3, 'Madrid'),
-       (123355, '1235-BCL', 4, 'Madrid'),
-       (123765, '1235-CLB', 5, 'Madrid'),
-       (158655, '1235-WF', 6, 'Madrid'),
-       (146456, '2234-BCB', 1, 'Barcelona'),
        (123485, '2235-BCB', 3, 'Barcelona'),
        (752455, '7723-JHB', 6, 'Barcelona'),
        (127595, '7235-BCL', 4, 'Barcelona'),
@@ -34,7 +28,6 @@ from Vehicle;
 
 -- Insert example Damage row:
 insert into Damage(vehicle, area, type, isRepaired)
-values (123456, 'general', 'minor', true);
 
 -- View inserted data:
 select *
