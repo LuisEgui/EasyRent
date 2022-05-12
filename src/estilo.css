@@ -37,6 +37,20 @@ div.buscadorVehiculo {
   width: 60%;
   border: 3px solid #303030;
   padding: 10px;
+  background-color: rgba(247, 167, 19, 0.926);
+  color: white;
+}
+
+div.infoButton {
+  grid-column: 1/4;
+  margin: auto;
+  border: 3px solid #303030;
+  padding: 10px;
+  width: 900px;
+  height: 100%;
+  color: white;
+  background: rgba(247, 167, 19, 0.926);
+  margin-top: 10px;
 }
 
 div.administracion {
@@ -56,23 +70,156 @@ div.promociones {
   grid-template-columns: auto auto auto;
   width: 100%;
 }
+.tituloNombre {
+  position: absolute;
+  left: 500px;
+  font-style: italic;
+  color: white;
+}
+
+.atajoMiembro {
+  position: absolute;
+  left: 300px;
+  font-style: italic;
+  color: white;
+}
+
+.fotoMiembro {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  left: 700px;
+}
+
+.tituloCorreo {
+  position: relative;
+  left: 30px;
+  top: 200px;
+  font-style: italic;
+  color: white;
+}
+
+.correoMiembro {
+  position: relative;
+  top: 225px;
+  left: 30px;
+  font-style: italic;
+  color: white;
+}
+
+.tituloDescripcion {
+  position: relative;
+  left: 30px;
+  top: -150px;
+  font-style: italic;
+  color: white;
+}
+
+.descripcionMiembro {
+  position: relative;
+  left: 30px;
+  top: -120px;
+  font-style: italic;
+  color: white;
+}
 
 .tituloProm {
   position: absolute;
-  left: 580px;
-  top: 625px;
+  left: 550px;
+  top: 670px;
+  color: white;
+}
+
+.tituloPagina {
+  text-align: center;
+  color: white;
+}
+
+.adminClass {
+  text-align: center;
+  color: white;
+}
+
+.listAdmin {
+  text-align: center;
+  color: white;
+}
+
+.cuadroFaqAntes {
+  position: relative;
+  top: 100px;
+  border: 3px solid #303030;
+  padding: 30px;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: x-large;
+  font-family: serif;
+  color: white;
+  background-color: rgba(247, 167, 19, 0.926);
+}
+
+.infoIndex {
+  position: relative;
+  border: 3px solid #303030;
+  padding: 30px;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: x-large;
+  font-family: serif;
+  color: white;
+  background-color: rgba(247, 167, 19, 0.926);
+}
+
+.cuadroAtCliente {
+  position: relative;
+  top: 100px;
+  border: 3px solid #303030;
+  padding: 30px;
+  margin-top: 5px;
+  margin-right: 5px;
+  font-size: x-large;
+  font-family: serif;
+  color: white;
+  background-color: rgba(247, 167, 19, 0.926);
+}
+
+.cuadriculaAdmin {
+  margin: 30px;
+  text-align: center;
+  padding: 10px;
+  grid-row: 4 / 4;
+  grid-column: 1 / 4;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: auto auto;
+  width: 100%;
+  line-height: 50px;
+}
+
+.infoAdmin {
+  border: 3px solid #303030;
+  padding: 30px;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: x-large;
+  font-family: serif;
+  color: white;
+  background-color: rgba(247, 167, 19, 0.926);
+}
+
+.tituloAtCliente {
+  position: relative;
+  left: 420px;
 }
 
 div.administracion {
-  margin: auto;
-  text-align: center;
-  padding: 10px;
-  grid-row: 3 / 4;
-  grid-column: 1 / 4;
   display: grid;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto auto auto auto auto;
   grid-template-columns: auto;
-  width: auto;
+  font-size: xx-large;
+  color: whitesmoke;
+  text-align: center;
+  width: 100%;
 }
 
 div#admin {
@@ -178,21 +325,37 @@ aside {
 }
 
 .packLeft {
+  border: 3px solid #303030;
+  padding: 30px;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: x-large;
+  font-family: serif;
+  color: white;
+  background-color: rgba(247, 167, 19, 0.926);
   position: absolute;
-  left: 300px;
-  top: 700px;
+  left: 100px;
+  top: 720px;
 }
 .packRight {
+  border: 3px solid #303030;
+  padding: 30px;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: x-large;
+  font-family: serif;
+  color: white;
+  background-color: rgba(247, 167, 19, 0.926);
   position: absolute;
   left: 700px;
-  top: 700px;
+  top: 720px;
 }
 
 main {
   padding: 10px;
   min-height: 600px;
   width: 1233px;
-  background-color: white;
+  background-color: rgb(181, 177, 177);
 }
 
 footer {
@@ -394,12 +557,22 @@ form#inrow {
   padding: 10px;
 }
 
+div.infoContacto {
+  text-align: center;
+  margin: auto;
+  width: auto;
+  border: 3px solid #303030;
+  padding: 10px;
+}
+
 div.infoclient {
   text-align: center;
   margin: auto;
   width: 60%;
   border: 3px solid #303030;
   padding: 10px;
+  background-color: rgba(247, 167, 19, 0.926);
+  color: white;
 }
 
 div.administracion {
@@ -414,13 +587,14 @@ div.administracion.h2 {
   grid-column: 1/4;
 }
 
-div#info {
+.info {
   grid-column: 1/4;
   margin: auto;
   border: 3px solid #303030;
   padding: 10px;
-  width: 1000px;
+  width: 900px;
   height: 100%;
+  color: white;
   background: rgba(247, 167, 19, 0.926);
 }
 

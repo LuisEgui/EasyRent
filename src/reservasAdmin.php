@@ -30,14 +30,14 @@ $tituloPagina = 'Lista reservas';
 
 $contenidoPrincipal = <<<EOS
     <div>
-    <h2>Lista de reservas</h2>
+    <h2 class="adminClass">Lista de reservas</h2>
     <div class="dropdown">
     <button class="dropbtn" style="float:left">Filtros</button>
     <div class="dropdown-content">
     $filterSelector
     </div>
     </div>
-    <div>
+    <div class="listAdmin">
     <table>
         <tr>
             <th>ID Reserva</th>
@@ -72,7 +72,7 @@ $contenidoPrincipal .= <<<EOS
     </div>
     </div>
     <div>
-    <div id="info">
+    <div class="infoButton">
     <a href="modifyReserveAdmin.php">Modificar o borrar reserva</a>
     </div>
     <div id="anteriorUrl">

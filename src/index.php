@@ -15,7 +15,7 @@ $contenidoPrincipal = <<<EOS
 
   <div class="promociones">
     <h2 class="tituloProm">Promociones</h2>
-    <div id="info">
+    <div class="infoIndex">
     <h3>Información</h3>
     <p>
       EasyRent es un negocio dedicado al alquiler de coches de forma online.

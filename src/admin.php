@@ -1,29 +1,27 @@
+
 <?php
 
-require_once '../vendor/autoload.php';
-require_once __DIR__.'/includes/config/config.php';
+ require_once '../vendor/autoload.php';
+ require_once __DIR__.'/includes/config/config.php';
 
-$tituloPagina = 'Admin';
+ $tituloPagina = 'Admin';
 
-$contenidoPrincipal = <<<EOS
-    <div class="administracion">
-    <h2>Administrar</h2>
-    <div class="info">
-    <a href="vehiclesAdmin.php">Administrar vehiculos</a>
+ $contenidoPrincipal = <<<EOS
+    <div class="administracion" >
+        <h2 class="tituloPagina">Administrar</h2>
     </div>
-    <div class="info">
-    <a href="modelsAdmin.php">Administrar modelo</a>
-    </div>
-    <div class="info">
-        <a href="reservasAdmin.php">Administrar reservas</a>
-    </div>
-    <div class="info">
-    <a href="nuevoAnuncio.php">Añadir anuncio</a>
-    </div>
-    <div class="info">
-    <a href="modificarAnuncios.php">Modificar anuncios</a>
-    </div>
-	</div>
-EOS;
+    <div class="cuadriculaAdmin">
+        <a class="infoAdmin" href="vehiclesAdmin.php">Administrar vehiculos</a>
 
-require __DIR__.'/includes/vistas/plantillas/plantilla.php';
+        <a class="infoAdmin" href="modelsAdmin.php">Administrar modelo</a>
+
+        <a class="infoAdmin" href="reservasAdmin.php">Administrar reservas</a>
+
+        <a class="infoAdmin" href="nuevoAnuncio.php">Añadir anuncio</a>
+
+        <a class="infoAdmin" href="modificarAnuncios.php">Modificar anuncios</a>
+
+    </div>
+ EOS;
+
+ require __DIR__.'/includes/vistas/plantillas/plantilla.php';

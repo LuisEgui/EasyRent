@@ -7,8 +7,8 @@ $tituloPagina = 'Contacto';
 
 $contenidoPrincipal = <<<EOS
   <div class="promociones">
-    <h2>Atencion al cliente</h2>
-    <div id="info">
+    <h2 class="tituloPagina">Atencion al cliente</h2>
+    <div id="infoContacto">
     <h3>Información</h3>
     <p>
       EasyRent es un negocio dedicado al alquiler de coches de forma online.
@@ -16,21 +16,21 @@ $contenidoPrincipal = <<<EOS
     </p>
     </div>
 
-    <div class="promo">
+    <div class="cuadroAtCliente">
     <h4>Teléfono S</h4>
     <p>
       666666666
     </p>
     </div>
 
-    <div class="promo">
+    <div class="cuadroAtCliente">
     <h4>Ticket</h4>
     <p>
       ticket
     </p>
     </div>
 
-    <div class="promo">
+    <div class="cuadroAtCliente">
     <h4>Email</h4>
     <p>
       contacto@easyrent.com

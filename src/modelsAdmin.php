@@ -31,14 +31,14 @@ $tituloPagina = 'Administrar modelos';
 
 $contenidoPrincipal = <<<EOS
     <div>
-    <h2>Lista de modelos</h2>
+    <h2 class="adminClass">Lista de modelos</h2>
     <div class="dropdown">
     <button class="dropbtn" style="float:left">Filtros</button>
     <div class="dropdown-content">
     $filterSelector
     </div>
     </div>
-    <div>
+    <div class="listAdmin">
     <table>
         <tr>
             <th>Marca</th>
@@ -72,10 +72,10 @@ $contenidoPrincipal .= <<<EOS
     </div>
     </div>
     <div>
-    <div class="info">
+    <div class="infoButton">
     <a href="nuevoModelo.php">Añadir modelo</a>
     </div>
-    <div class="info">
+    <div class="infoButton">
     <a href="borrarModelo.php">Borrar modelo</a>
     </div>
     <div id="anteriorUrl">

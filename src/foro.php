@@ -10,7 +10,7 @@ use easyrent\includes\service\UserService;
 
 $tituloPagina = 'Foro';
 
-$contenidoPrincipal = '<h1>Mensajes del foro</h1>';
+$contenidoPrincipal = '<h1 class="adminClass">Mensajes del foro</h1>';
 $messageService = new MessageService($GLOBALS['db_message_repository']);
 $messages = $messageService->readAllMessages();
 $userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
@@ -20,24 +20,24 @@ for ($i = 0; $i < count($messages); $i++) {
 
     if($messages[$i]->getIdParentMessage() == null){
         $contenidoPrincipal .= <<<EOS
-		<div class="v">
+		<div class="adminClass">
 		<h2>Mensaje:
 		EOS;
         $contenidoPrincipal .= <<<EOS
 		</h2>
-		<p>Autor:
+		<p class="adminClass">Autor:
 		EOS;
         $idAuthor = $messages[$i]->getAuthor();
         $userAuthor = $userService->readUserById($idAuthor);
         $contenidoPrincipal .= $userAuthor->getEmail();
         $contenidoPrincipal .= <<<EOS
 		</p>
-		<p>Texto:
+		<p class="adminClass">Texto:
 		EOS;
         $contenidoPrincipal .= $messages[$i]->getTxt();
         $contenidoPrincipal .= <<<EOS
 		</p>
-		<p>Fecha:
+		<p class="adminClass">Fecha:
 		EOS;
         $contenidoPrincipal .= $messages[$i]->getSendTime();
         $contenidoPrincipal .= <<<EOS
@@ -45,14 +45,14 @@ for ($i = 0; $i < count($messages); $i++) {
 		EOS;
         if ($userService->isLogged() && $userAuthor->getEmail() == $_SESSION['email']){
             $contenidoPrincipal .= <<<EOS
-				<a href="borrarMensaje.php?id=
+				<a  class="adminClass" href="borrarMensaje.php?id=
 			EOS;
             $contenidoPrincipal .= $messages[$i]->getId();
             $contenidoPrincipal .= <<<EOS
 				">Borrar</a>
 			EOS;
             $contenidoPrincipal .= <<<EOS
-				<a href="editarMensaje.php?id=
+				<a  class="adminClass" href="editarMensaje.php?id=
 			EOS;
             $contenidoPrincipal .= $messages[$i]->getId();
             $contenidoPrincipal .= <<<EOS
@@ -62,25 +62,25 @@ for ($i = 0; $i < count($messages); $i++) {
         for ($j = 0; $j < count($messages); $j++) {
             if($messages[$j]->getIdParentMessage() == $messages[$i]->getId()){
                 $contenidoPrincipal .= <<<EOS
-				<div class="v">
-				<h2>Respuesta a:
+				<div class="adminClass">
+				<h2 class="adminClass">Respuesta a:
 				EOS;
                 $contenidoPrincipal .= $userAuthor->getEmail();
                 $contenidoPrincipal .= <<<EOS
 				</h2>
-				<p>Autor:
+				<p class="adminClass">Autor:
 				EOS;
                 $idAuthor1 = $messages[$j]->getAuthor();
                 $userAuthor1 = $userService->readUserById($idAuthor1);
                 $contenidoPrincipal .= $userAuthor1->getEmail();
                 $contenidoPrincipal .= <<<EOS
 				</p>
-				<p>Texto:
+				<p class="adminClass">Texto:
 				EOS;
                 $contenidoPrincipal .= $messages[$j]->getTxt();
                 $contenidoPrincipal .= <<<EOS
 				</p>
-				<p>Fecha:
+				<p class="adminClass">Fecha:
 				EOS;
                 $contenidoPrincipal .= $messages[$j]->getSendTime();
                 $contenidoPrincipal .= <<<EOS
@@ -89,14 +89,14 @@ for ($i = 0; $i < count($messages); $i++) {
 				EOS;
                 if ($userService->isLogged() && $userAuthor1->getEmail() == $_SESSION['email']){
                     $contenidoPrincipal .= <<<EOS
-						<a href="borrarMensaje.php?id=
+						<a  class="adminClass" href="borrarMensaje.php?id=
 					EOS;
                     $contenidoPrincipal .= $messages[$j]->getId();
                     $contenidoPrincipal .= <<<EOS
 						">Borrar</a>
 					EOS;
                     $contenidoPrincipal .= <<<EOS
-						<a href="editarMensaje.php?id=
+						<a  class="adminClass" href="editarMensaje.php?id=
 					EOS;
                     $contenidoPrincipal .= $messages[$j]->getId();
                     $contenidoPrincipal .= <<<EOS
@@ -110,7 +110,7 @@ for ($i = 0; $i < count($messages); $i++) {
             $htmlFormRegAnswer = $form->gestiona();
 
             $contenidoPrincipal .= <<<EOS
-			<h1>Nueva respuesta</h1>
+			<h1 class="adminClass">Nueva respuesta</h1>
 			$htmlFormRegAnswer
 			EOS;
 
@@ -132,13 +132,13 @@ if ($userService->isLogged()) {
     $tituloPagina = 'Publicación de mensaje al foro';
 
     $contenidoPrincipal .= <<<EOS
-	<h1>Nuevo mensaje</h1>
+	<h1 class="adminClass">Nuevo mensaje</h1>
 	$htmlFormRegMessage
 	EOS;
 
 } else {
     $contenidoPrincipal .= <<<EOS
-			<p>Inicie sesión para participar en el foro.</p>
+			<p class="adminClass">Inicie sesión para participar en el foro.</p>
 			EOS;
 }
 

@@ -6,23 +6,23 @@ require_once __DIR__.'/includes/config/config.php';
 $tituloPagina = 'FAQ';
 
 $contenidoPrincipal = <<<EOS
-    <h2>Preguntas frecuentes</h2>
+    <h2 class="adminClass">Preguntas frecuentes</h2>
     <div class="promociones">
 
-    <div class="promo">
+    <div class="cuadroAtCliente">
     <h4>Ya tengo mi reserva</h4>
     </div>
 
-    <div class="promo">
+    <div class="cuadroAtCliente">
     <h4>Devolución del vehículo</h4>
     </div>
 
-    <div class="promo">
+    <div class="cuadroAtCliente">
     <h4>Otras FAQ</h4>
     </div>
 
-    <div class="promo">
-    <a href="faqantes.php">Antes de alquilar</a>
+    <div class="cuadroAtCliente">
+    <a class="adminClass" href="faqantes.php">Antes de alquilar</a>
     </div>
 
 	</div>
