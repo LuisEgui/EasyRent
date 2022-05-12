@@ -6,7 +6,8 @@
     "ext-mysqli": "*",
     "squizlabs/php_codesniffer": "3.*",
     "ext-fileinfo": "*",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "phpdocumentor/phpdocumentor": "v3.*"
   },
   "autoload": {
     "psr-4": {

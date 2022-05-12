@@ -7,16 +7,22 @@ $tituloPagina = 'Admin';
 
 $contenidoPrincipal = <<<EOS
     <div class="promociones">
-        <h2>Administrar</h2>
-        <div class="info">
+    <h2>Administrar</h2>
+    <div class="info">
+    <a href="vehiclesAdmin.php">Administrar vehiculos</a>
+    </div>
+    <div class="info">
+    <a href="modelsAdmin.php">Administrar modelo</a>
+    </div>
+    <div class="info">
         <a href="reservasAdmin.php">Administrar reservas</a>
-        </div>
-        <div class="info">
-        <a href="vehiclesAdmin.php">Administrar vehiculos</a>
-        </div>
-        <div class="info">
-        <a href="modelsAdmin.php">Administrar modelo</a>
-        </div>
+    </div>
+    <div id="info">
+    <a href="nuevoAnuncio.php">Añadir anuncio</a>
+    </div>
+    <div id="info">
+    <a href="modificarAnuncios.php">Modificar anuncios</a>
+    </div>
 	</div>
 EOS;
 

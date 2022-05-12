@@ -15,5 +15,5 @@ interface MessageRepository extends Repository
      * @return Message|null
      */
     public function findByAuthor($author) : ?Message;
-
 }
+
