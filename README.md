@@ -25,7 +25,7 @@ Hace falta hacer uso de [pre-commit](https://github.com/pre-commit/pre-commit) p
 
 #### Pasos para hacer una implementacion
 
-1. Crear una nueva rama con **develop** como base en la que tendremos que subir todo lo que vayamos haciendo.
+1. Crear una nueva rama con **main** como base en la que tendremos que subir todo lo que vayamos haciendo.
 2. Cuando se haya implementado todo lo que se queria en la nueva rama; hay que hacer un **pull request** a la rama develop y en la descripcion poner: "Closes #(num. de la issue que se ha hecho)" .
 3. (Opcional) Poner a una persona que revise la PR
 4. Rellenar todas las demas opciones que da: quien se ha encargado de hacer el codigo, de que milestone es, a que proyecto corresponde, etc.
