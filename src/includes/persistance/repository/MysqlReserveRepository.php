@@ -1,11 +1,9 @@
 <?php
 
-require_once __DIR__.'/MysqlConnector.php';
-require_once __DIR__.'/ReserveRepository.php';
-require_once __DIR__.'/Reserve.php';
-require_once __DIR__.'/AbstractMysqlRepository.php';
-require_once __DIR__.'/config.php';
-require_once __DIR__.'/User.php';
+namespace easyrent\includes\persistance\repository;
+
+use easyrent\includes\persistance\entity\Reserve;
+use easyrent\includes\persistance\entity\User;
 
 class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveRepository {
 
@@ -13,7 +11,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         parent::__construct($connector);
     }
     
-    public function count() {
+    public function count() : int {
         $sql = 'select count(id) as num_reserves from Reserve';
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
@@ -104,7 +102,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         return $reservas;
     }
 
-    public function findAll() {
+    public function findAll() : array{
         $reservas = [];
         $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve");
         $stmt = $this->db->prepare($sql);
@@ -122,7 +120,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         return $reservas;
     }
 
-    public function deleteById($id) {
+    public function deleteById($id) : bool{
         // Check if the reserve already exists
         if ($this->findById($id) !== null) {
             $sql = sprintf("delete from Reserve where id = %d", $id);
@@ -139,7 +137,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         return false;
     }
 
-    public function delete($reserve) {
+    public function delete($reserve) : bool{
         // Check entity type and we check first if the user already exists
         $importedReserve = $this->findById($reserve->getId());
         if ($reserve instanceof Reserve && ($importedReserve !== null))

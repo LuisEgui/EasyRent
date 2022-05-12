@@ -1,9 +1,5 @@
 <?php
 
-namespace easyrent\includes\persistance\entity;
-
-use easyrent\includes\service\Model;
-
 /**
  * Class for user entity.
  */

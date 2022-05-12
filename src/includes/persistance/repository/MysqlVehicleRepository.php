@@ -82,6 +82,24 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         return $vehicles;
     }
 
+    public function findAllbyLocation($location) {
+        $vehicles = [];
+
+        $sql = sprintf("select vin, licensePlate, model, location, state, fecha from Vehicle where location = '%s'", $location);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_assoc()) {
+            $vehicle = new Vehicle($row['vin'], $row['licensePlate'], $row['model'], $row['location'], $row['state'], $row['fecha']);
+            $vehicles[] = $vehicle;
+        }
+
+        return $vehicles;
+    }
+
     public function deleteById($vin) : bool
     {
         // Check if the vehicle already exists

@@ -1,6 +1,6 @@
 <?php
 
-require_once RAIZ_APP.'/Repository.php';
+namespace easyrent\includes\persistance\repository;
 
 /**
  * A specific repository for Users

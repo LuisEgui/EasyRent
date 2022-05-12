@@ -1,6 +1,8 @@
 <?php
 
-require __DIR__.'/MysqlReserveRepository.php';
+namespace easyrent\includes\service;
+
+use easyrent\includes\persistance\repository\MysqlReserveRepository;
 
 /**
  * Reserve Service class.

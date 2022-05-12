@@ -1,11 +1,10 @@
 <?php
 
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/Reserve.php';
-require_once RAIZ_APP.'/User.php';
-require_once RAIZ_APP.'/ReserveService.php';
-require_once RAIZ_APP.'/UserService.php';
-require_once RAIZ_APP.'/VehicleService.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\ReserveService;
+use easyrent\includes\service\UserService;
+use easyrent\includes\service\VehicleService;
 
 class FormularioBuscarVehiculo extends Formulario {
 
