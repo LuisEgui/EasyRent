@@ -31,6 +31,6 @@ interface ReserveRepository extends Repository {
      * @param string $vin Vehicles's vin
      * @return mixed|null
      */
-    public function findAllByVin($vin);
+    public function findAllByVin($vin) : array;
 
 }

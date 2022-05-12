@@ -120,6 +120,15 @@ class ReserveService {
         return null;
     }
 
+    /**
+     * Returns the reserves related with a vehicle
+     *
+     * @return Damage[]|null Returns null when there is not an existing reserve with the same $idVehicle associated
+     */
+    public function readReservesByVehicle($idVehicle){
+        return $this->reserveRepository->findAllByVin($idVehicle);
+    }
+
     public function getAllPersonalReserves() {
         $user = $this->userRepository->findByEmail($_SESSION['email']);
         return $this->reserveRepository->findAllByUser($user->getId());

@@ -26,21 +26,6 @@ values (123456, '1234-BCB', 1, 'Madrid'),
 select *
 from Vehicle;
 
--- Insert example Damage row:
-insert into Damage(vehicle, area, type, isRepaired)
-
--- View inserted data:
-select *
-from Damage;
-
--- Insert example EvidenceDamage row:
-insert into EvidenceDamage(damage, image)
-values (1, 1);
-
--- View inserted data:
-select *
-from EvidenceDamage;
-
 -- Insert example User row:
 -- Password encrypted with BCrypt.
 -- Password: 1234
@@ -75,6 +60,14 @@ insert into Message(id, author, txt, sendTime, idParentMessage) values
 (1, 1, 'Bienvenido al foro', @INIT, NULL),
 (2, 1, 'Muchas gracias', ADDTIME(@INIT, '0:15:0'), 1),
 (3, 1, 'Otro mensaje', ADDTIME(@INIT, '25:15:0'), NULL);
+
+-- Insert example Damage row:
+insert into Damage(vehicle, user, title, description, evidenceDamage, area, type, isRepaired)
+values (123456, 1, 'Audi S8 rozado', 'Hay una raya en la parte lateral', null, 'general', 'minor', false);
+
+-- View inserted data:
+select *
+from Damage;
 
 -- Insert example Priority row:
 insert into Priority(level, price)

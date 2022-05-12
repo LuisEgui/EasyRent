@@ -82,6 +82,25 @@ class MysqlVehicleRepository extends AbstractMysqlRepository {
         return $vehicles;
     }
 
+    public function findAllVin() : array
+    {
+        $vehiclesID = [];
+
+        $sql = sprintf("select vin from Vehicle");
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_assoc()) {
+            $id = $row['vin'];
+            $vehiclesID[] = $id;
+        }
+
+        return $vehiclesID;
+    }
+
     public function findAllbyLocation($location) {
         $vehicles = [];
 

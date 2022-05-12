@@ -30,6 +30,7 @@ use easyrent\includes\persistance\repository\MysqlModelRepository;
 use easyrent\includes\persistance\repository\MysqlReserveRepository;
 use easyrent\includes\persistance\repository\MysqlAdvertisementRepository;
 use easyrent\includes\persistance\repository\MysqlPriorityRepository;
+use easyrent\includes\persistance\repository\MysqlDamageRepository;
 
 session_start();
 
@@ -42,6 +43,8 @@ $modelRepository = new MysqlModelRepository($db);
 $messageRepository = new MysqlMessageRepository($db);
 $priorityRepository = new MysqlPriorityRepository($db);
 $advertisementRepository = new MysqlAdvertisementRepository($db);
+$damageRepository = new MysqlDamageRepository($db);
+$modelRepository = new MysqlModelRepository($db);
 $GLOBALS['db_connector'] = $db;
 $GLOBALS['db_user_repository'] = $userRepository;
 $GLOBALS['db_image_repository'] = $imageRepository;
@@ -51,3 +54,4 @@ $GLOBALS['db_message_repository'] = $messageRepository;
 $GLOBALS['db_advertisement_repository'] = $advertisementRepository;
 $GLOBALS['db_priority_repository'] = $priorityRepository;
 $GLOBALS['db_reserve_repository'] = $reserveRepository;
+$GLOBALS['db_damage_repository'] = $damageRepository;
