@@ -23,7 +23,6 @@ function mostrarMenu() {
 		return "<a href='../index.php'>Inicio</a>
 				<a href='{$rutaApp}/src/chat.php'>Chat informar incidentes</a>
 				<a href='{$rutaApp}/src/tusreservas.php'>Tus reservas</a>
-				<a href='{$rutaApp}/src/incidente.php'>Generar Incidente</a>
 				<a href='{$rutaApp}/src/promociones.php'>Tus promociones</a>
 				<a href='{$rutaApp}/src/perfil.php'>Tu perfil</a>
 				<a href='{$rutaApp}/src/foro.php'>Foro</a>
