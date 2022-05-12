@@ -1,19 +1,20 @@
 <?php
 
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/ReserveService.php';
-require_once RAIZ_APP.'/UserService.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\ReserveService;
+use easyrent\includes\service\UserService;
 
 class FormularioActualizarReturnTimeReserva extends Formulario {
 
     private $reserveService;
-    
+
     public function __construct() {
         parent::__construct('formUpdateReserveReturnTime', ['urlRedireccion' => 'index.php']);
         $this->reserveService = ReserveService::getInstance();
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
 
         // Se generan los mensajes de error si existen.
@@ -39,7 +40,7 @@ class FormularioActualizarReturnTimeReserva extends Formulario {
 
 
     protected function procesaFormulario(&$datos) {
-        $reservePT = $datos['returnTime']; 
+        $reservePT = $datos['returnTime'];
         if ($this->reserveService->updateReserveReturnTime($_GET["id"], $reservePT))
             header("Location: {$this->urlRedireccion}");
         else

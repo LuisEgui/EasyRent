@@ -1,5 +1,7 @@
 <?php
 
+namespace easyrent\includes\persistance\entity;
+
 /**
  * Class for user entity.
  */
@@ -48,8 +50,8 @@ class Vehicle
      * @return void
      */
     public function __construct($vin, $licensePlate, $model, $location, $state = 'available', $timeStamp = null)
-    {   
-        
+    {
+
         $this->vin = $vin;
         $this->licensePlate = $licensePlate;
         $this->model = $model;

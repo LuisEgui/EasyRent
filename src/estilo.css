@@ -4,10 +4,9 @@ body {
 
 div#contenedor {
   width: 900px;
-  margin: auto;
   border: 1px solid black;
   background-color: #aaaaaa;
-  margin-top: 30px;
+  margin: 30px auto auto;
 }
 
 div.buscadorVehiculo {
@@ -197,7 +196,7 @@ div.dropdown-content {
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -311,7 +310,7 @@ button,
 a.boton {
   border: 1px solid black;
   font-size: 0.9em;
-  font-family: Arial;
+  font-family: Arial, serif;
   font-weight: 400;
 }
 
@@ -327,7 +326,7 @@ button,
 a.boton {
   border: 1px solid black;
   font-size: 0.9em;
-  font-family: Arial;
+  font-family: Arial, serif;
   font-weight: 400;
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace easyrent\includes\persistance\lists;
+namespace easyrent\includes\service\lists;
 
 use easyrent\includes\service\ModelService;
 
@@ -241,5 +241,5 @@ class VehicleList
                 }
                 break;
         }
-    } 
+    }
 }

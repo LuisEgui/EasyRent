@@ -2,12 +2,15 @@
 
 namespace easyrent\includes\service;
 
-use easyrent\includes\persistance\repository\MysqlReserveRepository;
+use easyrent\includes\persistance\entity\Reserve;
+use easyrent\includes\persistance\repository\Repository;
+use easyrent\includes\persistance\repository\ReserveRepository;
+use easyrent\includes\persistance\repository\UserRepository;
 
 /**
  * Reserve Service class.
- * 
- * It manages the logic of the reserve's actions. 
+ *
+ * It manages the logic of the reserve's actions.
  */
 class ReserveService {
 
@@ -15,7 +18,7 @@ class ReserveService {
      * @var ReserveRepository Reserve repository
      */
     private $reserveRepository;
-    
+
     /**
      * @var Repository Reserve repository
      */
@@ -33,8 +36,7 @@ class ReserveService {
 
     /**
      * Creates an ReserveService
-     * 
-     * @param ReserveRepository $reserveRepository Instance of an ReserveRepository
+     *
      * @return void
      */
     private function __construct() {
@@ -62,7 +64,6 @@ class ReserveService {
         $reservas = $this->reserveRepository->findAllByVin($vin);
         for($i = 0; $i < count($reservas); $i++) {
             if(($id !== null) && ($id === $reservas[$i]->getId())) $i++;
-            
             if(($reservas[$i]->getPickUpTime() < $pickUpTime) && ($reservas[$i]->getReturnTime() > $pickUpTime)) return false;
             if(($reservas[$i]->getPickUpTime() < $returnTime) && ($reservas[$i]->getReturnTime() > $returnTime)) return false;
             if(($pickUpTime < $reservas[$i]->getPickUpTime()) && ($reservas[$i]->getReturnTime() < $returnTime)) return false;
@@ -75,19 +76,19 @@ class ReserveService {
 
         $reservas = $this->reserveRepository->findAllByVin($vin);
         if($pickUpTime === '') {
-            for($i = 0; $i < count($reservas); $i++) {    
+            for($i = 0; $i < count($reservas); $i++) {
                 if(($reservas[$i]->getPickUpTime() < $returnTime) && ($reservas[$i]->getReturnTime() > $returnTime)) return false;
             }
         }
         else if($returnTime === '') {
-            for($i = 0; $i < count($reservas); $i++) {    
+            for($i = 0; $i < count($reservas); $i++) {
                 if(($reservas[$i]->getPickUpTime() < $pickUpTime) && ($reservas[$i]->getReturnTime() > $pickUpTime)) return false;
             }
         }
         else {
             if($pickUpTime >= $returnTime) return false;
             if($returnTime <= $pickUpTime) return false;
-            for($i = 0; $i < count($reservas); $i++) {    
+            for($i = 0; $i < count($reservas); $i++) {
                 if(($reservas[$i]->getPickUpTime() < $pickUpTime) && ($reservas[$i]->getReturnTime() > $pickUpTime)) return false;
                 if(($reservas[$i]->getPickUpTime() < $returnTime) && ($reservas[$i]->getReturnTime() > $returnTime)) return false;
                 if(($pickUpTime < $reservas[$i]->getPickUpTime()) && ($reservas[$i]->getReturnTime() < $returnTime)) return false;
@@ -97,9 +98,8 @@ class ReserveService {
     }
     /**
      * Persists a new reserve into the system
-     * 
-     * @param string $vin Unique vehicle identifier (vin = vehicle identification number) 
-     * @param string $usuario User id
+     *
+     * @param string $vin Unique vehicle identifier (vin = vehicle identification number)
      * @param string $state Reserve state. Possible values: 'reserved', 'pending', 'cancelled'.
      * @param string $pickupLocation Reserve pickup location
      * @param string $returnLocation Reserve return location
@@ -113,7 +113,7 @@ class ReserveService {
         $validReserve = $this->validateReserve($vin, $pickupTime, $returnTime, null);
         if ($validReserve) {
             $reserve = new Reserve(null, $vin, $idusuario,
-                            $state, $pickupLocation, $returnLocation, 
+                            $state, $pickupLocation, $returnLocation,
                             $pickupTime, $returnTime, $price);
             return $this->reserveRepository->save($reserve);
         }
@@ -168,14 +168,14 @@ class ReserveService {
         $this->reserveRepository->save($reserve);
         return true;
     }
-    
+
     public function updateReservePrice($id, $newPrice) {
         $reserve = $this->reserveRepository->findById($id);
         $reserve->setPrice($newPrice);
         $this->reserveRepository->save($reserve);
         return true;
     }
-    
+
     public function deleteReserve($id) {
         $this->reserveRepository->deleteById($id);
         return true;

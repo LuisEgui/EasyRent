@@ -3,8 +3,8 @@
 require_once '../vendor/autoload.php';
 require_once __DIR__.'/includes/config/config.php';
 
+use easyrent\includes\service\lists\ModelList;
 use easyrent\includes\service\ModelService;
-use easyrent\includes\persistance\lists\ModelList;
 
 $modelService = ModelService::getInstance();
 
@@ -51,7 +51,7 @@ $contenidoPrincipal = <<<EOS
             <th>ID Imagen</th>
             <th>Fecha de modificacion</th>
         </tr>
-EOS; 
+EOS;
 foreach($modelsList->getArray() as $model) {
     $contenidoPrincipal .= <<<EOS
         <tr>
@@ -66,7 +66,7 @@ foreach($modelsList->getArray() as $model) {
             <td>{$model->getTimeStamp()}</td>
         </tr>
     EOS;
-}  
+}
 $contenidoPrincipal .= <<<EOS
     </table>
     </div>

@@ -12,8 +12,8 @@ interface MessageRepository extends Repository
     /**
      * Returns a message entity from the repository given its author.
      * @param string $author Message's author.
-     * @return Message|null
+     * @return array
      */
-    public function findByAuthor($author) : ?Message;
+    public function findByAuthor($author) : array;
 }
 

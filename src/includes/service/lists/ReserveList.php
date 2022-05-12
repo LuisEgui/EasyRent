@@ -1,5 +1,7 @@
 <?php
 
+namespace easyrent\includes\service\lists;
+
 /**
  * Class for reserveList entity.
  */
@@ -197,5 +199,5 @@ class ReserveList
                 }
                 break;
         }
-    } 
+    }
 }

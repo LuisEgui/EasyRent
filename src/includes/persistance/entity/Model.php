@@ -1,5 +1,7 @@
 <?php
 
+namespace easyrent\includes\persistance\entity;
+
 /**
  * Class for model entity.
  */
@@ -59,7 +61,7 @@ class Model
     /**
      * Creates a Model
      *
-     * @param string $m_id Unique model identifier 
+     * @param string $m_id Unique model identifier
      * @param string $brand Model brand
      * @param string $model Model model
      * @param string $submodel Model submodel

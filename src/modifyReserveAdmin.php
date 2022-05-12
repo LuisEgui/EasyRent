@@ -1,7 +1,9 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioModificarReserva.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
+
+use easyrent\includes\forms\FormularioModificarReserva;
 
 $defaultFunctions = array('cmpId', 'cmpVIN', 'cmpUser', 'cmpPickupLocation', 'cmpReturnLocation', 'cmpPickupDate', 'cmpReturnDate', 'cmpPrice', 'cmpState');
 $functionNames = ['cmpId' => 'ID Reserva', 'cmpVIN' => 'VIN Vehiculo', 'cmpUser' => 'ID Usuario', 'cmpPickupLocation' => 'Ubicacion recogida', 'cmpReturnLocation' => 'Ubicacion devolucion', 'cmpPickupDate' => 'Fecha recogida', 'cmpReturnDate' => 'Fecha devolucion', 'cmpPrice' => 'Precio', 'cmpState' => 'Estado'];

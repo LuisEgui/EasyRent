@@ -2,9 +2,9 @@
 
 namespace easyrent\includes\forms;
 
+use easyrent\includes\service\lists\VehicleList;
 use easyrent\includes\service\VehicleService;
 use easyrent\includes\service\ModelService;
-use easyrent\includes\persistance\lists\VehicleList;
 
 class FormularioActualizarVehiculo extends Formulario {
 
@@ -88,7 +88,7 @@ class FormularioActualizarVehiculo extends Formulario {
         if(!isset($datos['updatedVehicleVIN']))
             $this->errores[] = 'Debe seleccionar un vehiculo.';
 
-        if (count($this->errores) === 0) { 
+        if (count($this->errores) === 0) {
             $this->changeUlrRedireccion("{$this->urlRedireccion}?vinVehicleToUpdate={$datos['updatedVehicleVIN']}");
             header("Location: {$this->urlRedireccion}");
         }

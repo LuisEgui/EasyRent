@@ -1,26 +1,27 @@
 <?php
 
-require_once __DIR__.'/Formulario.php';
-require_once __DIR__.'/Reserve.php';
-require_once __DIR__.'/User.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\ReserveService;
+use easyrent\includes\service\UserService;
 
 class FormularioReserva extends Formulario {
 
     private $reserveService;
     private $userService;
-    
+
     public function __construct() {
         parent::__construct('formReserve', ['urlRedireccion' => 'reservado.php']);
         $this->reserveService = ReserveService::getInstance();
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['id', 'email', 'localizacion', 'fecha'], $this->errores, 'span', array('class' => 'error'));
-        
+
         $user = $this->userService->readUserByEmail($_SESSION['email']);
         $id = $user->getId();
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
@@ -120,15 +121,15 @@ class FormularioReserva extends Formulario {
         $idusuario = $datos['usuario'];
         $state = 0;
         $pickupLocation = $datos['pickupLocation'];
-        $returnLocation = $datos['returnLocation']; 
+        $returnLocation = $datos['returnLocation'];
         $pickupTime = $datos['pickupTime'];
-        $returnTime = $datos['returnTime']; 
+        $returnTime = $datos['returnTime'];
         $price = $datos['price'];
 
         if (count($this->errores) === 0) {
-            $reserva = $this->reserveService->createReserve($vehicle, $idusuario, $state, $pickupLocation, $returnLocation, 
+            $reserva = $this->reserveService->createReserve($vehicle, $idusuario, $state, $pickupLocation, $returnLocation,
             $pickupTime, $returnTime, $price);
-        
+
             if (!$reserva)
                 $this->errores[] = "no se ha creado la reserva";
             else

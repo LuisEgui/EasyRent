@@ -7,11 +7,12 @@
     "squizlabs/php_codesniffer": "3.*",
     "ext-fileinfo": "*",
     "ext-mbstring": "*",
-    "phpdocumentor/phpdocumentor": "v3.*"
+    "phpdocumentor/phpdocumentor": "v3.3.1"
   },
   "autoload": {
     "psr-4": {
-      "easyrent\\": "src/"
+      "easyrent\\": "src/",
+      "test\\": "test/"
     }
   },
   "config": {

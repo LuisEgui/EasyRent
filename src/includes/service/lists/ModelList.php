@@ -1,8 +1,6 @@
 <?php
 
-namespace easyrent\includes\persistance\lists;
-
-//use easyrent\includes\service\ModelService;
+namespace easyrent\includes\service\lists;
 
 /**
  * Class for modelList entity.
@@ -155,5 +153,5 @@ class ModelList
                 }
                 break;
         }
-    } 
+    }
 }

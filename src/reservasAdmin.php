@@ -1,10 +1,10 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Reserve.php';
-require_once __DIR__.'/includes/MysqlReserveRepository.php';
-require_once __DIR__.'/includes/ReserveService.php';
-require_once __DIR__.'/includes/ReserveList.php';
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
+
+use easyrent\includes\service\lists\ReserveList;
+use easyrent\includes\service\ReserveService;
 
 $reserveService = ReserveService::getInstance();
 
@@ -14,7 +14,7 @@ $functionNames = ['cmpId' => 'ID Reserva', 'cmpVIN' => 'VIN Vehiculo', 'cmpUser'
 $reservesList = new ReserveList($reserveService->getAllReserves());
 
 if(isset($_GET['orderReservesBy']) && in_array($_GET['orderReservesBy'], $defaultFunctions)){
-    $vehiclesList->orderBy($_GET['orderReservesBy']);
+    $reservesList->orderBy($_GET['orderReservesBy']);
 }
 
 $rutaApp = RUTA_APP;
@@ -50,7 +50,7 @@ $contenidoPrincipal = <<<EOS
             <th>Precio</th>
             <th>Estado</th>
         </tr>
-EOS; 
+EOS;
 foreach($reservesList->getArray() as $reserve) {
     //$vehicleModel = $modelService->readModelById($vehicle->getModel());
     $contenidoPrincipal .= <<<EOS
@@ -66,7 +66,7 @@ foreach($reservesList->getArray() as $reserve) {
             <td>{$reserve->getState()}</td>
         </tr>
     EOS;
-}  
+}
 $contenidoPrincipal .= <<<EOS
     </table>
     </div>
@@ -90,44 +90,44 @@ EOS;
 for ($i = 0; $i < count($reservas); $i++) {
     $contenidoPrincipal .= <<<EOS
     <div class="v">
-        <h2>Reserva 
+        <h2>Reserva
     EOS;
     $contenidoPrincipal .= $i + 1;
     $contenidoPrincipal .= <<<EOS
         </h2>
         <p>
-        Matricula: 
+        Matricula:
     EOS;
     $vin = $reservas[$i]->getVehicle();
     $contenidoPrincipal .= $reserveService->getLicensePlate($vin);
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Estado: 
+        Estado:
     EOS;
     $contenidoPrincipal .= $reservas[$i]->getState();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Localización de recogida: 
+        Localización de recogida:
     EOS;
     $contenidoPrincipal .= $reservas[$i]->getPickUpLocation();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Localización de devolución:  
+        Localización de devolución:
     EOS;
     $contenidoPrincipal .= $reservas[$i]->getReturnLocation();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Hora recogida: 
+        Hora recogida:
     EOS;
     $contenidoPrincipal .= $reservas[$i]->getPickUpTime();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Hora devolución: 
+        Hora devolución:
     EOS;
     $contenidoPrincipal .= $reservas[$i]->getReturnTime();
     $contenidoPrincipal .= <<<EOS
@@ -142,7 +142,7 @@ for ($i = 0; $i < count($reservas); $i++) {
     EOS;
         $contenidoPrincipal .= $reservas[$i]->getId();
         $contenidoPrincipal .= <<<EOS
-        ">Modificar</a> 
+        ">Modificar</a>
         </div>
     EOS;
 }*/

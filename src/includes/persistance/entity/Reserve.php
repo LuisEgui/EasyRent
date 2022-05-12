@@ -1,5 +1,7 @@
 <?php
 
+namespace easyrent\includes\persistance\entity;
+
 /**
  * Class for Reserve entity.
  */
@@ -50,11 +52,11 @@ class Reserve {
     const RESERVED = 0;
     const PENDING = 1;
 
-    const TYPES_STATE = [self::RESERVED => 'Reservado', self::PENDING => 'Pendiente'];   
-    
+    const TYPES_STATE = [self::RESERVED => 'Reservado', self::PENDING => 'Pendiente'];
+
     /**
      * Creates a Reserve
-     * 
+     *
      * @param string $vehicle Unique vehicle identifier (vin = vehicle identification number)
      * @param string $user Unique user id
      * @param string $state Reserve state. Possible values: 'reserved', 'pending', 'cancelled'.
@@ -127,7 +129,7 @@ class Reserve {
     {
         return $this->pickupLocation;
     }
-    
+
     /**
      * Returns reserve's returnLocation
      * @return string returnLocation
@@ -136,28 +138,28 @@ class Reserve {
     {
         return $this->returnLocation;
     }
-    
+
     /**
      * Returns reserve's pickUpTime
-     * @return  datetime pickUpTime
+     * @return string pickUpTime
      */
     public function getPickUpTime()
     {
         return $this->pickupTime;
     }
-    
+
     /**
      * Returns reserve's return Time
-     * @return  datetime returnocation
+     * @return string returnocation
      */
     public function getReturnTime()
     {
         return $this->returnTime;
     }
-    
+
     /**
      * Returns reserve's price
-     * @return  float price
+     * @return float price
      */
     public function getPrice()
     {
@@ -175,24 +177,24 @@ class Reserve {
 
     /**
      * Sets reserve´s vehicle
-     * @param mediumint $vehicle vehicle´s id
+     * @param string $vehicle vehicle´s id
      * @return void
      */
     public function setVehicle($vehicle)
     {
         $this->vehicle = $vehicle;
     }
-    
+
     /**
      * Sets reserve´s user
-     * @param mediumint $user user´s id who made the reserve
+     * @param string $user user´s id who made the reserve
      * @return void
      */
     public function setUser($user)
     {
         $this->user = $user;
     }
-    
+
     /**
      * Sets reserve´s pickUpLocation
      * @param string $pickUpLocation reserve´s pickUpLocation
@@ -202,7 +204,7 @@ class Reserve {
     {
         $this->pickupLocation = $pickupLocation;
     }
-    
+
     /**
      * Sets reserve´s pickUpTime
      * @param datetime $pickUpTime reserve´s pickUpTime
@@ -222,7 +224,7 @@ class Reserve {
     {
         $this->returnLocation = $returnLocation;
     }
-    
+
     /**
      * Sets reserve´s returnTime
      * @param datetime $returnTime reserve´s returnTimme
@@ -232,7 +234,7 @@ class Reserve {
     {
         $this->returnTime = $returnTime;
     }
-    
+
     /**
      * Sets reserve´s state
      * @param string $state reserve´s state
@@ -242,7 +244,7 @@ class Reserve {
     {
         $this->state = $state;
     }
-    
+
     /**
      * Sets reserve´s price
      * @param float $price reserve´s price
@@ -252,5 +254,5 @@ class Reserve {
     {
         $this->price = $price;
     }
-    
+
 }

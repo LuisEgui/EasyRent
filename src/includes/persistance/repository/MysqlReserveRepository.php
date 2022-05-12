@@ -3,14 +3,13 @@
 namespace easyrent\includes\persistance\repository;
 
 use easyrent\includes\persistance\entity\Reserve;
-use easyrent\includes\persistance\entity\User;
 
 class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveRepository {
 
     public function __construct(MysqlConnector $connector) {
         parent::__construct($connector);
     }
-    
+
     public function count() : int {
         $sql = 'select count(id) as num_reserves from Reserve';
         $stmt = $this->db->prepare($sql);
@@ -33,8 +32,8 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
 
         if ($result !== false && $result->num_rows > 0) {
             $obj = $result->fetch_object();
-            $reserve = new Reserve($obj->id, $obj->vehicle, $obj->user, 
-                            $obj->state, $obj->pickupLocation, $obj->returnLocation, 
+            $reserve = new Reserve($obj->id, $obj->vehicle, $obj->user,
+                            $obj->state, $obj->pickupLocation, $obj->returnLocation,
                             $obj->pickupTime , $obj->returnTime, $obj->price);
         }
 
@@ -46,7 +45,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
     public function findByVehicleAndUserAndPickUptime($vehicle, $user, $pickUpTime) {
         $reservas = [];
 
-        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where vehicle = '%s', user = '%d', pickupTime = '%s'", 
+        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where vehicle = '%s', user = '%d', pickupTime = '%s'",
             $vehicle, $user, $pickUpTime);
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
@@ -58,7 +57,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
             $reserva = new Reserve(null, $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'], $row['pickupTime'], $row['returnTime'], $row['price']);
             $reservas[] = $reserva;
         }
-        
+
         return $reservas;
     }
 
@@ -74,11 +73,11 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         $stmt->close();
 
         while ($row = $result->fetch_assoc()) {
-            $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'], 
+            $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'],
                 $row['pickupTime'], $row['returnTime'], $row['price']);
             $reservas[] = $reserve;
         }
-    
+
         return $reservas;
     }
 
@@ -94,7 +93,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         $stmt->close();
 
         while ($row = $result->fetch_assoc()) {
-            $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'], 
+            $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'],
                 $row['pickupTime'], $row['returnTime'], $row['price']);
             $reservas[] = $reserve;
         }
@@ -112,7 +111,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         $stmt->close();
 
         while ($row = $result->fetch_assoc()) {
-            $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'], 
+            $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'],
                 $row['pickupTime'], $row['returnTime'], $row['price']);
             $reservas[] = $reserve;
         }
@@ -127,10 +126,10 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute();
             $stmt->close();
-            
+
             if (!$result)
                 error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
-            
+
             return $result;
         }
 
@@ -163,14 +162,14 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
                         $this->db->getConnection()->real_escape_string($reserve->getPickUpTime()),
                         $this->db->getConnection()->real_escape_string($reserve->getReturnTime()),
                         $reserve->getPrice(), $reserve->getId());
-                
+
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
                 $stmt->close();
 
                 if ($result)
                     return $reserve;
-                else 
+                else
                     error_log("Database error: ({$this->db->getConnection()->errno}) {$this->db->getConnection()->error}");
                 // If the reserve is not in the database, we insert it.
             } else {
@@ -182,7 +181,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
                         $this->db->getConnection()->real_escape_string($reserve->getPickUpTime()),
                         $this->db->getConnection()->real_escape_string($reserve->getReturnTime()),
                         $reserve->getPrice());
-                
+
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
                 $stmt->close();

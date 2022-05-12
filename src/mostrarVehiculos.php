@@ -4,7 +4,7 @@
 require_once '../vendor/autoload.php';
 require_once __DIR__.'/includes/config/config.php';
 
-use easyrent\includes\persistance\entity\Vehicle;
+use easyrent\includes\service\ModelService;
 use easyrent\includes\service\VehicleService;
 use easyrent\includes\service\ReserveService;
 
@@ -35,7 +35,7 @@ else{
     if(isset($_GET['rDate'])){
         $returnDate = $_GET['rDate'];
     }
-    for ($i = 0; $i < count($vehiculos); $i++) { 
+    for ($i = 0; $i < count($vehiculos); $i++) {
         if(!$reserveService->findIfExistingReserve($vehiculos[$i]->getVin(), $pickupDate, $returnDate)) {
             array_splice($vehiculos, $i, 1);
             $i--;
@@ -77,11 +77,11 @@ for ($i = 0; $i < count($vehiculos); $i++) {
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Location: 
+        Location:
     EOS;
     $contenidoPrincipal .= $vehiculos[$i]->getLocation();
     $contenidoPrincipal .= <<<EOS
-        </p>        
+        </p>
         <p>
         Fuel type:
     EOS;
@@ -106,7 +106,7 @@ for ($i = 0; $i < count($vehiculos); $i++) {
     EOS;
         $contenidoPrincipal .= $vehiculos[$i]->getLocation();
         $contenidoPrincipal .= <<<EOS
-        ">Reservar</a> 
+        ">Reservar</a>
         </div>
     EOS;
     }

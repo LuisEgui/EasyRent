@@ -63,6 +63,18 @@ class UserService
     }
 
     /**
+     * Returns the user from the system given an user's id.
+     *
+     * @param string $id User's id.
+     * @return User|null Returns the user from the database.
+     */
+    public function readUserById($id) : ?User
+    {
+        $user = $this->userRepository->findById($id);
+        return $user;
+    }
+
+    /**
      * Creates a password hash.
      * This algorithm is using BCrypt with 12 rounds by default.
      * @link https://www.php.net/manual/en/function.password-hash
@@ -100,7 +112,7 @@ class UserService
      * call to this function.
      * @return bool
      */
-    private function isLogged()
+    public function isLogged()
     {
         return isset($_SESSION['email']) && isset($_SESSION['login']);
     }

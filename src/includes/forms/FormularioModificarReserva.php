@@ -1,8 +1,9 @@
 <?php
 
-require_once __DIR__.'/ReserveList.php';
-require_once __DIR__.'/ReserveService.php';
-require_once RAIZ_APP.'/Formulario.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\lists\ReserveList;
+use easyrent\includes\service\ReserveService;
 
 class FormularioModificarReserva extends Formulario {
 
@@ -82,7 +83,7 @@ class FormularioModificarReserva extends Formulario {
         if(!isset($datos['updatedReserveID']))
             $this->errores[] = 'Debe seleccionar una reserva.';
 
-        if (count($this->errores) === 0) { 
+        if (count($this->errores) === 0) {
             $this->changeUlrRedireccion("{$this->urlRedireccion}?id={$datos['updatedReserveID']}");
             header("Location: {$this->urlRedireccion}");
         }

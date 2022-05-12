@@ -5,7 +5,7 @@ require_once __DIR__.'/includes/config/config.php';
 
 use easyrent\includes\service\VehicleService;
 use easyrent\includes\service\ModelService;
-use easyrent\includes\persistance\lists\VehicleList;
+use easyrent\includes\service\lists\VehicleList;
 
 $vehicleService = VehicleService::getInstance();
 $modelService = ModelService::getInstance();
@@ -56,7 +56,7 @@ $contenidoPrincipal = <<<EOS
             <th>Estado</th>
             <th>Fecha de modificacion</th>
         </tr>
-EOS; 
+EOS;
 foreach($vehiclesList->getArray() as $vehicle) {
     $vehicleModel = $modelService->readModelById($vehicle->getModel());
     $contenidoPrincipal .= <<<EOS
@@ -75,7 +75,7 @@ foreach($vehiclesList->getArray() as $vehicle) {
             <td>{$vehicle->getTimeStamp()}</td>
         </tr>
     EOS;
-}  
+}
 $contenidoPrincipal .= <<<EOS
     </table>
     </div>

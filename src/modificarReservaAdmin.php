@@ -1,12 +1,14 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioCancelarReserva.php';
-require_once __DIR__.'/includes/FormularioActualizarReturnLocationReserva.php';
-require_once __DIR__.'/includes/FormularioActualizarPickupTimeReserva.php';
-require_once __DIR__.'/includes/FormularioActualizarReturnTimeReserva.php';
-require_once __DIR__.'/includes/FormularioActualizarVehiculoReserva.php';
-require_once __DIR__.'/includes/FormularioActualizarPrecioReserva.php';
+use easyrent\includes\forms\FormularioActualizarPickupTimeReserva;
+use easyrent\includes\forms\FormularioActualizarPrecioReserva;
+use easyrent\includes\forms\FormularioActualizarReturnLocationReserva;
+use easyrent\includes\forms\FormularioActualizarReturnTimeReserva;
+use easyrent\includes\forms\FormularioActualizarVehiculoReserva;
+use easyrent\includes\forms\FormularioCancelarReserva;
+
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
 
 $returnLocationForm = new FormularioActualizarReturnLocationReserva();
 $htmlFormReturnLocation = $returnLocationForm->gestiona();

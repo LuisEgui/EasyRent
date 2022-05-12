@@ -1,5 +1,7 @@
 <?php
 
+// phpcs:ignoreFile
+
 function mostrarSaludo() {
 	if (isset($_SESSION['login']) && ($_SESSION['login']===true)) {
 		return "Bienvenido, {$_SESSION['email']} <a href='logout.php'>(salir)</a>";
@@ -10,7 +12,6 @@ function mostrarSaludo() {
 
 function mostrarMenu() {
     $rutaApp = RUTA_APP;
-	$html='';
 	if (isset($_SESSION["login"]) && ($_SESSION["login"]===true) && $_SESSION['esAdmin']) {
 		return "<a href='{$rutaApp}/src/index.php'>Inicio</a>
 				<a href='{$rutaApp}/src/admin.php'>Administrar</a>
@@ -32,7 +33,6 @@ function mostrarMenu() {
 				<a href='{$rutaApp}/src/foro.php'>Foro</a>
 				<a href='{$rutaApp}/src/Contacto.php'>Contacto</a>";
 	}
-	return $html;
 }
 
 ?>

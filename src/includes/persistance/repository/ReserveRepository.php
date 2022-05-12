@@ -2,11 +2,14 @@
 
 namespace easyrent\includes\persistance\repository;
 
+use easyrent\includes\persistance\entity\Reserve;
+use easyrent\includes\persistance\entity\User;
+
 /**
  * A specific repository for Users
  */
 interface ReserveRepository extends Repository {
-    
+
     /**
      * Returns an reserve entity from the repository given its primary key: vehicle, user, pickup time.
      * @param string $vehicle Vehicle's identification number (vin)
@@ -18,7 +21,7 @@ interface ReserveRepository extends Repository {
 
     /**
      * Returns all reserves from the repository given an user
-     * @param user $user User's id
+     * @param string $user User's id
      * @return mixed|null
      */
     public function findAllByUser($user);

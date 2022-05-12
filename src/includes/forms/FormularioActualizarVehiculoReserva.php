@@ -1,23 +1,24 @@
 <?php
 
-require_once RAIZ_APP.'/Formulario.php';
-require_once RAIZ_APP.'/ReserveService.php';
-require_once RAIZ_APP.'/UserService.php';
-require_once RAIZ_APP.'/VehicleService.php';
+namespace easyrent\includes\forms;
+
+use easyrent\includes\service\ReserveService;
+use easyrent\includes\service\UserService;
+use easyrent\includes\service\VehicleService;
 
 class FormularioActualizarVehiculoReserva extends Formulario {
 
     private $reserveService;
 
     private $vehicleService;
-    
+
     public function __construct() {
         parent::__construct('formUpdateReserveVehicle', ['urlRedireccion' => 'index.php']);
         $this->vehicleService = VehicleService::getInstance();
         $this->reserveService = ReserveService::getInstance();
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
-    
+
     protected function generaCamposFormulario(&$datos) {
 
         $vehiculos = $this->vehicleService->readAllVehicles();
@@ -37,15 +38,15 @@ class FormularioActualizarVehiculoReserva extends Formulario {
         for ($i = 0; $i < count($vehiculos); $i++) {
             //hacer algo para que vehiculos reservados no salgan
             $html .= <<<EOF
-                <option value=" 
+                <option value="
             EOF;
             $html .= $vehiculos[$i]->getVin();
             $html .= <<<EOF
-                "> 
+                ">
             EOF;
             $html .= $vehiculos[$i]->getVin();
             $html .= <<<EOF
-                </option> 
+                </option>
             EOF;
         }
         $html .= <<<EOF
@@ -61,7 +62,7 @@ class FormularioActualizarVehiculoReserva extends Formulario {
 
 
     protected function procesaFormulario(&$datos) {
-        $reserve = $datos['vehicle']; 
+        $reserve = $datos['vehicle'];
         if ($this->reserveService->updateReserveVehicle($_GET["id"], $reserve))
             header("Location: {$this->urlRedireccion}");
         else
