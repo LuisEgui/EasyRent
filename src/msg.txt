@@ -1,0 +1,1 @@
+<p><span class="name">Administrador -> Luison: </span><span class="txt">Hola</span></p>
