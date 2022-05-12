@@ -3,21 +3,35 @@ body {
 }
 
 div#contenedor {
-  width: 900px;
+  margin: auto;
   border: 1px solid black;
   background-color: #aaaaaa;
-  margin: 30px auto auto;
+  margin-top: 30px;
+  display: grid;
+  grid-template-rows: auto auto auto auto auto;
+  grid-template-columns: auto auto auto;
+  width: 100%;
+  height: 100%;
+}
+
+aside#sidebarIzq {
+  height: auto;
+  width: auto;
+  grid-column: 1 / 4;
+  grid-row: 2 / 3;
+}
+
+aside#sidebarDer {
+  height: auto;
+  width: auto;
+  grid-column: 1 / 4;
+  grid-row: 4 / 5;
 }
 
 div.buscadorVehiculo {
-  text-align: center;
-  margin: auto;
-  width: 60%;
-  border: 3px solid #303030;
-  padding: 10px;
-}
-
-div.infoclient {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto auto auto auto;
   text-align: center;
   margin: auto;
   width: 60%;
@@ -35,6 +49,30 @@ div.promociones {
   margin: auto;
   text-align: center;
   padding: 10px;
+  grid-row: 3 / 4;
+  grid-column: 1 / 4;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: auto auto auto;
+  width: 100%;
+}
+
+.tituloProm {
+  position: absolute;
+  left: 580px;
+  top: 625px;
+}
+
+div.administracion {
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+  grid-row: 3 / 4;
+  grid-column: 1 / 4;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: auto;
+  width: auto;
 }
 
 div#admin {
@@ -55,19 +93,11 @@ div.v h2 {
   text-align: center;
 }
 
-div#info {
-  margin: auto;
-  border: 3px solid #303030;
-  padding: 10px;
-}
-
 div#promo {
-  float: left;
   margin: 10px;
-  width: 20%;
-  height: 20%;
+  width: auto;
+  height: auto;
   border: 3px solid #303030;
-  padding: 10px;
 }
 
 div.vehiculos {
@@ -91,14 +121,19 @@ div#fechas {
 
 header {
   padding: 30px;
-  height: 100px;
-  background-color: #303030;
+  grid-column: 1 / 4;
+  background-color: rgba(247, 167, 19, 0.926);
   color: white;
+}
+
+div.navegador {
+  padding: 30px;
+  height: 100px;
 }
 
 header a,
 header a:visited {
-  color: white;
+  color: rgb(255, 255, 255);
   font-weight: bold;
   text-decoration: none;
 }
@@ -114,7 +149,7 @@ nav {
   float: left;
   width: 170px;
   height: 400px;
-  background-color: #dddddd;
+  background-color: #ff0000;
 }
 
 nav a,
@@ -129,35 +164,45 @@ nav a:hover {
   text-decoration: underline;
 }
 
-aside#sidebarDer {
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  padding: 1rem;
+aside {
+  padding: 10px;
+  float: right;
+  width: 170px;
+  height: 400px;
   background-color: #dddddd;
 }
 
-aside#sidebarIzq {
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  padding: 1rem;
-  background-color: #dddddd;
+.imagenBanner {
+  width: 100%;
+  height: 100px;
+}
+
+.packLeft {
+  position: absolute;
+  left: 300px;
+  top: 700px;
+}
+.packRight {
+  position: absolute;
+  left: 700px;
+  top: 700px;
 }
 
 main {
   padding: 10px;
   min-height: 600px;
-  width: auto;
+  width: 1233px;
   background-color: white;
 }
 
 footer {
   clear: both;
   padding: 20px;
-  background-color: #303030;
+  background-color: rgba(247, 167, 19, 0.926);
   color: white;
   text-align: center;
+  grid-column: 1 / 4;
+  grid-row: 5 / 6;
 }
 
 footer a,
@@ -195,8 +240,8 @@ div.dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -310,7 +355,7 @@ button,
 a.boton {
   border: 1px solid black;
   font-size: 0.9em;
-  font-family: Arial, serif;
+  font-family: Arial;
   font-weight: 400;
 }
 
@@ -326,7 +371,7 @@ button,
 a.boton {
   border: 1px solid black;
   font-size: 0.9em;
-  font-family: Arial, serif;
+  font-family: Arial;
   font-weight: 400;
 }
 
@@ -336,4 +381,55 @@ a.boton {
 
 a.deshabilitado {
   color: rgba(16, 16, 16, 0.3);
+}
+
+form#inrow {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto auto auto auto;
+  text-align: center;
+  margin: auto;
+  width: auto;
+  border: 3px solid #303030;
+  padding: 10px;
+}
+
+div.infoclient {
+  text-align: center;
+  margin: auto;
+  width: 60%;
+  border: 3px solid #303030;
+  padding: 10px;
+}
+
+div.administracion {
+  display: grid;
+  grid-template-rows: auto auto auto auto auto auto;
+  grid-template-columns: auto;
+  text-align: center;
+  width: 100%;
+}
+
+div.administracion.h2 {
+  grid-column: 1/4;
+}
+
+div#info {
+  grid-column: 1/4;
+  margin: auto;
+  border: 3px solid #303030;
+  padding: 10px;
+  width: 1000px;
+  height: 100%;
+  background: rgba(247, 167, 19, 0.926);
+}
+
+div#promo {
+  margin: auto;
+  width: 30%;
+  height: 30%;
+  margin: auto;
+  border: 3px solid #303030;
+  padding: 10px;
+  text-align: center;
 }

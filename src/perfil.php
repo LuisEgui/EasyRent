@@ -45,7 +45,6 @@ if ($user) {
 
     $contenidoPrincipal .= <<<EOS
     <a href='{$rutaApp}/src/modperfil.php'>Modificar datos</a>
-    </div>
 
     <div class="promociones">
     <h2>Reservas</h2>

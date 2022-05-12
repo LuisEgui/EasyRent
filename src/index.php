@@ -14,7 +14,7 @@ $contenidoPrincipal = <<<EOS
   $htmlFormSearch
 
   <div class="promociones">
-    <h2>Promociones</h2>
+    <h2 class="tituloProm">Promociones</h2>
     <div id="info">
     <h3>Información</h3>
     <p>
@@ -23,14 +23,14 @@ $contenidoPrincipal = <<<EOS
     </p>
     </div>
 
-    <div id="promo-s">
+    <div class="packLeft" id="promo-s">
     <h4>Pack S</h4>
     <p>
       10% de descuento para nuevos clientes
     </p>
     </div>
 
-    <div id="promo-m">
+    <div class="packRight" id="promo-m">
     <h4>Pack M</h4>
     <p>
       20% de descuento al completar 20 reservas

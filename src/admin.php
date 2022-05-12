@@ -6,7 +6,7 @@ require_once __DIR__.'/includes/config/config.php';
 $tituloPagina = 'Admin';
 
 $contenidoPrincipal = <<<EOS
-    <div class="promociones">
+    <div class="administracion">
     <h2>Administrar</h2>
     <div class="info">
     <a href="vehiclesAdmin.php">Administrar vehiculos</a>
