@@ -155,5 +155,6 @@ create table
       banner bigint unsigned,
       releaseDate datetime not null,
       endDate datetime not null,
-      priority bigint unsigned not null
+      priority bigint unsigned not null,
+      foreign key (banner) references Image(img_id)
 );
