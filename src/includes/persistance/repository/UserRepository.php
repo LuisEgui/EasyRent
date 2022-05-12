@@ -16,4 +16,8 @@ interface UserRepository extends Repository {
      */
     public function findByEmail($email): ?User;
 
+    public function findAllIDNoAdmin();
+
+    public function findAllNoAdmin();
+
 }

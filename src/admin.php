@@ -15,7 +15,10 @@ $contenidoPrincipal = <<<EOS
     <a href="modelsAdmin.php">Administrar modelo</a>
     </div>
     <div class="info">
-        <a href="reservasAdmin.php">Administrar reservas</a>
+    <a href="incidentesAdmin.php">Administrar incidentes</a>
+    </div>
+    <div class="info">
+    <a href="reservasAdmin.php">Administrar reservas</a>
     </div>
     <div class="info">
     <a href="nuevoAnuncio.php">Añadir anuncio</a>

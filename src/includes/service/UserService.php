@@ -52,6 +52,26 @@ class UserService
     }
 
     /**
+     * Returns all the users in the system, except the admin.
+     *
+     * @return array Returns the users from the database.
+     */
+    public function readAllUsersNoAdmin()
+    {
+        return $this->userRepository->findAllNoAdmin();
+    }
+
+    /**
+     * Returns all the users id in the system, except the admin one.
+     *
+     * @return array Returns the users id from the database.
+     */
+    public function readAllUsersIDNoAdmin()
+    {
+        return $this->userRepository->findAllIDNoAdmin();
+    }
+
+    /**
      * Returns the user from the system given an user's email.
      *
      * @param string $email User's email.

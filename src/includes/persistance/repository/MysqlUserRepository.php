@@ -81,6 +81,48 @@ class MysqlUserRepository extends AbstractMysqlRepository implements UserReposit
         return $users;
     }
 
+    public function findAllNoAdmin()
+    {
+        $users = [];
+
+        $sql = sprintf("select * from User");
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_assoc()) {
+            if($row['role'] !== "admin"){
+                $user = new User($row['u_id'], $row['email'], $row['password'], $row['role'], $row['userImg']);
+                $users[] = $user;
+            }
+        }
+
+        return $users;
+    }
+
+    public function findAllIDNoAdmin()
+    {
+        $usersID = [];
+
+        $sql = sprintf("select u_id, role from User");
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        while ($row = $result->fetch_assoc()) {
+            if($row['role'] !== "admin"){
+                $id = $row['u_id'];
+                $usersID[] = $id;
+            }
+        }
+
+        return $usersID;
+    }
+
     public function deleteById($id) : bool
     {
         // Check if the user already exists

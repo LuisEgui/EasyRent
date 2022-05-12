@@ -61,18 +61,22 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         return $reservas;
     }
 
-    public function findAllByVin($vin) {
+    public function findAllByVin($vin) : array
+    {
         $reservas = [];
 
-        $sql = sprintf("select id, vehicle, user, state, pickupLocation, returnLocation, pickupTime, returnTime, price from Reserve where vehicle = '%d'",
+        if(!isset($vin))
+            return $reservas;
+
+        $sql = sprintf("select * from Reserve where vehicle = '%d'",
                         $vin);
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
         $result = $stmt->get_result();
         $stmt->close();
-
         while ($row = $result->fetch_assoc()) {
+
             $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'],
                 $row['pickupTime'], $row['returnTime'], $row['price']);
             $reservas[] = $reserve;
