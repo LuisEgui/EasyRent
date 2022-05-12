@@ -114,7 +114,7 @@ create table
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
     foreign key (vehicle) references Vehicle(vin),
     foreign key (evidenceDamage) references Image(img_id),
-    foreign key (user) references User(u_id),
+    foreign key (user) references User(u_id)
   );
 
 -- Aux: check Damage fields:
