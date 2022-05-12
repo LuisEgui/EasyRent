@@ -61,7 +61,8 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         return $reservas;
     }
 
-    public function findAllByVin($vin) : array{
+    public function findAllByVin($vin) : array
+    {
         $reservas = [];
 
         if(!isset($vin))
@@ -75,7 +76,7 @@ class MysqlReserveRepository extends AbstractMysqlRepository implements ReserveR
         $result = $stmt->get_result();
         $stmt->close();
         while ($row = $result->fetch_assoc()) {
-            
+
             $reserve = new Reserve($row['id'], $row['vehicle'], $row['user'], $row['state'], $row['pickupLocation'], $row['returnLocation'],
                 $row['pickupTime'], $row['returnTime'], $row['price']);
             $reservas[] = $reserve;

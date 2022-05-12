@@ -8,7 +8,6 @@ define('RAIZ_APP', __DIR__);
 define('RUTA_APP', '/sw-practices');
 define('RUTA_USER_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\\src\\includes\\img', 'usr']));
 define('RUTA_VEHICLE_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\\src\\includes\\img', 'vehicle']));
-define('RUTA_DAMAGE_IMAGES', implode(DIRECTORY_SEPARATOR, [__DIR__.'\\src\\includes\\img', 'damage']));
 define('RUTA_IMGS', RUTA_APP.'/doc/web/images');
 
 /**
