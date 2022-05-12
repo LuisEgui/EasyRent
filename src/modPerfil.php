@@ -23,15 +23,15 @@ $htmlDeleteForm = $deleteForm->gestiona();
 $tituloPagina = 'Modificar perfil';
 
 $contenidoPrincipal = <<<EOS
-<h2>Modificar contraseña</h2>
+<h2 class="adminClass">Modificar contraseña</h2>
 $htmlFormPassword
-<h2>Modificar email</h2>
+<h2 class="adminClass">Modificar email</h2>
 $htmlFormEmail
-<h2>Modificar imagen de usuario</h2>
+<h2 class="adminClass">Modificar imagen de usuario</h2>
 $htmlFormUserImg
-<h2>Modificar el role de usuario</h2>
+<h2 class="adminClass">Modificar el role de usuario</h2>
 $htmlRoleForm
-<h2>Eliminar cuenta</h2>
+<h2 class="adminClass">Eliminar cuenta</h2>
 $htmlDeleteForm
 EOS;
 

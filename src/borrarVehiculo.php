@@ -30,7 +30,7 @@ $filterSelector .= '';
 $tituloPagina = 'Eliminar Vehiculo';
 
 $contenidoPrincipal = <<<EOS
-<h1>Eliminar Vehiculo</h1>
+<h1 class="tituloPagina">Eliminar Vehiculo</h1>
 <div class="dropdown">
 <button class="dropbtn" style="float:left">Filtros</button>
 <div class="dropdown-content">

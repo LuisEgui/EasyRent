@@ -11,7 +11,7 @@ $htmlFormNewAd = $form->gestiona();
 $tituloPagina = 'Registro de Vehiculo';
 
 $contenidoPrincipal = <<<EOS
-<h1>Nuevo anuncio</h1>
+<h1 class="adminClass">Nuevo anuncio</h1>
 $htmlFormNewAd
 EOS;
 require __DIR__.'\includes\vistas\plantillas\plantilla.php';

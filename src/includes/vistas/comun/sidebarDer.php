@@ -9,7 +9,7 @@
         $imgPath = "{$b->getId()}-{$b->getPath()}";
         $banner = <<<EOS
             <div>
-               <img src="includes/img/ads/$imgPath" width="800" height="100" alt="Banner"/>
+               <img class="imagenBanner" src="includes/img/ads/$imgPath" alt="Banner"/>
             </div>
             EOS;
     }
