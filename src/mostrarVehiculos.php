@@ -1,17 +1,22 @@
 <?php
 
-require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/Vehicle.php';
-require_once __DIR__.'/includes/VehicleService.php';
-require_once __DIR__.'/includes/ReserveService.php';
+
+require_once '../vendor/autoload.php';
+require_once __DIR__.'/includes/config/config.php';
+
+use easyrent\includes\persistance\entity\Vehicle;
+use easyrent\includes\service\VehicleService;
+use easyrent\includes\service\ReserveService;
 
 $vehicleService = VehicleService::getInstance();
 $reserveService = ReserveService::getInstance();
+$modelService = ModelService::getInstance();
 
 $location = $_GET['location'];
 $vehiculos = $vehicleService->readAllVehiclesInLocation($location);
 
 $tituloPagina = 'Lista vehiculos';
+
 $contenidoPrincipal = <<<EOS
 <h1>Lista vehiculos</h1>
 EOS;
@@ -45,45 +50,52 @@ else{
 
 
 for ($i = 0; $i < count($vehiculos); $i++) {
-    //hacer algo para que vehiculos reservados no salgan
+    $vehicleModel = $modelService->readModelById($vehiculos[$i]->getModel());
     $contenidoPrincipal .= <<<EOS
     <div class="v">
-        <h2>Vehiculo 
+        <h2>Vehiculo
     EOS;
     $contenidoPrincipal .= $i + 1;
     $contenidoPrincipal .= <<<EOS
         </h2>
         <p>
-        Vin: 
+        Marca:
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getVin();
+    $contenidoPrincipal .= $vehicleModel->getBrand();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        License plate: 
+        Model:
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getLicensePlate();
+    $contenidoPrincipal .= $vehicleModel->getModel();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Model: 
+        Submodel:
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getModel();
+    $contenidoPrincipal .= $vehicleModel->getSubmodel();
     $contenidoPrincipal .= <<<EOS
         </p>
         <p>
-        Location:  
+        Location: 
     EOS;
     $contenidoPrincipal .= $vehiculos[$i]->getLocation();
     $contenidoPrincipal .= <<<EOS
-        </p>
+        </p>        
         <p>
-        State: 
+        Fuel type:
     EOS;
-    $contenidoPrincipal .= $vehiculos[$i]->getState();
+    $contenidoPrincipal .= $vehicleModel->getFuelType();
+    $contenidoPrincipal .= <<<EOS
+        </p>
+        Seat count:
+    EOS;
+    $contenidoPrincipal .= $vehicleModel->getSeatCount();
+    $contenidoPrincipal .= <<<EOS
+        </p>
+    EOS;
     if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
         $contenidoPrincipal .= <<<EOS
-        </p>
         <h4>TARIFA</h4>
         <h4>20€</h4>
         <a href="reserva.php?id=
@@ -100,13 +112,12 @@ for ($i = 0; $i < count($vehiculos); $i++) {
     }
     else{
         $contenidoPrincipal .= <<<EOS
-        </p>
         <h4>TARIFA</h4>
         <h4>20€</h4>
         <p>[Para reservar inicie sesión]</p>
+        </div>
     EOS;
     }
-    
-}
 
+}
 require __DIR__.'/includes/vistas/plantillas/plantilla.php';

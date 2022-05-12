@@ -1,5 +1,16 @@
 -- Author: Luis Egui
 
+-- Image table creation
+create table
+  Image (
+    img_id serial primary key,
+    path varchar(256) not null,
+    mimeType enum('image/jpeg','image/jpg','image/png') not null
+  );
+
+-- Aux: check Image fields
+-- describe Image;
+
 -- Model table creation
 create table
   Model (
@@ -20,17 +31,6 @@ create table
 -- Aux: check Model fields
 -- describe Model;
 
--- Image table creation
-create table
-  Image (
-    img_id serial primary key,
-    path varchar(256) not null,
-    mimeType enum('image/jpeg','image/jpg','image/png') not null
-  );
-
--- Aux: check Image fields
--- describe Image;
-
 -- Vehicle table creation
 create table
   Vehicle (
@@ -43,6 +43,7 @@ create table
     foreign key (model) references Model(m_id) ON DELETE RESTRICT,   
     check (vin regexp '^[0-9]{6}$'),   
     check (licensePlate regexp '^[0-9]{4}-(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{1,3}$')
+    
   );
 
 -- Aux: check Vehicle fields
@@ -136,5 +137,3 @@ create table
     foreign key (author) references User(u_id)
 );
 
--- Aux: check Message fields:
--- describe Message;
