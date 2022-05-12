@@ -112,7 +112,7 @@ create table
     type enum ('Minor', 'Moderate', 'Severe'),
     isRepaired boolean default false,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
-    foreign key (vehicle) references Vehicle(vin),
+    foreign key (vehicle) references Vehicle(vin) ON DELETE RESTRICT,
     foreign key (evidenceDamage) references Image(img_id),
     foreign key (user) references User(u_id)
   );

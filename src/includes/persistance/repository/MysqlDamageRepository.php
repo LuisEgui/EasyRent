@@ -78,21 +78,24 @@ class MysqlDamageRepository extends AbstractMysqlRepository implements DamageRep
         return $damagesID;
     }
 
-    public function findByVehicle($vehicle)
+    public function findByVehicle($vin) : array
     {
-        $damages[] = array();
+        $damages = [];
+
+        if(!isset($vin))
+            return $damages;
 
         $sql = sprintf("select * from Damage where vehicle = '%d'",
-                        $vehicle->getVin());
+                        $vin);
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
         $result = $stmt->get_result();
         $stmt->close();
 
-        while ($row = $result->fetch_array(MYSQLI_NUM)) {
-            foreach ($row as $damage)
-                $damages[] = $damage;
+        while ($row = $result->fetch_assoc()) {
+            $damage = new Damage($row['d_id'], $row['vehicle'], $row['user'], $row['title'], $row['description'], $row['evidenceDamage'], $row['area'], $row['type'], $row['isRepaired'], $row['fecha']);
+            $damages[] = $damage;
         }
 
         return $damages;

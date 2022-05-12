@@ -2,8 +2,10 @@
 
 namespace easyrent\includes\forms;
 
-use easyrent\includes\service\VehicleService;
+use easyrent\includes\service\DamageService;
 use easyrent\includes\service\ModelService;
+use easyrent\includes\service\VehicleService;
+use easyrent\includes\service\ReserveService;
 use easyrent\includes\service\lists\VehicleList;
 
 class FormularioEliminarVehiculo extends Formulario {
@@ -11,6 +13,10 @@ class FormularioEliminarVehiculo extends Formulario {
     private $vehicleService;
 
     private $modelService;
+
+    private $damageService;
+
+    private $reserveService;
 
     private $vehiclesList;
 
@@ -20,6 +26,8 @@ class FormularioEliminarVehiculo extends Formulario {
         parent::__construct('formDeleteVehicle', ['urlRedireccion' => 'vehiclesAdmin.php']);
         $this->vehicleService = VehicleService::getInstance();
         $this->modelService = ModelService::getInstance();
+        $this->damageService = DamageService::getInstance();
+        $this->reserveService = ReserveService::getInstance();
         $this->vehiclesList = new VehicleList();
         if(isset($orderByFunction)){
             $this->orderVehiclesBy = $orderByFunction;
@@ -86,6 +94,14 @@ class FormularioEliminarVehiculo extends Formulario {
 
         if(!isset($datos['deletedVehicleVIN']))
             $this->errores[] = 'Debe seleccionar un vehiculo.';
+
+        $damages = $this->damageService->readDamagesByVehicle($datos['deletedVehicleVIN']);
+        if(!empty($damages))
+            $this->errores[] = 'Existen incidentes asociados al vehiculo que desea eliminar. Por favor, elimine en primer lugar dichos incidentes y, posteriormente, el vehiculo.';
+
+        $reserves = $this->reserveService->readReservesByVehicle($datos['deletedVehicleVIN']);
+        if(!empty($reserves))
+            $this->errores[] = 'Existen reservas asociadas al vehiculo que desea eliminar. Por favor, elimine en primer lugar dichas reservas y, posteriormente, el vehiculo.';
 
         if (count($this->errores) === 0) {
             $result = $this->vehicleService->deleteVehicleByVin($datos['deletedVehicleVIN']);

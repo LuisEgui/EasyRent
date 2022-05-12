@@ -94,9 +94,18 @@ class DamageService {
     }
 
     /**
+     * Returns the damages related with a vehicle
+     *
+     * @return Damage[]|null Returns null when there is not an existing damage with the same $idVehicle associated
+     */
+    public function readDamagesByVehicle($idVehicle){
+        return $this->damageRepository->findByVehicle($idVehicle);
+    }
+
+    /**
      * Returns all the damages id in the system.
      *
-     * @return Vehicle[] Returns the damages id from the database.
+     * @return Damage[] Returns the damages id from the database.
      */
     public function readAllDamagesID(){
         return $this->damageRepository->findAllId();

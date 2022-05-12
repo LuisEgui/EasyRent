@@ -7,6 +7,6 @@ namespace easyrent\includes\persistance\repository;
  */
 interface DamageRepository extends Repository {
 
-    public function findByVehicle($vehicle);
+    public function findByVehicle($vehicle) : array;
 
 }

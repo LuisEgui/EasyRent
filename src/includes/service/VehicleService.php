@@ -106,7 +106,7 @@ class VehicleService {
     }
 
     /**
-     * Returns the vehicle by its model
+     * Returns the vehicles related with a model
      *
      * @return Vehicle[]|null Returns null when there is not an existing vehicle with the same $model
      */
