@@ -47,7 +47,7 @@ class AdvertisementService
      * @return Advertisement|null Returns null when there is an already existing vehicle with the same $vin
      */
     public function createAdvertisement($banner, $releaseDate, $endDate, $priority) {
-        if($releaseDate > $endDate) return false;
+        if($releaseDate > $endDate) return null;
         $ad = new Advertisement(null, $banner, $releaseDate, $endDate, $priority);
         return $this->advertisementRepository->save($ad);
     }
@@ -96,7 +96,7 @@ class AdvertisementService
          * 4. Insert the new image in the user
          * 5. Save the user
          */
-        if ($ad->getBanner() !== '0') {
+        if ($ad->getBanner() !== null) {
             $oldAdImageId = $ad->getBanner();
             $oldAdImage = $this->imageRepository->findById($oldAdImageId);
             $oldAdImageFile = "{$oldAdImage->getId()}-{$oldAdImage->getPath()}";

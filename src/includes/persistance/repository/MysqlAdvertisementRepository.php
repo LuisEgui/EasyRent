@@ -116,13 +116,22 @@ class MysqlAdvertisementRepository extends AbstractMysqlRepository implements Re
                 return null;
                 // If the ad is not in the database, we insert it.
             } else {
-                $sql = sprintf("insert into Advertisement (banner, releaseDate, endDate, priority) " .
-                               "values ('%d', '%s', '%s', '%d')",
-                    $ad->getBanner(),
-                    $this->db->getConnection()->real_escape_string($ad->getReleaseDate()),
-                    $this->db->getConnection()->real_escape_string($ad->getEndDate()),
-                    $ad->getPriority()
-                );
+                if ($ad->getBanner() != null) {
+                    $sql = sprintf("insert into Advertisement (banner, releaseDate, endDate, priority) " .
+                        "values ('%d', '%s', '%s', '%d')",
+                        $ad->getBanner(),
+                        $this->db->getConnection()->real_escape_string($ad->getReleaseDate()),
+                        $this->db->getConnection()->real_escape_string($ad->getEndDate()),
+                        $ad->getPriority()
+                    );
+                } else {
+                    $sql = sprintf("insert into Advertisement (releaseDate, endDate, priority) " .
+                        "values ('%s', '%s', '%d')",
+                        $this->db->getConnection()->real_escape_string($ad->getReleaseDate()),
+                        $this->db->getConnection()->real_escape_string($ad->getEndDate()),
+                        $ad->getPriority()
+                    );
+                }
 
                 $stmt = $this->db->prepare($sql);
                 $result = $stmt->execute();
