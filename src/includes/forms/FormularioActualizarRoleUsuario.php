@@ -11,7 +11,7 @@ class FormularioActualizarRoleUsuario extends Formulario {
     const ROLES = [self::PARTICULAR => 'Particular', self::ENTERPRISE => 'Enterprise'];
 
     public function __construct() {
-        parent::__construct('formUpdateRole', ['urlRedireccion' => 'index.php']);
+        parent::__construct('formUpdateRole', ['urlRedireccion' => RUTA_APP.'/index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
 

@@ -1,7 +1,7 @@
 <?php
 
-require_once '../vendor/autoload.php';
-require_once __DIR__.'/includes/config/config.php';
+require_once 'vendor/autoload.php';
+require_once __DIR__ . '/src/includes/config/config.php';
 
 use easyrent\includes\forms\FormularioBuscarVehiculo;
 
@@ -41,4 +41,4 @@ $contenidoPrincipal = <<<EOS
 EOS;
 
 
-require __DIR__.'/includes/vistas/plantillas/plantilla.php';
+require __DIR__ . '/src/includes/vistas/plantillas/plantillaIndex.php';

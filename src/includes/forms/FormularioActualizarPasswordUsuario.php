@@ -9,7 +9,7 @@ class FormularioActualizarPasswordUsuario extends Formulario {
     private $userService;
 
     public function __construct() {
-        parent::__construct('formPasswordUpdate', ['urlRedireccion' => 'index.php']);
+        parent::__construct('formPasswordUpdate', ['urlRedireccion' => RUTA_APP.'/index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
 

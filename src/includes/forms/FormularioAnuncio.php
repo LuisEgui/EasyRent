@@ -8,7 +8,7 @@ class FormularioAnuncio extends Formulario {
     private $advertisementService;
 
     public function __construct() {
-        parent::__construct('formUpdateReleaseDate', ['urlRedireccion' => 'index.php']);
+        parent::__construct('formUpdateReleaseDate', ['urlRedireccion' => RUTA_APP.'/index.php']);
         $this->advertisementService = new AdvertisementService($GLOBALS['db_advertisement_repository'], $GLOBALS['db_image_repository']);
     }
 

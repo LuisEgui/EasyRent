@@ -11,7 +11,7 @@ class FormularioActualizarEmailUsuario extends Formulario
 
     public function __construct()
     {
-        parent::__construct('formUpdateEmail', ['urlRedireccion' => 'index.php']);
+        parent::__construct('formUpdateEmail', ['urlRedireccion' => RUTA_APP.'/index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
 

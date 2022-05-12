@@ -13,7 +13,7 @@ class FormularioRegistroUsuario extends Formulario
 
     public function __construct()
     {
-        parent::__construct('formRegisterUser', ['urlRedireccion' => 'index.php']);
+        parent::__construct('formRegisterUser', ['urlRedireccion' => RUTA_APP.'/index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
 

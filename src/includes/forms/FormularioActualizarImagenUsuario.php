@@ -14,7 +14,7 @@ class FormularioActualizarImagenUsuario extends Formulario
     public function __construct()
     {
         parent::__construct('formUpdateUserImage', ['enctype' => 'multipart/form-data',
-                            'urlRedireccion' => 'index.php']);
+                            'urlRedireccion' => RUTA_APP.'/index.php']);
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);
     }
 

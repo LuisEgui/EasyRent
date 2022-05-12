@@ -7,7 +7,7 @@ class FormularioActualizarEndDateAd extends Formulario {
     private $advertisementService;
 
     public function __construct() {
-        parent::__construct('formUpdateEndDate', ['urlRedireccion' => 'index.php']);
+        parent::__construct('formUpdateEndDate', ['urlRedireccion' => RUTA_APP.'/index.php']);
         $this->advertisementService = new AdvertisementService($GLOBALS['db_advertisement_repository'], $GLOBALS['db_image_repository']);
     }
 

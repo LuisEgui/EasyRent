@@ -11,13 +11,13 @@ class FormularioBuscarVehiculo extends Formulario {
     private $reserveService;
 
     private $vehicleService;
-    
+
     public function __construct() {
-        parent::__construct('formSearchCars', ['urlRedireccion' => 'mostrarVehiculos.php']);
+        parent::__construct('formSearchCars', ['urlRedireccion' => 'src/mostrarVehiculos.php']);
         $this->vehicleService = VehicleService::getInstance();
         $this->reserveService = ReserveService::getInstance();
         $this->userService = new UserService($GLOBALS['db_user_repository'], $GLOBALS['db_image_repository']);    }
-    
+
     protected function generaCamposFormulario(&$datos) {
        // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
@@ -66,8 +66,8 @@ class FormularioBuscarVehiculo extends Formulario {
 
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
-        
-        if (count($this->errores) === 0) { 
+
+        if (count($this->errores) === 0) {
             $this->changeUlrRedireccion("{$this->urlRedireccion}?location={$datos['pickupLocation']}");
 
             if(isset($datos['returnDate']) && isset($datos['pickupDate'])) $this->changeUlrRedireccion("{$this->urlRedireccion}&rDate={$datos['returnDate']}&pDate={$datos['pickupDate']}");
@@ -75,9 +75,9 @@ class FormularioBuscarVehiculo extends Formulario {
                 if(isset($datos['pickupDate'])) $this->changeUlrRedireccion("{$this->urlRedireccion}&pDate={$datos['pickupDate']}");
                 if(isset($datos['returnDate'])) $this->changeUlrRedireccion("{$this->urlRedireccion}&rDate={$datos['returnDate']}");
             }
-            
+
             header("Location: {$this->urlRedireccion}");
         }
     }
-    
+
 }

@@ -3,9 +3,9 @@
 // phpcs:ignoreFile
 function mostrarSaludo() {
 	if (isset($_SESSION['login']) && ($_SESSION['login']===true)) {
-		return "Bienvenido, {$_SESSION['email']} <a href='logout.php'>(salir)</a>";
+		return "Bienvenido, {$_SESSION['email']} <a href='src/logout.php'>(salir)</a>";
 	} else {
-		return "Usuario desconocido. <a href='login.php'>Login</a> <a href='registro.php'>Registro</a>";
+		return "Usuario desconocido. <a href='src/login.php'>Login</a> <a href='src/registro.php'>Registro</a>";
 	}
 }
 

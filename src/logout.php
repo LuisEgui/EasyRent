@@ -12,4 +12,4 @@ session_destroy();
 
 echo '<h2>Successfully logout!</h2>';
 echo '<p>Retornando a la página principal...</p>';
-echo '<meta http-equiv="refresh" content="3;url=index.php">';
+echo '<meta http-equiv="refresh" content="3;url=../index.php">';
